@@ -2,29 +2,71 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    Vector3 velocity;
-    Rigidbody player_rigid_body;
 
+    protected Joystick joystick;
+
+    public int factor = 10;
+    private float velo_x = 0f;
+    private float velo_z = 0f;
+
+
+    public float stop_duration = 0.4f;
+    private Vector3 velo_eq;
+    float curr_time = 0;
+    float fix_vel_x;
+    float fix_vel_z;
+
+    Rigidbody rigidbody;
+
+    // Start is called before the first frame update
     void Start()
     {
-        player_rigid_body = GetComponent<Rigidbody>();
+        joystick = FindObjectOfType<Joystick>();
+        rigidbody = GetComponent<Rigidbody>();
+        velo_eq = new Vector3(0, 0, 0);
     }
 
-    public void Move(Vector3 _velocity)
+    // Update is called once per frame
+    void Update()
     {
-        velocity = _velocity;
+        if (joystick.Vertical != 0f || joystick.Horizontal != 0f)
+        {
+            MovingPlayer();
+
+            curr_time = 0;
+            fix_vel_x = velo_x;
+            fix_vel_z = velo_z;
+        }
+        else
+        {
+            StoppingPlayer();
+        }
+        //Player Velocity
+        //Debug.Log(rigidbody.velocity);
+    }
+    void MovingPlayer()
+    {
+        velo_x = joystick.Horizontal * factor;
+        velo_z = joystick.Vertical * factor;
+        velo_eq.Set(velo_x, 0, velo_z);
+        rigidbody.velocity = velo_eq;
     }
 
-    public void FixedUpdate()
+    void StoppingPlayer()
     {
-        player_rigid_body.MovePosition(player_rigid_body.position + velocity * Time.fixedDeltaTime);
-    }
+        curr_time += Time.deltaTime;
 
-    public Vector3 GetPosition()
-    {
-        return player_rigid_body.position;
+        if (curr_time <= stop_duration)
+        {
+            //Current time during desaceleration
+            //Debug.Log(curr_time);
+            velo_x = fix_vel_x - fix_vel_x * curr_time / stop_duration;
+            velo_z = fix_vel_z - fix_vel_z * curr_time / stop_duration;
+            velo_eq.Set(velo_x, 0, velo_z);
+            rigidbody.velocity = velo_eq;
+        }
     }
 }
+
