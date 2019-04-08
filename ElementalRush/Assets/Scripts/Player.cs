@@ -8,14 +8,12 @@ public class Player : MonoBehaviour
     public float move_speed = 5;
     PlayerController controller;
     GameObject map;
-    MapGenerator tilemap;
     Vector2Int on_tile;
 
     void Start()
     {
         //controller = GetComponent<PlayerController>();
         map = GameObject.Find("TileMap");
-        tilemap = map.GetComponent<MapGenerator>();
         on_tile = new Vector2Int(0, 0);
     }
 
