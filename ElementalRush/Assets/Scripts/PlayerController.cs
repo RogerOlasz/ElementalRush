@@ -18,13 +18,13 @@ public class PlayerController : MonoBehaviour
     float fix_vel_x;
     float fix_vel_z;
 
-    Rigidbody rigidbody;
+    Rigidbody rigid_body;
 
     // Start is called before the first frame update
     void Start()
     {
         joystick = FindObjectOfType<Joystick>();
-        rigidbody = GetComponent<Rigidbody>();
+        rigid_body = GetComponent<Rigidbody>();
         velo_eq = new Vector3(0, 0, 0);
     }
 
@@ -46,12 +46,13 @@ public class PlayerController : MonoBehaviour
         //Player Velocity
         //Debug.Log(rigidbody.velocity);
     }
+
     void MovingPlayer()
     {
         velo_x = joystick.Horizontal * factor;
         velo_z = joystick.Vertical * factor;
         velo_eq.Set(velo_x, 0, velo_z);
-        rigidbody.velocity = velo_eq;
+        rigid_body.velocity = velo_eq;
     }
 
     void StoppingPlayer()
@@ -65,7 +66,7 @@ public class PlayerController : MonoBehaviour
             velo_x = fix_vel_x - fix_vel_x * curr_time / stop_duration;
             velo_z = fix_vel_z - fix_vel_z * curr_time / stop_duration;
             velo_eq.Set(velo_x, 0, velo_z);
-            rigidbody.velocity = velo_eq;
+            rigid_body.velocity = velo_eq;
         }
     }
 }
