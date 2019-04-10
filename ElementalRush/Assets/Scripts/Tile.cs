@@ -103,7 +103,7 @@ public class Tile : MonoBehaviour
         {
             player_is_on = true;
             type = TileType.Fire;
-            Debug.Log("Player is on: " + transform);
+            //Debug.Log("Player is on: " + transform);
         }
     }
 
