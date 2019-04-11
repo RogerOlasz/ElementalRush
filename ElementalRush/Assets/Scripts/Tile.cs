@@ -107,7 +107,7 @@ public class Tile : MonoBehaviour
             //Debug.Log("Player is on: " + transform);
             if(this.type == TileType.Base && ui_manager != null)
             {
-                ui_manager.OpenElementChangingMenu();
+                ui_manager.OpenElementChangingMenu(); //TODO Multiple tile collision are not able to give a good experience over element changer menu
             }
             else if (ui_manager != null)
             {

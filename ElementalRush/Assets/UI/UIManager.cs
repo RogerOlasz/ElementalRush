@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    GameObject element_change_panel; //TODO try to set it active/unactive to unlock the rest of their children
+    GameObject element_change_panel; 
 
     GameObject fire_image;
     GameObject earth_image;
@@ -18,30 +18,12 @@ public class UIManager : MonoBehaviour
     public void OpenElementChangingMenu()
     {
         element_change_panel.SetActive(true);
-
-        fire_image.SetActive(true);
-        earth_image.SetActive(true);
-        water_image.SetActive(true);
-        ice_image.SetActive(true);
-        plant_image.SetActive(true);
-        air_image.SetActive(true);
-        electric_image.SetActive(true);
     }
 
     public void CloseElementChangingMenu()
     {
         element_change_panel.SetActive(false);
-
-        fire_image.SetActive(false);
-        earth_image.SetActive(false);
-        water_image.SetActive(false);
-        ice_image.SetActive(false);
-        plant_image.SetActive(false);
-        air_image.SetActive(false);
-        electric_image.SetActive(false);
     }
-
-    //TODO Create methods to be called on click button mode, they may be on any other script
 
     // Start is called before the first frame update
     void Awake()
@@ -57,14 +39,6 @@ public class UIManager : MonoBehaviour
         electric_image = GameObject.Find("Canvas").transform.Find("ElementChangePanel").Find("ElectricImage").gameObject;
 
         element_change_panel.SetActive(false);
-
-        fire_image.SetActive(false);
-        earth_image.SetActive(false);
-        water_image.SetActive(false);
-        ice_image.SetActive(false);
-        plant_image.SetActive(false);
-        air_image.SetActive(false);
-        electric_image.SetActive(false);
     }
 
     void Start()
