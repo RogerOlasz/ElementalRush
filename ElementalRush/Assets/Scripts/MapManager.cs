@@ -12,6 +12,8 @@ public class MapManager : MonoBehaviour
 
     public Transform players_floor;
 
+    Tile base_tile;
+
     //Size of the map in tiles
     public Vector2Int map_size;
 
@@ -63,6 +65,17 @@ public class MapManager : MonoBehaviour
                 new_tile.localScale = Vector3.one * (1 - outline_percent);
                 new_tile.name = "Tile_x" + x + "_y" + y;
                 new_tile.parent = map_holder;
+
+                if (y == 0)
+                {
+                    base_tile = new_tile.GetComponent<Tile>();
+                    base_tile.ModifyTileType(Tile.TileType.Base);
+                }
+                else if (y == (map_size.y - 1))
+                {
+                    base_tile = new_tile.GetComponent<Tile>();
+                    base_tile.ModifyTileType(Tile.TileType.Base);
+                }
             }
         }
 

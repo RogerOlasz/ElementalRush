@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
 
     PlayerElementOnUse on_use_element;
 
-    void SetPlayerStatsByElement(PlayerElementOnUse new_on_use_element)
+    public void SetPlayerStatsByElement(PlayerElementOnUse new_on_use_element)
     {
         on_use_element = new_on_use_element;
 
@@ -107,12 +107,53 @@ public class Player : MonoBehaviour
                     //movement_speed = bottled_fire.GetFireBaseSpeed();
                     //item_carrying_speed = bottled_fire.GetFireItemCarryingSpeed();
                     break;
-                }            
+                }
         }
 
         p_controller.SetSpeedFactor(movement_speed);
-
     }
+    
+    public void SetPlayerFire()
+    {
+        SetPlayerStatsByElement(PlayerElementOnUse.Fire);
+        Debug.Log(movement_speed);
+    }
+
+    public void SetPlayerEarth()
+    {
+        SetPlayerStatsByElement(PlayerElementOnUse.Earth);
+        Debug.Log(movement_speed);
+    }
+
+    public void SetPlayerWater()
+    {
+        SetPlayerStatsByElement(PlayerElementOnUse.Water);
+        Debug.Log(movement_speed);
+    }
+
+    public void SetPlayerIce()
+    {
+        SetPlayerStatsByElement(PlayerElementOnUse.Ice);
+        Debug.Log(movement_speed);
+    }
+
+    public void SetPlayerPlant()
+    {
+        SetPlayerStatsByElement(PlayerElementOnUse.Plant);
+        Debug.Log(movement_speed);
+    }
+
+    public void SetPlayerAir()
+    {
+        SetPlayerStatsByElement(PlayerElementOnUse.Air);
+        Debug.Log(movement_speed);
+    }
+
+    public void SetPlayerElectric()
+    {
+        SetPlayerStatsByElement(PlayerElementOnUse.Electric);
+        Debug.Log(movement_speed);
+    }    
 
     void Start()
     {

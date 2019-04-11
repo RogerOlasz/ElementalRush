@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Tile : MonoBehaviour
 {
+    UIManager ui_manager = null;
+
     public Vector2Int tile_coord;
     private bool player_is_on;
 
@@ -102,8 +104,15 @@ public class Tile : MonoBehaviour
         if (collider.gameObject.tag == "Player")
         {
             player_is_on = true;
-            type = TileType.Fire;
             //Debug.Log("Player is on: " + transform);
+            if(this.type == TileType.Base && ui_manager != null)
+            {
+                ui_manager.OpenElementChangingMenu();
+            }
+            else if (ui_manager != null)
+            {
+                ui_manager.CloseElementChangingMenu();
+            }
         }
     }
 
@@ -111,8 +120,12 @@ public class Tile : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            type = TileType.Normal;
             player_is_on = false;
+
+            //if (this.type != TileType.Base)
+            //{
+            //    ui_manager.CloseElementChangingMenu();
+            //}
         }
     }
 
@@ -121,6 +134,8 @@ public class Tile : MonoBehaviour
         player_is_on = false;
         normal_color = new Vector4(0.4f, 0.7f, 0.4f, 1);
         brown = new Vector4(0.804f, 0.521f, 0.247f, 1);
+
+        ui_manager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
     void Update()
