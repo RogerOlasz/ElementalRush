@@ -42,13 +42,13 @@ public class PlayerController : MonoBehaviour
 
         if (joystick.Vertical >= 0)
         {
-            transform.rotation = Quaternion.Euler(0, -rot_y, 0);
+            transform.rotation = Quaternion.Euler(0, 270 - rot_y, 0);
             last_rot = rot_y;
         }
         else
         {
-            transform.rotation = Quaternion.Euler(0, -180 + rot_y, 0);
-            last_rot = 180 - rot_y;
+            transform.rotation = Quaternion.Euler(0, 90 + rot_y, 0);
+            last_rot = 270 - rot_y;
         }
 
     }
