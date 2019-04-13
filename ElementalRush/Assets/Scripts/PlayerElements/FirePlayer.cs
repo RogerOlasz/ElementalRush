@@ -26,7 +26,7 @@ public class FirePlayer : MonoBehaviour
 
     public void AoEAttack()
     {
-
+        
     }
 
     // Start is called before the first frame update

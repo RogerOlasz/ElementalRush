@@ -9,12 +9,15 @@ public class PlayerController : MonoBehaviour
     float speed_factor;
     private float velo_x = 0f;
     private float velo_z = 0f;
+    private float rot_y = 0f;
+    private Vector2 direction;
 
     public float stop_duration = 0.4f;
     private Vector3 velo_eq;
     float curr_time = 0;
     float fix_vel_x;
     float fix_vel_z;
+    float last_rot;
 
     Rigidbody rigid_body;
 
@@ -29,6 +32,25 @@ public class PlayerController : MonoBehaviour
         velo_z = joystick.Vertical * speed_factor;
         velo_eq.Set(velo_x, 0, velo_z);
         rigid_body.velocity = velo_eq;
+    }
+
+    void RottingPlayer()
+    {
+        direction.Set(joystick.Vertical, joystick.Horizontal);
+        direction.Normalize();
+        rot_y = Mathf.Asin(-direction.y) * Mathf.Rad2Deg;
+
+        if (joystick.Vertical >= 0)
+        {
+            transform.rotation = Quaternion.Euler(0, -rot_y, 0);
+            last_rot = rot_y;
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, -180 + rot_y, 0);
+            last_rot = 180 - rot_y;
+        }
+
     }
 
     void StoppingPlayer()
@@ -52,14 +74,16 @@ public class PlayerController : MonoBehaviour
         joystick = FindObjectOfType<Joystick>();
         rigid_body = GetComponent<Rigidbody>();
         velo_eq = new Vector3(0, 0, 0);
+        direction = new Vector2(0, 0);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (joystick.Vertical != 0f || joystick.Horizontal != 0f)
+        if (Mathf.Abs(joystick.Vertical) >= 0.3f || Mathf.Abs(joystick.Horizontal) >= 0.3f)
         {
             MovingPlayer();
+            RottingPlayer();
 
             curr_time = 0;
             fix_vel_x = velo_x;
