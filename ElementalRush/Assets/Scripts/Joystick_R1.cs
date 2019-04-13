@@ -3,14 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum AxisOptions
-{
-    Both,
-    Horizontal,
-    Vertical
-}
-
-public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class Joystick_R1 : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     public float Horizontal
     {
@@ -19,6 +12,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
             return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x;
         }
     }
+
     public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
     public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
 
@@ -60,7 +54,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         baseRect = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
         if (canvas == null)
-            Debug.LogError("The Joystick is not placed inside a canvas");
+            Debug.LogError("The Joystick_R1 is not placed inside a canvas");
 
         Vector2 center = new Vector2(0.5f, 0.5f);
         background.pivot = center;

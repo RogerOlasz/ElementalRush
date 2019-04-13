@@ -19,9 +19,9 @@ public class Player : MonoBehaviour
 
     //Player attributes
     float movement_speed;
-    PlayerController p_controller;
     float item_carrying_speed;
-    int element_energy;
+    PlayerController p_controller;    
+    public int element_energy;
 
     public enum PlayerElementPassives
     {
@@ -186,6 +186,8 @@ public class Player : MonoBehaviour
         bottled_plant = GetComponent<PlantPlayer>();
         bottled_air = GetComponent<AirPlayer>();
         bottled_electric = GetComponent<ElectricPlayer>();
+
+        element_energy = 100;
 
         SetPlayerStatsByElement(PlayerElementOnUse.Fire);
         Debug.Log(movement_speed);

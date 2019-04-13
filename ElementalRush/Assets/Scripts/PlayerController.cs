@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     protected Joystick joystick;
 
     float speed_factor;
     private float velo_x = 0f;
     private float velo_z = 0f;
-
 
     public float stop_duration = 0.4f;
     private Vector3 velo_eq;

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2929252283123773938}
   - component: {fileID: 2929252283123773936}
   - component: {fileID: 2929252283123773937}
-  - component: {fileID: 8953467911201699832}
+  - component: {fileID: 8141807774633914067}
   m_Layer: 5
   m_Name: Fixed Joystick
   m_TagString: Untagged
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &8953467911201699832
+--- !u!114 &8141807774633914067
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2929252283123773939}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02187e9a2aeb60948a9d99f88f8ee11f, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b3d39f420b3b93468e74022faffb348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   handleRange: 1
@@ -93,8 +93,8 @@ MonoBehaviour:
   axisOptions: 0
   snapX: 0
   snapY: 0
-  background: {fileID: 0}
-  handle: {fileID: 0}
+  background: {fileID: 2929252283123773938}
+  handle: {fileID: 2929252285020697096}
 --- !u!1 &2929252285020697097
 GameObject:
   m_ObjectHideFlags: 0
