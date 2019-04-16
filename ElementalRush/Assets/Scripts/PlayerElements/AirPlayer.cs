@@ -9,14 +9,14 @@ public class AirPlayer : MonoBehaviour
     public float player_movement_speed = 5.5f;
     public float player_item_carrying_speed = 4.5f;
 
-    public float GetAirBaseSpeed()
+    public void SetAirBaseSpeed()
     {
-        return player_movement_speed;
+        player_stats.movement_speed = player_movement_speed;
     }
 
-    public float GetAirItemCarryingSpeed()
+    public void SetAirItemCarryingSpeed()
     {
-        return player_item_carrying_speed;
+        player_stats.item_carrying_speed = player_item_carrying_speed;
     }
 
     public void StraightAttack()
@@ -30,7 +30,7 @@ public class AirPlayer : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         player_stats = GetComponent<Player>();
     }

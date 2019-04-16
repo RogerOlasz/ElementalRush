@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     protected Joystick joystick;
+    protected Joystick_R1 right_1_joystick;
 
     float speed_factor;
     private float velo_x = 0f;

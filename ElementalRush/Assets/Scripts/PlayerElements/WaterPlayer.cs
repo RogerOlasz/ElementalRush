@@ -9,14 +9,14 @@ public class WaterPlayer : MonoBehaviour
     public float player_movement_speed = 4.5f;
     public float player_item_carrying_speed = 3.5f;
 
-    public float GetWaterBaseSpeed()
+    public void SetWaterBaseSpeed()
     {
-        return player_movement_speed;
+        player_stats.movement_speed = player_movement_speed;
     }
 
-    public float GetWaterItemCarryingSpeed()
+    public void SetWaterItemCarryingSpeed()
     {
-        return player_item_carrying_speed;
+        player_stats.item_carrying_speed = player_item_carrying_speed;
     }
 
     public void StraightAttack()
@@ -30,7 +30,7 @@ public class WaterPlayer : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         player_stats = GetComponent<Player>();
     }

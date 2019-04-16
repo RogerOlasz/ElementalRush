@@ -9,14 +9,14 @@ public class IcePlayer : MonoBehaviour
     public float player_movement_speed = 5;
     public float player_item_carrying_speed = 4;
 
-    public float GetIceBaseSpeed()
+    public void SetIceBaseSpeed()
     {
-        return player_movement_speed;
+        player_stats.movement_speed = player_movement_speed;
     }
 
-    public float GetIceItemCarryingSpeed()
+    public void SetIceItemCarryingSpeed()
     {
-        return player_item_carrying_speed;
+        player_stats.item_carrying_speed = player_item_carrying_speed;
     }
 
     public void StraightAttack()
@@ -30,7 +30,7 @@ public class IcePlayer : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         player_stats = GetComponent<Player>();
     }

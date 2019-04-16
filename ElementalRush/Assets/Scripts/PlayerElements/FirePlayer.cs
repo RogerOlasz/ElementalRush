@@ -8,15 +8,15 @@ public class FirePlayer : MonoBehaviour
 
     public float player_movement_speed = 5;
     public float player_item_carrying_speed = 4;
-
-    public float GetFireBaseSpeed()
+    
+    public void SetFireBaseSpeed()
     {
-        return player_movement_speed;
+        player_stats.movement_speed = player_movement_speed;
     }
 
-    public float GetFireItemCarryingSpeed()
+    public void SetFireItemCarryingSpeed()
     {
-        return player_item_carrying_speed;
+        player_stats.item_carrying_speed = player_item_carrying_speed;
     }
 
     public void StraightAttack()
@@ -30,7 +30,7 @@ public class FirePlayer : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         player_stats = GetComponent<Player>();
     }

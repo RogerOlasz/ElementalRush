@@ -33,11 +33,6 @@ public class MapManager : MonoBehaviour
 
     }
 
-    private void OnDestroy()
-    {
-
-    }
-
     //Function to generate the tilemap
     public void GenerateMap()
     {    

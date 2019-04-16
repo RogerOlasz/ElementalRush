@@ -18,9 +18,9 @@ public class Player : MonoBehaviour
     ElectricPlayer bottled_electric = null;
 
     //Player attributes
-    float movement_speed;
-    float item_carrying_speed;
-    PlayerController p_controller;    
+    [HideInInspector] public float movement_speed;
+    [HideInInspector] public float item_carrying_speed;
+    PlayerController p_controller;
     public int element_energy;
 
     public enum PlayerElementPassives
@@ -58,64 +58,73 @@ public class Player : MonoBehaviour
         {
             case PlayerElementOnUse.Fire:
                 {
-                    movement_speed = bottled_fire.GetFireBaseSpeed();
-                    item_carrying_speed = bottled_fire.GetFireItemCarryingSpeed();
+                    bottled_fire.SetFireBaseSpeed();
+                    bottled_fire.SetFireItemCarryingSpeed();
+
                     element_text.GetComponent<TextMesh>().text = "Fire";
                     break;
                 }
             case PlayerElementOnUse.Earth:
                 {
-                    movement_speed = bottled_earth.GetEarthBaseSpeed();
-                    item_carrying_speed = bottled_earth.GetEarthItemCarryingSpeed();
+                    bottled_earth.SetEarthBaseSpeed();
+                    bottled_earth.SetEarthItemCarryingSpeed();
+
                     element_text.GetComponent<TextMesh>().text = "Earth";
                     break;
                 }
             case PlayerElementOnUse.Water:
                 {
-                    movement_speed = bottled_water.GetWaterBaseSpeed();
-                    item_carrying_speed = bottled_water.GetWaterItemCarryingSpeed();
+                    bottled_water.SetWaterBaseSpeed();
+                    bottled_water.SetWaterItemCarryingSpeed();
+
                     element_text.GetComponent<TextMesh>().text = "Water";
                     break;
                 }
             case PlayerElementOnUse.Ice:
                 {
-                    movement_speed = bottled_ice.GetIceBaseSpeed();
-                    item_carrying_speed = bottled_ice.GetIceItemCarryingSpeed();
+                    bottled_ice.SetIceBaseSpeed();
+                    bottled_ice.SetIceItemCarryingSpeed();
+
                     element_text.GetComponent<TextMesh>().text = "Ice";
                     break;
                 }
             case PlayerElementOnUse.Plant:
                 {
-                    movement_speed = bottled_plant.GetPlantBaseSpeed();
-                    item_carrying_speed = bottled_plant.GetPlantItemCarryingSpeed();
+                    bottled_plant.SetPlantBaseSpeed();
+                    bottled_plant.SetPlantItemCarryingSpeed();
+
                     element_text.GetComponent<TextMesh>().text = "Plant";
                     break;
                 }
             case PlayerElementOnUse.Air:
                 {
-                    movement_speed = bottled_air.GetAirBaseSpeed();
-                    item_carrying_speed = bottled_air.GetAirItemCarryingSpeed();
+                    bottled_air.SetAirBaseSpeed();
+                    bottled_air.SetAirItemCarryingSpeed();
+
                     element_text.GetComponent<TextMesh>().text = "Air";
                     break;
                 }
             case PlayerElementOnUse.Electric:
                 {
-                    movement_speed = bottled_electric.GetElectricBaseSpeed();
-                    item_carrying_speed = bottled_electric.GetElectricItemCarryingSpeed();
+                    bottled_electric.SetElectricBaseSpeed();
+                    bottled_electric.SetElectricItemCarryingSpeed();
+
                     element_text.GetComponent<TextMesh>().text = "Electric";
                     break;
                 }
             case PlayerElementOnUse.Non_Element:
                 {
-                    //movement_speed = bottled_fire.GetFireBaseSpeed();
-                    //item_carrying_speed = bottled_fire.GetFireItemCarryingSpeed();
+                    //TODO: Set the Non-Element properties
+                    movement_speed = 7.5f;
+                    item_carrying_speed = 0;
+
+                    element_text.GetComponent<TextMesh>().text = "Non-Element";
                     break;
                 }
             default:
                 {
-                    on_use_element = PlayerElementOnUse.Non_Element;
-                    //movement_speed = bottled_fire.GetFireBaseSpeed();
-                    //item_carrying_speed = bottled_fire.GetFireItemCarryingSpeed();
+                    SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
+
                     break;
                 }
         }
@@ -189,13 +198,18 @@ public class Player : MonoBehaviour
 
         element_energy = 100;
 
-        SetPlayerStatsByElement(PlayerElementOnUse.Fire);
-        Debug.Log(movement_speed);
+        SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
+
+        if (element_text != null)
+        {
+            element_text.transform.LookAt(Camera.main.transform.position);
+            element_text.transform.Rotate(0, 180, 0);
+        }
     }
 
     void Update()
     {
-        if(element_text != null)
+        if (element_text != null)
         {
             element_text.transform.LookAt(Camera.main.transform.position);
             element_text.transform.Rotate(0, 180, 0);

@@ -59,6 +59,60 @@ public class Tile : MonoBehaviour
     public void ModifyTileType(TileType new_type)
     {
         type = new_type;
+
+        switch (type)
+        {
+            case TileType.Normal:
+                {
+                    GetComponent<Renderer>().material.color = normal_color;
+                    break;
+                }
+            case TileType.Base:
+                {
+                    GetComponent<Renderer>().material.color = Color.grey;
+                    break;
+                }
+            case TileType.Fire:
+                {
+                    GetComponent<Renderer>().material.color = Color.red;
+                    break;
+                }
+            case TileType.Earth:
+                {
+                    GetComponent<Renderer>().material.color = brown;
+                    break;
+                }
+            case TileType.Water:
+                {
+                    GetComponent<Renderer>().material.color = Color.blue;
+                    break;
+                }
+            case TileType.Ice:
+                {
+                    GetComponent<Renderer>().material.color = Color.cyan;
+                    break;
+                }
+            case TileType.Plant:
+                {
+                    GetComponent<Renderer>().material.color = Color.green;
+                    break;
+                }
+            case TileType.Air:
+                {
+                    GetComponent<Renderer>().material.color = Color.magenta;
+                    break;
+                }
+            case TileType.Electric:
+                {
+                    GetComponent<Renderer>().material.color = Color.yellow;
+                    break;
+                }
+            default:
+                {
+                    type = TileType.Normal;
+                    break;
+                }
+        }
     }
 
     //UNDER CONSTRUCTION
@@ -141,58 +195,5 @@ public class Tile : MonoBehaviour
     void Update()
     {
         //Debug.Log("Updating Tiles...");
-        switch (type)
-        {
-            case TileType.Normal:
-                {
-                    GetComponent<Renderer>().material.color = normal_color;
-                    break;
-                }
-            case TileType.Base:
-                {
-                    GetComponent<Renderer>().material.color = Color.grey;
-                    break;
-                }
-            case TileType.Fire:
-                {
-                    GetComponent<Renderer>().material.color = Color.red;
-                    break;
-                }
-            case TileType.Earth:
-                {
-                    GetComponent<Renderer>().material.color = brown; 
-                    break;
-                }
-            case TileType.Water:
-                {
-                    GetComponent<Renderer>().material.color = Color.blue;
-                    break;
-                }
-            case TileType.Ice:
-                {
-                    GetComponent<Renderer>().material.color = Color.cyan;
-                    break;
-                }
-            case TileType.Plant:
-                {
-                    GetComponent<Renderer>().material.color = Color.green;
-                    break;
-                }
-            case TileType.Air:
-                {
-                    GetComponent<Renderer>().material.color = Color.magenta;
-                    break;
-                }
-            case TileType.Electric:
-                {
-                    GetComponent<Renderer>().material.color = Color.yellow;
-                    break;
-                }
-            default:
-                {
-                    type = TileType.Normal;
-                    break;
-                }
-        }
     }
 }
