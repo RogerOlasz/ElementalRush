@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour
     UIManager ui_manager = null;
 
     public Vector2Int tile_coord;
-    private bool player_is_on;
+    //private bool player_is_on;
 
     private float duration = 0;
 
@@ -157,7 +157,7 @@ public class Tile : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            player_is_on = true;
+            //player_is_on = true;
             //Debug.Log("Player is on: " + transform);
             if(this.type == TileType.Base && ui_manager != null)
             {
@@ -174,7 +174,7 @@ public class Tile : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            player_is_on = false;
+            //player_is_on = false;
 
             //if (this.type != TileType.Base)
             //{
@@ -185,7 +185,7 @@ public class Tile : MonoBehaviour
 
     void Start()
     {
-        player_is_on = false;
+        //player_is_on = false;
         normal_color = new Vector4(0.4f, 0.7f, 0.4f, 1);
         brown = new Vector4(0.804f, 0.521f, 0.247f, 1);
 
