@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class FireStraightProjectile : MonoBehaviour
 {
-    public float projectile_speed = 16f;
+    public float projectile_speed = 60f;
     public float projectile_range = 8f;
-    public int energy_consumption = 7;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +16,9 @@ public class FireStraightProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (projectile_speed != 0)
+        {
+            transform.position += transform.right * (projectile_speed * Time.deltaTime);
+        }
     }
 }
