@@ -30,16 +30,11 @@ public class PlayersMatchBase : MonoBehaviour
         }
     }
 
+    //This is basically to show it updated with the map on the Unity Editor
     public void SetTriggerBase()
     {
-        if(map_manager == null)
-        {
-            map_manager = GetComponentInParent<MapManager>();
-        }
-        else if (base_trigger == null)
-        {
-            base_trigger = GetComponent<BoxCollider>();
-        }
+        map_manager = GetComponentInParent<MapManager>();
+        base_trigger = GetComponent<BoxCollider>();
         transform.position = new Vector3(map_manager.map_size.x / 2f, 0.75f, 0.5f);
         base_trigger.size = new Vector3(map_manager.map_size.x, 1.5f, 1);
     }
@@ -50,6 +45,9 @@ public class PlayersMatchBase : MonoBehaviour
         ui_manager = GameObject.Find("UIManager").GetComponent<UIManager>();
         base_trigger = GetComponent<BoxCollider>();
         map_manager = GetComponentInParent<MapManager>();
+
+        transform.position = new Vector3(map_manager.map_size.x / 2f, 0.75f, 0.5f);
+        base_trigger.size = new Vector3(map_manager.map_size.x, 1.5f, 1);
     }
 
     // Update is called once per frame

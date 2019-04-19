@@ -133,15 +133,6 @@ public class MapManager : MonoBehaviour
         right_boundary.parent = map_holder;
         right_boundary.name = "RightBoundary";
 
-        //if (map_size.x % 2 != 0 && map_size.y % 2 != 0)
-        //{
-        //    bottom_boundary_position.Set(map_size.x + 0.5f, 0.75f, -0.05f);
-        //    bottom_boundary.transform.position = left_boundary_position;
-
-        //    top_boundary_position.Set((map_size.x / 2), 0.75f, 0.05f + map_size.y);
-        //    top_boundary.transform.position = left_boundary_position;
-        //}
-
         //Players floor from the battleground
         Transform players_floor = Instantiate(players_floor_prefab) as Transform;
         players_floor.parent = map_holder;
@@ -149,6 +140,7 @@ public class MapManager : MonoBehaviour
         players_floor.localScale = new Vector3(map_size.x / 10f, 1, map_size.y / 10f);
         players_floor.transform.position = new Vector3(map_size.x / 2f, 0, map_size.y / 2f);
 
+        //Setting the player base trigger
         match_base = GetComponentInChildren<PlayersMatchBase>();
         match_base.SetTriggerBase();
     }
