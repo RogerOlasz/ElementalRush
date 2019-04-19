@@ -22,19 +22,17 @@ public class Player : MonoBehaviour
     [HideInInspector] public float item_carrying_speed;
     PlayerController p_controller;
 
-    //Player striaght attacks
+    //Player Straight attack
     public int element_energy; //it decreases when the player uses spells
     public int straight_attack_player_consumption; //this info will be readed from ElementPlayer.cs
     public int aoe_attack_player_consumption;
     public float recharging_duration_straight = 0.5f;
-    //private IEnumerator recharge_coroutine;
     private bool aim_straight = false;
     private bool charged_straight = true;
     private bool charging_straight = false;
 
-    //Player aoe attacks
+    //Player AoE attack
     public float recharging_duration_aoe = 0.5f;
-    //private IEnumerator recharge_coroutine;
     private bool aim_aoe = false;
     private bool charged_aoe = true;
     private bool charging_aoe = false;
@@ -306,11 +304,57 @@ public class Player : MonoBehaviour
 
         if (charged_aoe == true && aim_aoe == true && p_controller.last_r2 > p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0)
         {
-            //TODO: here will be a pretty huge switch used to jump between the different elements where
-            //    the differents cost and length... will be fixed
+            switch (on_use_element)
+            {
+                case PlayerElementOnUse.Fire:
+                    {
+                        bottled_fire.AoEAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Earth:
+                    {
+                        bottled_earth.AoEAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Water:
+                    {
+                        bottled_water.AoEAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Ice:
+                    {
+                        bottled_ice.AoEAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Plant:
+                    {
+                        bottled_plant.AoEAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Air:
+                    {
+                        bottled_air.AoEAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Electric:
+                    {
+                        bottled_electric.AoEAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Non_Element:
+                    {
+                        Debug.Log("Cannot attack, you have no element.");
+                        break;
+                    }
+                default:
+                    {
+                        SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
+                        break;
+                    }
+            }
 
-            //StraightShoot();
-            element_energy -= straight_attack_player_consumption;
+            element_energy -= aoe_attack_player_consumption;
+
             charged_aoe = false;
             aim_aoe = false;
         }
@@ -343,8 +387,6 @@ public class Player : MonoBehaviour
         bottled_electric = GetComponent<ElectricPlayer>();
 
         element_energy = 100;
-
-        //recharge_coroutine = Recharge(recharging_duration);
 
         SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
 
