@@ -22,15 +22,24 @@ public class Player : MonoBehaviour
     [HideInInspector] public float item_carrying_speed;
     PlayerController p_controller;
 
-    //Player attacks
+    //Player striaght attacks
     public int element_energy; //it decreases when the player uses spells
     public int straight_attack_player_consumption; //this info will be readed from ElementPlayer.cs
     public int aoe_attack_player_consumption;
-    public float recharging_duration = 0.5f;
-    private bool charging = false;
+    public float recharging_duration_straight = 0.5f;
     //private IEnumerator recharge_coroutine;
-    private bool aim = false;
-    private bool charged = true;
+    private bool aim_straight = false;
+    private bool charged_straight = true;
+    private bool charging_straight = false;
+
+    //Player aoe attacks
+    public float recharging_duration_aoe = 0.5f;
+    //private IEnumerator recharge_coroutine;
+    private bool aim_aoe = false;
+    private bool charged_aoe = true;
+    private bool charging_aoe = false;
+
+
 
     public enum PlayerElementPassives
     {
@@ -193,24 +202,32 @@ public class Player : MonoBehaviour
         Debug.Log(movement_speed);
     }
 
-    IEnumerator Recharge()
+    IEnumerator Recharge_aoe()
     {
-        charging = true;
-        yield return new WaitForSeconds(recharging_duration);
-        charged = true;
-        charging = false;
+        charging_aoe = true;
+        yield return new WaitForSeconds(recharging_duration_aoe);
+        charged_aoe = true;
+        charging_aoe = false;
+    }
+
+    IEnumerator Recharge_straight()
+    {
+        charging_straight = true;
+        yield return new WaitForSeconds(recharging_duration_straight);
+        charged_straight = true;
+        charging_straight = false;
     }
 
     public void StraightAiming()
     {
-        if (charged == true && element_energy >= straight_attack_player_consumption && p_controller.direction_r1_no_normal.magnitude > p_controller.sensibility)
+        if (charged_straight == true && element_energy >= straight_attack_player_consumption && p_controller.direction_r1_no_normal.magnitude > p_controller.sensibility)
         {
             //GenerateArea(); // l'àrea haurà de desepareixer quan la direcció baixa de 0.5
             p_controller.last_r1 = p_controller.direction_r1_no_normal.magnitude;
-            aim = true;
+            aim_straight = true;
         }
 
-        if (charged == true && aim == true && p_controller.last_r1 > p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0)
+        if (charged_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0)
         {
             switch (on_use_element)
             {
@@ -263,19 +280,52 @@ public class Player : MonoBehaviour
 
             element_energy -= straight_attack_player_consumption;
 
-            charged = false;
-            aim = false;
+            charged_straight = false;
+            aim_straight = false;
         }
-        else if (charged == true && aim == true && p_controller.last_r1 < p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0)
+        else if (charged_straight == true && aim_straight == true && p_controller.last_r1 < p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0)
         {
-            aim = false;
+            aim_straight = false;
         }
 
-        if (charged == false && element_energy >= straight_attack_player_consumption && charging == false) //the counter will stop 0.1 seconds after be charged
+        if (charged_straight == false && element_energy >= straight_attack_player_consumption && charging_straight == false) //the counter will stop 0.1 seconds after be charged
         {
-            StartCoroutine(Recharge());//co-rutina per truajar charged
+            StartCoroutine(Recharge_straight());//co-rutina per truajar charged
         }
     }
+
+
+    public void AoEAiming()
+    {
+        if (charged_aoe == true && element_energy >= straight_attack_player_consumption && p_controller.direction_r1_no_normal.magnitude > p_controller.sensibility)
+        {
+            //GenerateArea(); // l'àrea haurà de desepareixer quan la direcció baixa de 0.5
+            p_controller.last_r2 = p_controller.direction_r1_no_normal.magnitude;
+            aim_aoe = true;
+        }
+
+        if (charged_aoe == true && aim_aoe == true && p_controller.last_r2 > p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0)
+        {
+            //TODO: here will be a pretty huge switch used to jump between the different elements where
+            //    the differents cost and length... will be fixed
+
+            //StraightShoot();
+            element_energy -= straight_attack_player_consumption;
+            charged_aoe = false;
+            aim_aoe = false;
+        }
+        else if (charged_aoe == true && aim_aoe == true && p_controller.last_r2 < p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0)
+        {
+            aim_aoe = false;
+        }
+
+        if (charged_aoe == false && element_energy >= straight_attack_player_consumption && charging_aoe == false) //the counter will stop 0.1 seconds after be charged
+        {
+            StartCoroutine(Recharge_aoe());//co-rutina per truajar charged
+        }
+    }
+
+
 
     void Start()
     {

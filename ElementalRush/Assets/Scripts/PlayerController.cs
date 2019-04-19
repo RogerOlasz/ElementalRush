@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Joystick joystick_l;
+    private Joystick_L1 joystick_l;
     private Joystick_R1 joystick_r1;
+    private Joystick_R2 joystick_r2;
     private Player player;
 
     //Left joystick. Used to move the player
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private float last_rot;
     public float stop_duration = 0.4f;
     private Vector2 direction_l;
+    private Vector2 direction_l_no_normal;
     private Vector3 velo_eq;
 
     //Used to detect joystick
@@ -29,6 +31,9 @@ public class PlayerController : MonoBehaviour
     public float last_r1 = 1f;
     public Vector2 direction_r1;
     public Vector2 direction_r1_no_normal;
+    public float last_r2 = 0f;
+    public Vector2 direction_r2;
+    public Vector2 direction_r2_no_normal;
 
     Rigidbody rigid_body;
 
@@ -47,10 +52,7 @@ public class PlayerController : MonoBehaviour
 
     void RottingPlayer()
     {
-        direction_l.Set(joystick_l.Vertical, joystick_l.Horizontal);
-        direction_l.Normalize();
-
-        if (joystick_r1.Vertical == 0 || joystick_r1.Horizontal == 0 && velo_eq.magnitude > 0)
+        if (direction_r1.magnitude == 0 && direction_l_no_normal.magnitude > 0)
         {
             rot_y = Mathf.Asin(-direction_l.y) * Mathf.Rad2Deg;
 
@@ -101,9 +103,8 @@ public class PlayerController : MonoBehaviour
 
     void StaticRotation()
     {
-        if (joystick_r1.Vertical != 0 || joystick_r1.Horizontal != 0)
+        if (direction_r1_no_normal.magnitude != 0)
         {
-            direction_r1.Normalize();
             rot_y = Mathf.Asin(-direction_r1.y) * Mathf.Rad2Deg;
 
             if (joystick_r1.Vertical >= 0)
@@ -122,8 +123,10 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        joystick_l = FindObjectOfType<Joystick>();
+        joystick_l = FindObjectOfType<Joystick_L1>();
         joystick_r1 = FindObjectOfType<Joystick_R1>();
+        joystick_r2 = FindObjectOfType<Joystick_R2>();
+
         rigid_body = GetComponent<Rigidbody>();
         player = GetComponent<Player>();
 
@@ -131,16 +134,25 @@ public class PlayerController : MonoBehaviour
         direction_l = new Vector2(0, 0);
         direction_r1 = new Vector2(0, 0);
         direction_r1_no_normal = new Vector2(0, 0);
+        direction_r2 = new Vector2(0, 0);
+        direction_r2_no_normal = new Vector2(0, 0);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         direction_r1.Set(joystick_r1.Vertical, joystick_r1.Horizontal);
+        direction_r1.Normalize();
         direction_r1_no_normal.Set(joystick_r1.Vertical, joystick_r1.Horizontal);
+        direction_r2.Set(joystick_r2.Vertical, joystick_r2.Horizontal);
+        direction_r2.Normalize();
+        direction_r2_no_normal.Set(joystick_r2.Vertical, joystick_r2.Horizontal);
+        direction_l.Set(joystick_l.Vertical, joystick_l.Horizontal);
+        direction_l.Normalize();
+        direction_l_no_normal.Set(joystick_l.Vertical, joystick_l.Horizontal);
         player.StraightAiming();
 
-        if (Mathf.Abs(joystick_l.Vertical) >= sensibility || Mathf.Abs(joystick_l.Horizontal) >= sensibility)
+        if (direction_l.magnitude >= sensibility)
         {
             RottingPlayer();
             MovingPlayer();

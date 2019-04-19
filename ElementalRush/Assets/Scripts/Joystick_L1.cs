@@ -10,7 +10,7 @@ public enum AxisOptions
     Vertical
 }
 
-public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class Joystick_L1 : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     public float Horizontal
     {
