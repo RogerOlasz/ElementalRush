@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FireStraightProjectile : MonoBehaviour
 {
-    public float projectile_speed = 60f;
+    public float projectile_speed = 16f;
     public float projectile_range = 8f;
 
     // Start is called before the first frame update
