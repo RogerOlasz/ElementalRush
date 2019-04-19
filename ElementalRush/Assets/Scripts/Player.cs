@@ -21,7 +21,16 @@ public class Player : MonoBehaviour
     [HideInInspector] public float movement_speed;
     [HideInInspector] public float item_carrying_speed;
     PlayerController p_controller;
-    public int element_energy;
+
+    //Player attacks
+    public int element_energy; //it decreases when the player uses spells
+    public int straight_attack_player_consumption; //this info will be readed from ElementPlayer.cs
+    public int aoe_attack_player_consumption;
+    public float recharging_duration = 0.5f;
+    private bool charging = false;
+    //private IEnumerator recharge_coroutine;
+    private bool aim = false;
+    private bool charged = true;
 
     public enum PlayerElementPassives
     {
@@ -60,6 +69,9 @@ public class Player : MonoBehaviour
                 {
                     bottled_fire.SetFireBaseSpeed();
                     bottled_fire.SetFireItemCarryingSpeed();
+
+                    bottled_fire.SetFireStraightConsumption();
+                    bottled_fire.SetFireAoEConsumption();
 
                     element_text.GetComponent<TextMesh>().text = "Fire";
                     break;
@@ -179,7 +191,45 @@ public class Player : MonoBehaviour
         SetPlayerStatsByElement(PlayerElementOnUse.Electric);
         ui_manager.CloseElementChangingMenu();
         Debug.Log(movement_speed);
-    }    
+    }
+
+    IEnumerator Recharge()
+    {
+        charging = true;
+        yield return new WaitForSeconds(recharging_duration);
+        charged = true;
+        charging = false;
+    }
+
+    public void StraightAiming()
+    {
+        if (charged == true && element_energy >= straight_attack_player_consumption && p_controller.direction_r1_no_normal.magnitude > p_controller.sensibility)
+        {
+            //GenerateArea(); // l'àrea haurà de desepareixer quan la direcció baixa de 0.5
+            p_controller.last_r1 = p_controller.direction_r1_no_normal.magnitude;
+            aim = true;
+        }
+
+        if (charged == true && aim == true && p_controller.last_r1 > p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0)
+        {
+            //TODO: here will be a pretty huge switch used to jump between the different elements where
+            //    the differents cost and length... will be fixed
+
+            //StraightShoot();
+            element_energy -= straight_attack_player_consumption;
+            charged = false;
+            aim = false;
+        }
+        else if (charged == true && aim == true && p_controller.last_r1 < p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0)
+        {
+            aim = false;
+        }
+
+        if (charged == false && element_energy >= straight_attack_player_consumption && charging == false) //the counter will stop 0.1 seconds after be charged
+        {
+            StartCoroutine(Recharge());//co-rutina per truajar charged
+        }
+    }
 
     void Start()
     {
@@ -198,6 +248,8 @@ public class Player : MonoBehaviour
 
         element_energy = 100;
 
+        //recharge_coroutine = Recharge(recharging_duration);
+
         SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
 
         if (element_text != null)
@@ -209,6 +261,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+
+        StraightAiming();
         if (element_text != null)
         {
             element_text.transform.LookAt(Camera.main.transform.position);

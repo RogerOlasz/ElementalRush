@@ -4,21 +4,31 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    protected Joystick joystick;
-    protected Joystick_R1 right_1_joystick;
+    private Joystick joystick_l;
+    private Joystick_R1 joystick_r1;
+    private Player player;
 
-    float speed_factor;
+    //Left joystick. Used to move the player
+    private float speed_factor;
     private float velo_x = 0f;
     private float velo_z = 0f;
     private float rot_y = 0f;
-    private Vector2 direction;
-
+    private float curr_time = 0;
+    private float fix_vel_x;
+    private float fix_vel_z;
+    private float last_rot;
     public float stop_duration = 0.4f;
+    private Vector2 direction_l;
     private Vector3 velo_eq;
-    float curr_time = 0;
-    float fix_vel_x;
-    float fix_vel_z;
-    float last_rot;
+
+    //Used to detect joystick
+    public float sensibility = 0.3f;
+
+    //Attack variables
+    public float cancel_attack = 0.5f;
+    public float last_r1 = 1f;
+    public Vector2 direction_r1;
+    public Vector2 direction_r1_no_normal;
 
     Rigidbody rigid_body;
 
@@ -29,35 +39,54 @@ public class PlayerController : MonoBehaviour
 
     void MovingPlayer()
     {
-        velo_x = joystick.Horizontal * speed_factor;
-        velo_z = joystick.Vertical * speed_factor;
+        velo_x = joystick_l.Horizontal * speed_factor;
+        velo_z = joystick_l.Vertical * speed_factor;
         velo_eq.Set(velo_x, 0, velo_z);
         rigid_body.velocity = velo_eq;
     }
 
     void RottingPlayer()
     {
-        direction.Set(joystick.Vertical, joystick.Horizontal);
-        direction.Normalize();
-        rot_y = Mathf.Asin(-direction.y) * Mathf.Rad2Deg;
+        direction_l.Set(joystick_l.Vertical, joystick_l.Horizontal);
+        direction_l.Normalize();
 
-        if (joystick.Vertical >= 0)
+        if (joystick_r1.Vertical == 0 || joystick_r1.Horizontal == 0 && velo_eq.magnitude > 0)
         {
-            transform.rotation = Quaternion.Euler(0, 270 - rot_y, 0);
-            last_rot = rot_y;
+            rot_y = Mathf.Asin(-direction_l.y) * Mathf.Rad2Deg;
+
+            if (joystick_l.Vertical >= 0)
+            {
+                transform.rotation = Quaternion.Euler(0, 270 - rot_y, 0);
+                last_rot = rot_y;
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 90 + rot_y, 0);
+                last_rot = 270 - rot_y;
+            }
         }
         else
         {
-            transform.rotation = Quaternion.Euler(0, 90 + rot_y, 0);
-            last_rot = 270 - rot_y;
+            rot_y = Mathf.Asin(-direction_l.y) * Mathf.Rad2Deg;
+
+            if (joystick_r1.Vertical >= 0)
+            {
+                transform.rotation = Quaternion.Euler(0, 270 - rot_y, 0);
+                last_rot = rot_y;
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 90 + rot_y, 0);
+                last_rot = 270 - rot_y;
+            }
         }
+
 
     }
 
     void StoppingPlayer()
     {
         curr_time += Time.fixedDeltaTime;
-
         if (curr_time <= stop_duration)
         {
             //Current time during desaceleration
@@ -67,35 +96,66 @@ public class PlayerController : MonoBehaviour
             velo_eq.Set(velo_x, 0, velo_z);
             rigid_body.velocity = velo_eq;
         }
+
     }
 
+    void StaticRotation()
+    {
+        if (joystick_r1.Vertical != 0 || joystick_r1.Horizontal != 0)
+        {
+            direction_r1.Normalize();
+            rot_y = Mathf.Asin(-direction_r1.y) * Mathf.Rad2Deg;
+
+            if (joystick_r1.Vertical >= 0)
+            {
+                transform.rotation = Quaternion.Euler(0, 270 - rot_y, 0);
+                last_rot = rot_y;
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 90 + rot_y, 0);
+                last_rot = 270 - rot_y;
+            }
+        }
+
+    }
     // Start is called before the first frame update
     void Start()
     {
-        joystick = FindObjectOfType<Joystick>();
+        joystick_l = FindObjectOfType<Joystick>();
+        joystick_r1 = FindObjectOfType<Joystick_R1>();
         rigid_body = GetComponent<Rigidbody>();
+        player = GetComponent<Player>();
+
         velo_eq = new Vector3(0, 0, 0);
-        direction = new Vector2(0, 0);
+        direction_l = new Vector2(0, 0);
+        direction_r1 = new Vector2(0, 0);
+        direction_r1_no_normal = new Vector2(0, 0);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Mathf.Abs(joystick.Vertical) >= 0.3f || Mathf.Abs(joystick.Horizontal) >= 0.3f)
-        {
-            MovingPlayer();
-            RottingPlayer();
+        direction_r1.Set(joystick_r1.Vertical, joystick_r1.Horizontal);
+        direction_r1_no_normal.Set(joystick_r1.Vertical, joystick_r1.Horizontal);
+        player.StraightAiming();
 
+        if (Mathf.Abs(joystick_l.Vertical) >= sensibility || Mathf.Abs(joystick_l.Horizontal) >= sensibility)
+        {
+            RottingPlayer();
+            MovingPlayer();
             curr_time = 0;
             fix_vel_x = velo_x;
             fix_vel_z = velo_z;
-        }
+        }// enought joystick to move
         else
         {
+            StaticRotation();
             StoppingPlayer();
         }
         //Player Velocity
         //Debug.Log(rigidbody.velocity);
-    }    
+        //Debug.Log(joystick_R1.Vertical);
+    }
 }
 
