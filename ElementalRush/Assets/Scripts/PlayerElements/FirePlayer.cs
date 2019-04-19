@@ -38,10 +38,10 @@ public class FirePlayer : MonoBehaviour
 
     public void StraightAttack()
     {
-        GameObject vfx;
+        GameObject attack_vfx;
 
-        vfx = Instantiate(effect_to_spawn, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        vfx.transform.localRotation = transform.rotation;
+        attack_vfx = Instantiate(effect_to_spawn, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+        attack_vfx.transform.localRotation = transform.rotation;
     }
 
     public void AoEAttack()

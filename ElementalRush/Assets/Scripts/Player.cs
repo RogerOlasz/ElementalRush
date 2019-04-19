@@ -30,14 +30,13 @@ public class Player : MonoBehaviour
     private bool aim_straight = false;
     private bool charged_straight = true;
     private bool charging_straight = false;
+    private int extra_attack = 0;
 
     //Player AoE attack
     public float recharging_duration_aoe = 0.5f;
     private bool aim_aoe = false;
     private bool charged_aoe = true;
     private bool charging_aoe = false;
-
-
 
     public enum PlayerElementPassives
     {
@@ -224,8 +223,14 @@ public class Player : MonoBehaviour
             p_controller.last_r1 = p_controller.direction_r1_no_normal.magnitude;
             aim_straight = true;
         }
+        else if (charged_straight == true && extra_attack > 0 && p_controller.direction_r1_no_normal.magnitude > p_controller.sensibility)
+        {
+            //GenerateArea(); // l'àrea haurà de desepareixer quan la direcció baixa de 0.5
+            p_controller.last_r1 = p_controller.direction_r1_no_normal.magnitude;
+            aim_straight = true;
+        }
 
-        if (charged_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0)
+        if (charged_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0 && element_energy > straight_attack_player_consumption)
         {
             switch (on_use_element)
             {
@@ -278,17 +283,80 @@ public class Player : MonoBehaviour
 
             element_energy -= straight_attack_player_consumption;
 
+            if (element_energy < straight_attack_player_consumption)
+            {
+                extra_attack += 1;
+            }
+
             charged_straight = false;
             aim_straight = false;
+        }
+        else if(charged_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0 && extra_attack > 0)
+        {
+            switch (on_use_element)
+            {
+                case PlayerElementOnUse.Fire:
+                    {
+                        bottled_fire.StraightAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Earth:
+                    {
+                        bottled_earth.StraightAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Water:
+                    {
+                        bottled_water.StraightAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Ice:
+                    {
+                        bottled_ice.StraightAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Plant:
+                    {
+                        bottled_plant.StraightAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Air:
+                    {
+                        bottled_air.StraightAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Electric:
+                    {
+                        bottled_electric.StraightAttack();
+                        break;
+                    }
+                case PlayerElementOnUse.Non_Element:
+                    {
+                        Debug.Log("Cannot attack, you have no element.");
+                        break;
+                    }
+                default:
+                    {
+                        SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
+                        break;
+                    }
+            }
+
+            element_energy = 0;
+            extra_attack -= 1;
         }
         else if (charged_straight == true && aim_straight == true && p_controller.last_r1 < p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0)
         {
             aim_straight = false;
         }
 
-        if (charged_straight == false && element_energy >= straight_attack_player_consumption && charging_straight == false) //the counter will stop 0.1 seconds after be charged
+        if (charged_straight == false && element_energy > straight_attack_player_consumption && charging_straight == false) //the counter will stop 0.1 seconds after be charged
         {
             StartCoroutine(Recharge_straight());//co-rutina per truajar charged
+        }
+        else if (charged_straight == false && extra_attack > 0 && charging_straight == false)
+        {
+            StartCoroutine(Recharge_straight());
         }
     }
 
