@@ -9610,3 +9610,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile_speed: 9
   projectile_range: 14
+  element_path: {fileID: 8336288561698027759, guid: 795e75adf4594f94fb33d7e5b86176e2,
+    type: 3}

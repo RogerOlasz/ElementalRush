@@ -1274,11 +1274,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stop_duration: 0.4
   sensibility: 0.3
-  cancel_attack: 0.5
+  cancel_attack_r1: 0.5
   last_r1: 1
   direction_r1: {x: 0, y: 0}
   direction_r1_no_normal: {x: 0, y: 0}
+  cancel_attack_r2: 0.2
   last_r2: 0
+  last_direction_r2_no_normal: {x: 0, y: 0}
   direction_r2: {x: 0, y: 0}
   direction_r2_no_normal: {x: 0, y: 0}
 --- !u!54 &821201567
