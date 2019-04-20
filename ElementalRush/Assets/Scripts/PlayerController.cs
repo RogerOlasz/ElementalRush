@@ -29,12 +29,14 @@ public class PlayerController : MonoBehaviour
     public float sensibility = 0.3f;
 
     //Attack variables
-    public float cancel_attack = 0.5f;
+    public float cancel_attack_r1 = 0.5f;
     public float last_r1 = 1f;
     public Vector2 direction_r1;
     public Vector2 direction_r1_no_normal;
 
+    public float cancel_attack_r2 = 0.2f;
     public float last_r2 = 0f;
+    public Vector2 last_direction_r2_no_normal;
     public Vector2 direction_r2;
     public Vector2 direction_r2_no_normal;
 
@@ -100,6 +102,7 @@ public class PlayerController : MonoBehaviour
 
         if (_joystick_r2 != null)
         {
+            last_direction_r2_no_normal = direction_r2_no_normal;
             if (_joystick_r2.Horizontal >= 0)
             {
                 transform.rotation = Quaternion.Euler(0, rot_y, 0);

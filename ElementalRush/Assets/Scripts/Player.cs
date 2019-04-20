@@ -245,7 +245,7 @@ public class Player : MonoBehaviour
             aim_straight = true;
         }
 
-        if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0 && current_element_energy > straight_attack_player_consumption)
+        if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0 && current_element_energy > straight_attack_player_consumption)
         {
             switch (on_use_element)
             {
@@ -306,7 +306,7 @@ public class Player : MonoBehaviour
             shoot_rate_straight = false;
             aim_straight = false;
         }
-        else if(shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0 && extra_attack > 0)
+        else if(shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0 && extra_attack > 0)
         {
             switch (on_use_element)
             {
@@ -360,7 +360,7 @@ public class Player : MonoBehaviour
             current_element_energy = 0;
             extra_attack -= 1;
         }
-        else if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 < p_controller.cancel_attack && p_controller.direction_r1_no_normal.magnitude == 0)
+        else if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 < p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0)
         {
             aim_straight = false;
         }
@@ -384,7 +384,7 @@ public class Player : MonoBehaviour
             aim_aoe = true;
         }
 
-        if (shoot_rate_aoe == true && aim_aoe == true && p_controller.last_r2 > p_controller.cancel_attack && p_controller.direction_r2_no_normal.magnitude == 0)
+        if (shoot_rate_aoe == true && aim_aoe == true && p_controller.last_r2 > p_controller.cancel_attack_r2 && p_controller.direction_r2_no_normal.magnitude == 0)
         {
             switch (on_use_element)
             {
@@ -445,7 +445,7 @@ public class Player : MonoBehaviour
             shoot_rate_aoe = false;
             aim_aoe = false;
         }
-        else if (shoot_rate_aoe == true && aim_aoe == true && p_controller.last_r2 < p_controller.cancel_attack && p_controller.direction_r2_no_normal.magnitude == 0)
+        else if (shoot_rate_aoe == true && aim_aoe == true && p_controller.last_r2 < p_controller.cancel_attack_r2 && p_controller.direction_r2_no_normal.magnitude == 0)
         {
             aim_aoe = false;
         }
