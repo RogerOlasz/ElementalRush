@@ -13,8 +13,8 @@ public class FirePlayer : MonoBehaviour
     public int aoe_attack_consumption = 10;
 
     //Straight attack projectile attributes
-    private GameObject effect_to_spawn;
-    public List<GameObject> projectile_vfx_list = new List<GameObject>();
+    public GameObject straight_projectile_effect;
+    public GameObject aoe_projectile_effect;
 
     public void SetFireBaseSpeed()
     {
@@ -38,23 +38,25 @@ public class FirePlayer : MonoBehaviour
 
     public void StraightAttack()
     {
-        GameObject attack_vfx;
+        GameObject straight_attack_vfx;
 
-        attack_vfx = Instantiate(effect_to_spawn, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        attack_vfx.transform.localRotation = transform.rotation;
+        straight_attack_vfx = Instantiate(straight_projectile_effect, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+        straight_attack_vfx.transform.localRotation = transform.rotation;
     }
 
     public void AoEAttack()
     {
+        GameObject aoe_attack_vfx;
 
+        aoe_attack_vfx = Instantiate(aoe_projectile_effect, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+        aoe_attack_vfx.transform.localRotation = transform.rotation;
     }
 
     // Start is called before the first frame update
     void Awake()
     {        
         player_stats = GetComponent<Player>();
-        effect_to_spawn = projectile_vfx_list[0];
-    }
+    }   
 
     // Update is called once per frame
     void Update()

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.4416767, g: 0.49057436, b: 0.5705636, a: 1}
+  m_IndirectSpecularColor: {r: 0.4416768, g: 0.49057502, b: 0.5705649, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1448,8 +1448,10 @@ MonoBehaviour:
   player_item_carrying_speed: 4
   straight_attack_consumption: 7
   aoe_attack_consumption: 10
-  projectile_vfx_list:
-  - {fileID: 3194254371144410663, guid: 80638619f8126b84dabe95674c87f1ee, type: 3}
+  straight_projectile_effect: {fileID: 3194254371144410663, guid: 80638619f8126b84dabe95674c87f1ee,
+    type: 3}
+  aoe_projectile_effect: {fileID: 4125613774013065983, guid: f669508120c72b444b7bd82cc0d55f8b,
+    type: 3}
 --- !u!114 &821201577
 MonoBehaviour:
   m_ObjectHideFlags: 0
