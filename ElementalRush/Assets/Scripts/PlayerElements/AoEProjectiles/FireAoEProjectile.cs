@@ -10,46 +10,42 @@ public class FireAoEProjectile : MonoBehaviour
 
     private Vector3 original_pos;
 
-    //private float max_height = 4f;
-    //private float gravity = -18f;
-    //private Vector3 target_pos;
-    //private Rigidbody my_rigidbody;
+    private float max_height = 4f;
+    private float gravity = -10f;
+    private Vector3 target_pos;
+    private Vector3 relative_target;
+    private Rigidbody my_rigidbody;
+    private PlayerController p_controller;
+    
 
-    //Vector3 CalculateLaunchVelocity()
-    //{
-    //    Vector3 displacement = new Vector3(target_pos.x - transform.position.x, 0, target_pos.z - transform.position.z);
+    Vector3 CalculateLaunchVelocity()
+    {
+        Vector3 displacement = new Vector3(target_pos.x - transform.position.x, 0, target_pos.z - transform.position.z);
+        Vector3 velocity_y = Vector3.up * Mathf.Sqrt(-2 * gravity * max_height * Mathf.Pow(p_controller.last_direction_r2_no_normal.magnitude, 2));
+        Vector3 velocity_x_z = displacement / (Mathf.Sqrt(-2 * max_height / gravity) + Mathf.Sqrt(2 * (-max_height) / gravity));
 
-    //    Vector3 velocity_y = Vector3.up * Mathf.Sqrt(-2 * gravity * max_height);
-    //    Vector3 velocity_x_z = displacement / (Mathf.Sqrt(-2 * max_height / gravity) + Mathf.Sqrt(2 * (-max_height) / gravity));
+        return (velocity_x_z + velocity_y);
+    }
 
-    //    return (velocity_x_z + velocity_y);
-    //}
-
-    // Start is called before the first frame update
+    //Start is called before the first frame update
     void Start()
     {
+        p_controller = FindObjectOfType<PlayerController>();
+        relative_target = new Vector3(p_controller.last_direction_r2_no_normal.x * projectile_range, 0, p_controller.last_direction_r2_no_normal.y * projectile_range);
         original_pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        //target_pos = new Vector3(transform.position.x + projectile_range, transform.position.y, transform.position.z + projectile_range);
+        target_pos = original_pos + relative_target;
 
-        //Physics.gravity = Vector3.up * gravity;
-        //my_rigidbody = transform.GetComponent<Rigidbody>();
-        //my_rigidbody.useGravity = true;
+        Physics.gravity = Vector3.up * gravity;
+        my_rigidbody = transform.GetComponent<Rigidbody>();
+        my_rigidbody.useGravity = true;
 
-        //my_rigidbody.velocity = CalculateLaunchVelocity();
+        my_rigidbody.velocity = CalculateLaunchVelocity();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(original_pos, transform.position) <= projectile_range)
-        {
-            transform.position += transform.right * (projectile_speed * Time.deltaTime);
-            //my_rigidbody.velocity = CalculateLaunchVelocity();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+
     }
 
     private void OnTriggerEnter(Collider collider)
