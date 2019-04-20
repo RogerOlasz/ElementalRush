@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tilemap
   - MapBoundary
+  - MapGround
   layers:
   - Default
   - TransparentFX

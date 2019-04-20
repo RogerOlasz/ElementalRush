@@ -1311,11 +1311,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement_speed: 0
   item_carrying_speed: 0
-  element_energy: 100
+  max_element_energy: 100
+  current_element_energy: 0
   straight_attack_player_consumption: 0
+  shooting_rate_duration_straight: 0.5
   aoe_attack_player_consumption: 0
-  recharging_duration_straight: 0.5
-  recharging_duration_aoe: 0.5
+  shooting_rate_duration_aoe: 0.5
 --- !u!136 &821201569
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2172,7 +2173,7 @@ GameObject:
   - component: {fileID: 1686518435}
   m_Layer: 0
   m_Name: PlayersFloor
-  m_TagString: Untagged
+  m_TagString: MapGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
