@@ -90,6 +90,9 @@ public class Player : MonoBehaviour
                     bottled_earth.SetEarthBaseSpeed();
                     bottled_earth.SetEarthItemCarryingSpeed();
 
+                    bottled_earth.SetEarthStraightConsumption();
+                    bottled_earth.SetEarthAoEConsumption();
+
                     element_text.GetComponent<TextMesh>().text = "Earth";
                     break;
                 }

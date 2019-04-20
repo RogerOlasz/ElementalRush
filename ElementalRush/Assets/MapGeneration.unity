@@ -1419,6 +1419,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player_movement_speed: 3.5
   player_item_carrying_speed: 3.5
+  straight_attack_consumption: 20
+  aoe_attack_consumption: 15
+  straight_projectile_effect: {fileID: 7053842413786300184, guid: 75b4039629f487f4c971159c99304a79,
+    type: 3}
+  aoe_projectile_effect: {fileID: 0}
 --- !u!114 &821201575
 MonoBehaviour:
   m_ObjectHideFlags: 0
