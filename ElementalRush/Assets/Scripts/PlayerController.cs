@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rigid_body;
 
     //Left joystick. Used to move the player
+    public float stop_duration = 0.4f;
     private float speed_factor;
     private float velo_x = 0f;
     private float velo_z = 0f;
@@ -20,7 +21,6 @@ public class PlayerController : MonoBehaviour
     private float fix_vel_x;
     private float fix_vel_z;
     private float last_rot;
-    public float stop_duration = 0.4f;
     private Vector2 direction_l;
     private Vector2 direction_l_no_normal;
     private Vector3 velo_eq;
@@ -31,14 +31,15 @@ public class PlayerController : MonoBehaviour
     //Attack variables
     public float cancel_attack_r1 = 0.5f;
     public float last_r1 = 1f;
-    public Vector2 direction_r1;
-    public Vector2 direction_r1_no_normal;
+    [HideInInspector] public Vector2 direction_r1;
+    [HideInInspector] public Vector2 direction_r1_no_normal;
+    [HideInInspector] public Vector2 last_direction_r1_no_normal;
 
     public float cancel_attack_r2 = 0.2f;
     public float last_r2 = 0f;
-    public Vector2 last_direction_r2_no_normal;
-    public Vector2 direction_r2;
-    public Vector2 direction_r2_no_normal;
+    [HideInInspector] public Vector2 direction_r2;
+    [HideInInspector] public Vector2 direction_r2_no_normal;
+    [HideInInspector] public Vector2 last_direction_r2_no_normal;
 
     public void SetSpeedFactor(float new_speed)
     {
@@ -88,6 +89,7 @@ public class PlayerController : MonoBehaviour
 
         if (_joystick_r1 != null)
         {
+            last_direction_r1_no_normal = direction_r1_no_normal; //Still not in use
             if (_joystick_r1.Horizontal >= 0)
             {
                 transform.rotation = Quaternion.Euler(0, rot_y, 0);

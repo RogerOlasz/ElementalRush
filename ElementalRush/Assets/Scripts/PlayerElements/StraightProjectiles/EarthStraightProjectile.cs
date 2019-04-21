@@ -12,6 +12,8 @@ public class EarthStraightProjectile : MonoBehaviour
 
     private Vector3 original_pos;
     private Vector3 first_path_go_pos;
+    private Vector3 projectile_direction;
+    private Vector3 projectile_direction_normalized;
 
     // Start is called before the first frame update
     void Start()
@@ -34,16 +36,24 @@ public class EarthStraightProjectile : MonoBehaviour
         if (Vector3.Distance(original_pos, transform.position) >= tile_counter)
         {
             //TODO: After the first cube the rest of them have to appear adjacent and with a perfect allineagment
+            projectile_direction = transform.position - original_pos;
+            projectile_direction_normalized = projectile_direction.normalized;
+
             if (tile_counter == 1)
             {
                 GameObject tmp_path;
                 tmp_path = Instantiate(element_path, new Vector3(transform.position.x, 0.6f, transform.position.z), transform.rotation);
                 first_path_go_pos = transform.position;
+                
             }
             else if (tile_counter > 1)
             {
                 GameObject tmp_path;
-                tmp_path = Instantiate(element_path, new Vector3(first_path_go_pos.x + (tile_counter / 2), 0.6f, first_path_go_pos.z + (tile_counter / 2)), transform.rotation);
+                Vector3 tmp_vector;
+                tmp_vector = new Vector3((first_path_go_pos.x + ((tile_counter - 1) * projectile_direction_normalized.x)), 0.6f, (first_path_go_pos.z + ((tile_counter - 1) * projectile_direction_normalized.z)));
+                Debug.Log("New path bloc position: " + tmp_vector);
+                //tmp_path = Instantiate(element_path, new Vector3((first_path_go_pos.x + tile_counter) * projectile_direction_normalized.x, 0.6f, (first_path_go_pos.z + tile_counter) * projectile_direction_normalized.z), transform.rotation);
+                tmp_path = Instantiate(element_path, tmp_vector, transform.rotation);
             }
 
             tile_counter++;
