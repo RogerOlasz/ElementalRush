@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerController))]
 public class Player : MonoBehaviour
 {
-    GameObject element_text = null;
     UIManager ui_manager = null;
+    PlayerController p_controller = null;
+
+    [Header("UI")]
+    GameObject player_canvas = null;
+    public Image element_energy_bar;
+    GameObject element_text = null;
 
     //Bottled elements are those that are able to refill on the base
     FirePlayer bottled_fire = null;
@@ -17,16 +23,17 @@ public class Player : MonoBehaviour
     AirPlayer bottled_air = null;
     ElectricPlayer bottled_electric = null;
 
-    //Player attributes
-    [HideInInspector] public float movement_speed;
-    [HideInInspector] public float item_carrying_speed;
-    PlayerController p_controller;
-
+    [Header("Player attributes")]
     //------ Player attack atributes ------
     public int max_element_energy = 100;
     public int current_element_energy;
     private int extra_attack = 0;
 
+    //Player attributes
+    [HideInInspector] public float movement_speed;
+    [HideInInspector] public float item_carrying_speed;
+
+    [Header("Straight Attack attributes")]
     //Player Straight attack
     public int straight_attack_player_consumption; //This info will be readed from (Element)Player.cs
     public float shooting_rate_duration_straight = 0.5f;
@@ -34,6 +41,7 @@ public class Player : MonoBehaviour
     private bool shoot_rate_straight = true;
     private bool shooting_rate_straight = false;
 
+    [Header("AoE Attack attributes")]
     //Player AoE attack
     public int aoe_attack_player_consumption;
     public float shooting_rate_duration_aoe = 0.5f;
@@ -159,7 +167,7 @@ public class Player : MonoBehaviour
     public void SetPlayerFire()
     {
         SetPlayerStatsByElement(PlayerElementOnUse.Fire);
-        current_element_energy = max_element_energy;
+        RefillElementEnergy(max_element_energy);
 
         ui_manager.CloseElementChangingMenu();
         Debug.Log(movement_speed);
@@ -168,7 +176,7 @@ public class Player : MonoBehaviour
     public void SetPlayerEarth()
     {
         SetPlayerStatsByElement(PlayerElementOnUse.Earth);
-        current_element_energy = max_element_energy;
+        RefillElementEnergy(max_element_energy);
 
         ui_manager.CloseElementChangingMenu();
         Debug.Log(movement_speed);
@@ -177,6 +185,8 @@ public class Player : MonoBehaviour
     public void SetPlayerWater()
     {
         SetPlayerStatsByElement(PlayerElementOnUse.Water);
+        RefillElementEnergy(max_element_energy);
+
         ui_manager.CloseElementChangingMenu();
         Debug.Log(movement_speed);
     }
@@ -184,7 +194,7 @@ public class Player : MonoBehaviour
     public void SetPlayerIce()
     {
         SetPlayerStatsByElement(PlayerElementOnUse.Ice);
-        current_element_energy = max_element_energy;
+        RefillElementEnergy(max_element_energy);
 
         ui_manager.CloseElementChangingMenu();
         Debug.Log(movement_speed);
@@ -193,7 +203,7 @@ public class Player : MonoBehaviour
     public void SetPlayerPlant()
     {
         SetPlayerStatsByElement(PlayerElementOnUse.Plant);
-        current_element_energy = max_element_energy;
+        RefillElementEnergy(max_element_energy);
 
         ui_manager.CloseElementChangingMenu();
         Debug.Log(movement_speed);
@@ -202,7 +212,7 @@ public class Player : MonoBehaviour
     public void SetPlayerAir()
     {
         SetPlayerStatsByElement(PlayerElementOnUse.Air);
-        current_element_energy = max_element_energy;
+        RefillElementEnergy(max_element_energy);
 
         ui_manager.CloseElementChangingMenu();
         Debug.Log(movement_speed);
@@ -211,10 +221,22 @@ public class Player : MonoBehaviour
     public void SetPlayerElectric()
     {
         SetPlayerStatsByElement(PlayerElementOnUse.Electric);
-        current_element_energy = max_element_energy;
+        RefillElementEnergy(max_element_energy);
 
         ui_manager.CloseElementChangingMenu();
         Debug.Log(movement_speed);
+    }
+
+    public void ConsumeElementEnergy(int energy_consumed)
+    {
+        current_element_energy -= energy_consumed;
+        element_energy_bar.fillAmount = ((float)current_element_energy / (float)max_element_energy);
+    }
+
+    public void RefillElementEnergy(int energy_quantity)
+    {
+        current_element_energy = energy_quantity;
+        element_energy_bar.fillAmount = ((float)current_element_energy / (float)max_element_energy);
     }
 
     IEnumerator Recharge_straight()
@@ -299,11 +321,11 @@ public class Player : MonoBehaviour
                     }
             }
 
-            current_element_energy -= straight_attack_player_consumption;
+            ConsumeElementEnergy(straight_attack_player_consumption);
 
             if (current_element_energy < straight_attack_player_consumption)
             {
-                extra_attack += 1;
+                extra_attack += 1; //TODO Still need fixes, does not work properly
             }
 
             shoot_rate_straight = false;
@@ -380,7 +402,7 @@ public class Player : MonoBehaviour
 
     public void AoEAiming()
     {
-        if (shoot_rate_aoe == true && current_element_energy >= straight_attack_player_consumption && p_controller.direction_r2_no_normal.magnitude > p_controller.sensibility)
+        if (shoot_rate_aoe == true && current_element_energy >= aoe_attack_player_consumption && p_controller.direction_r2_no_normal.magnitude > p_controller.sensibility)
         {
             //GenerateArea(); // l'àrea haurà de desepareixer quan la direcció baixa de 0.5
             p_controller.last_r2 = p_controller.direction_r2_no_normal.magnitude;
@@ -438,7 +460,7 @@ public class Player : MonoBehaviour
                     }
             }
 
-            current_element_energy -= aoe_attack_player_consumption;
+            ConsumeElementEnergy(aoe_attack_player_consumption);
 
             if (current_element_energy < straight_attack_player_consumption)
             {
@@ -453,7 +475,7 @@ public class Player : MonoBehaviour
             aim_aoe = false;
         }
 
-        if (shoot_rate_aoe == false && current_element_energy >= straight_attack_player_consumption && shooting_rate_aoe == false) //the counter will stop 0.1 seconds after be charged
+        if (shoot_rate_aoe == false && current_element_energy >= aoe_attack_player_consumption && shooting_rate_aoe == false) //the counter will stop 0.1 seconds after be charged
         {
             StartCoroutine(Recharge_aoe());//co-rutina per truajar charged
         }
@@ -463,6 +485,7 @@ public class Player : MonoBehaviour
     {
         element_text = GameObject.Find("PlayerElementText").gameObject;
         ui_manager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        player_canvas = transform.Find("PlayerCanvas").gameObject;
 
         p_controller = GetComponent<PlayerController>();
 
@@ -491,6 +514,9 @@ public class Player : MonoBehaviour
         {
             element_text.transform.LookAt(Camera.main.transform.position);
             element_text.transform.Rotate(0, 180, 0);
+
+            player_canvas.transform.LookAt(Camera.main.transform.position);
+            player_canvas.transform.Rotate(0, 180, 0);
         }
     }
 }

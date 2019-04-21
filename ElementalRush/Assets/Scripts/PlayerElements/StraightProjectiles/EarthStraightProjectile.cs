@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EarthStraightProjectile : MonoBehaviour
 {
+    //TODO: All these attributes have to be setteable from (Element)Player
     public float projectile_speed = 9f;
     public float projectile_range = 14f;
 
@@ -49,11 +50,9 @@ public class EarthStraightProjectile : MonoBehaviour
             else if (tile_counter > 1)
             {
                 GameObject tmp_path;
-                Vector3 tmp_vector;
-                tmp_vector = new Vector3((first_path_go_pos.x + ((tile_counter - 1) * projectile_direction_normalized.x)), 0.6f, (first_path_go_pos.z + ((tile_counter - 1) * projectile_direction_normalized.z)));
-                Debug.Log("New path bloc position: " + tmp_vector);
-                //tmp_path = Instantiate(element_path, new Vector3((first_path_go_pos.x + tile_counter) * projectile_direction_normalized.x, 0.6f, (first_path_go_pos.z + tile_counter) * projectile_direction_normalized.z), transform.rotation);
-                tmp_path = Instantiate(element_path, tmp_vector, transform.rotation);
+                Vector3 tmp_path_position;
+                tmp_path_position = new Vector3((first_path_go_pos.x + ((tile_counter - 1) * projectile_direction_normalized.x)), 0.6f, (first_path_go_pos.z + ((tile_counter - 1) * projectile_direction_normalized.z)));        
+                tmp_path = Instantiate(element_path, tmp_path_position, transform.rotation);
             }
 
             tile_counter++;
