@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EarthStraightProjectile : MonoBehaviour
+public class WaterStraightProjectile : MonoBehaviour
 {
+    //TODO: All these attributes have to be setteable from (Element)Player
     [Header("Projectile Attributes")]
-    public float projectile_speed;
-    public float projectile_range;
+    public float projectile_speed = 16f;
+    public float projectile_range = 8f;
 
     [Header("Element Path GameObject")]
     public GameObject element_path;
@@ -16,12 +17,6 @@ public class EarthStraightProjectile : MonoBehaviour
     private Vector3 first_path_go_pos;
     private Vector3 projectile_direction;
     private Vector3 projectile_direction_normalized;
-
-    public void SetProjectileProperties(float _projectile_speed, float _projectile_range)
-    {
-        projectile_speed = _projectile_speed;
-        projectile_range = _projectile_range;
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -51,13 +46,13 @@ public class EarthStraightProjectile : MonoBehaviour
                 GameObject tmp_path;
                 tmp_path = Instantiate(element_path, new Vector3(transform.position.x, 0.6f, transform.position.z), transform.rotation);
                 first_path_go_pos = transform.position;
-                
+
             }
             else if (tile_counter > 1)
             {
                 GameObject tmp_path;
                 Vector3 tmp_path_position;
-                tmp_path_position = new Vector3((first_path_go_pos.x + ((tile_counter - 1) * projectile_direction_normalized.x)), 0.6f, (first_path_go_pos.z + ((tile_counter - 1) * projectile_direction_normalized.z)));        
+                tmp_path_position = new Vector3((first_path_go_pos.x + ((tile_counter - 1) * projectile_direction_normalized.x)), 0.6f, (first_path_go_pos.z + ((tile_counter - 1) * projectile_direction_normalized.z)));
                 tmp_path = Instantiate(element_path, tmp_path_position, transform.rotation);
             }
 

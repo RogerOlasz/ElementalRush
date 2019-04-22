@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class FirePlayer : MonoBehaviour
 {
-    Player player_stats;
+    private Player player_stats;
 
+    [Header("Element attributes")]
     public float player_movement_speed = 5;
     public float player_item_carrying_speed = 4;
 
+    [Header("Straight attack properties")]
     public int straight_attack_consumption = 7;
-    public int aoe_attack_consumption = 10;
-
-    //Straight attack projectile attributes
+    public float straight_projectile_speed = 16f;
+    public float straight_projectile_range = 8f;
     public GameObject straight_projectile_effect;
+    private FireStraightProjectile straight_projectile;
+
+    [Header("AoE attack properties")]
+    public int aoe_attack_consumption = 10;
+    public float aoe_projectile_speed;
+    public float aoe_projectile_range;
     public GameObject aoe_projectile_effect;
+    private FireAoEProjectile aoe_projectile;
 
     public void SetFireBaseSpeed()
     {
@@ -56,6 +64,9 @@ public class FirePlayer : MonoBehaviour
     void Awake()
     {        
         player_stats = GetComponent<Player>();
+
+        straight_projectile = straight_projectile_effect.GetComponent<FireStraightProjectile>();
+        straight_projectile.SetProjectileProperties(straight_projectile_speed, straight_projectile_range);
     }   
 
     // Update is called once per frame

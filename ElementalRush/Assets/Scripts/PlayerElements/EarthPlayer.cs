@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class EarthPlayer : MonoBehaviour
 {
-    Player player_stats;
+    private Player player_stats;
 
+    [Header("Element attributes")]
     public float player_movement_speed = 3.5f;
     public float player_item_carrying_speed = 3.5f;
 
+    [Header("Straight attack properties")]
     public int straight_attack_consumption = 20;
-    public int aoe_attack_consumption = 15;
-
-    //Straight attack projectile attributes
+    public float straight_projectile_speed = 9f;
+    public float straight_projectile_range = 14f;
     public GameObject straight_projectile_effect;
+    private EarthStraightProjectile straight_projectile;
+
+    [Header("AoE attack properties")]
+    public int aoe_attack_consumption = 15;
+    public float aoe_projectile_speed;
+    public float aoe_projectile_range;
     public GameObject aoe_projectile_effect;
+    //private EarthAoEProjectile aoe_projectile;
 
     public void SetEarthBaseSpeed()
     {
@@ -53,6 +61,9 @@ public class EarthPlayer : MonoBehaviour
     void Awake()
     {
         player_stats = GetComponent<Player>();
+
+        straight_projectile = straight_projectile_effect.GetComponent<EarthStraightProjectile>();
+        straight_projectile.SetProjectileProperties(straight_projectile_speed, straight_projectile_range);
     }
 
     // Update is called once per frame
