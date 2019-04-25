@@ -1524,9 +1524,13 @@ MonoBehaviour:
   player_movement_speed: 3.5
   player_item_carrying_speed: 3.5
   straight_attack_consumption: 20
-  aoe_attack_consumption: 15
+  straight_projectile_speed: 9
+  straight_projectile_range: 14
   straight_projectile_effect: {fileID: 7053842413786300184, guid: 75b4039629f487f4c971159c99304a79,
     type: 3}
+  aoe_attack_consumption: 15
+  aoe_projectile_speed: 0
+  aoe_projectile_range: 0
   aoe_projectile_effect: {fileID: 0}
 --- !u!114 &821201575
 MonoBehaviour:
@@ -1557,9 +1561,13 @@ MonoBehaviour:
   player_movement_speed: 5
   player_item_carrying_speed: 4
   straight_attack_consumption: 7
-  aoe_attack_consumption: 10
+  straight_projectile_speed: 16
+  straight_projectile_range: 8
   straight_projectile_effect: {fileID: 3194254371144410663, guid: 80638619f8126b84dabe95674c87f1ee,
     type: 3}
+  aoe_attack_consumption: 10
+  aoe_projectile_speed: 0
+  aoe_projectile_range: 0
   aoe_projectile_effect: {fileID: 4125613774013065983, guid: f669508120c72b444b7bd82cc0d55f8b,
     type: 3}
 --- !u!114 &821201577
@@ -1604,6 +1612,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player_movement_speed: 4.5
   player_item_carrying_speed: 3.5
+  straight_attack_consumption: 10
+  straight_projectile_speed: 16
+  straight_projectile_range: 8
+  straight_projectile_effect: {fileID: 5826883579262050879, guid: f2acb0299a5b98a43add2eacbc3cbe50,
+    type: 3}
+  aoe_attack_consumption: 10
+  aoe_projectile_speed: 0
+  aoe_projectile_range: 0
+  aoe_projectile_effect: {fileID: 0}
 --- !u!1 &884684765
 GameObject:
   m_ObjectHideFlags: 0

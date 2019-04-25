@@ -29,13 +29,13 @@ public class PlayerController : MonoBehaviour
     public float sensibility = 0.3f;
 
     //Attack variables
-    public float cancel_attack_r1 = 0.5f;
+    public float cancel_attack_r1 = 0.5f; 
     public float last_r1 = 1f;
     [HideInInspector] public Vector2 direction_r1;
     [HideInInspector] public Vector2 direction_r1_no_normal;
     [HideInInspector] public Vector2 last_direction_r1_no_normal;
 
-    public float cancel_attack_r2 = 0.2f;
+    public float cancel_attack_r2 = 0.1f; //TODO: Actually this is apparently useless, used in Player.cs
     public float last_r2 = 0f;
     [HideInInspector] public Vector2 direction_r2;
     [HideInInspector] public Vector2 direction_r2_no_normal;

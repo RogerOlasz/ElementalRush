@@ -10,7 +10,7 @@ public class FireStraightProjectile : MonoBehaviour
 
     [Header("Element Path GameObject")]
     public GameObject element_path;
-    //private int tile_counter = 1;
+    private int tile_counter = 1;
 
     private Vector3 original_pos;
     private Vector3 first_path_go_pos;
@@ -41,28 +41,28 @@ public class FireStraightProjectile : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //if (Vector3.Distance(original_pos, transform.position) >= tile_counter)
-        //{
-        //    projectile_direction = transform.position - original_pos;
-        //    projectile_direction_normalized = projectile_direction.normalized;
+        if (Vector3.Distance(original_pos, transform.position) >= tile_counter)
+        {
+            projectile_direction = transform.position - original_pos;
+            projectile_direction_normalized = projectile_direction.normalized;
 
-        //    if (tile_counter == 1)
-        //    {
-        //        GameObject tmp_path;
-        //        tmp_path = Instantiate(element_path, new Vector3(transform.position.x, 0.6f, transform.position.z), transform.rotation);
-        //        first_path_go_pos = transform.position;
+            if (tile_counter == 1)
+            {
+                GameObject tmp_path;
+                tmp_path = Instantiate(element_path, new Vector3(transform.position.x, 0.6f, transform.position.z), transform.rotation);
+                first_path_go_pos = transform.position;
 
-        //    }
-        //    else if (tile_counter > 1)
-        //    {
-        //        GameObject tmp_path;
-        //        Vector3 tmp_path_position;
-        //        tmp_path_position = new Vector3((first_path_go_pos.x + ((tile_counter - 1) * projectile_direction_normalized.x)), 0.6f, (first_path_go_pos.z + ((tile_counter - 1) * projectile_direction_normalized.z)));
-        //        tmp_path = Instantiate(element_path, tmp_path_position, transform.rotation);
-        //    }
+            }
+            else if (tile_counter > 1)
+            {
+                GameObject tmp_path;
+                Vector3 tmp_path_position;
+                tmp_path_position = new Vector3((first_path_go_pos.x + ((tile_counter - 1) * projectile_direction_normalized.x)), 0.6f, (first_path_go_pos.z + ((tile_counter - 1) * projectile_direction_normalized.z)));
+                tmp_path = Instantiate(element_path, tmp_path_position, transform.rotation);
+            }
 
-        //    tile_counter++;
-        //}
+            tile_counter++;
+        }
     }
 
     private void OnTriggerEnter(Collider collider)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EarthPathBehaveour : MonoBehaviour
+public class EarthPathBehaviour : MonoBehaviour
 {
     public float effect_duration = 10f;
 

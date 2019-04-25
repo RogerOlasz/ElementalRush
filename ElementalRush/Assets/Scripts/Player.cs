@@ -109,6 +109,9 @@ public class Player : MonoBehaviour
                     bottled_water.SetWaterBaseSpeed();
                     bottled_water.SetWaterItemCarryingSpeed();
 
+                    bottled_water.SetWaterStraightConsumption();
+                    bottled_water.SetWaterAoEConsumption();
+
                     element_text.GetComponent<TextMesh>().text = "Water";
                     break;
                 }

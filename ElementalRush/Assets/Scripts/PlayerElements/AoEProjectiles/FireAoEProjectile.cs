@@ -8,9 +8,13 @@ public class FireAoEProjectile : MonoBehaviour
     public float projectile_range = 6f;
     public float area_radius = 3.5f;
 
+    public int projectile_average = 8;
+    public float velocity_rate;
+    public float visual_height = 4f; //it is ruled by a factor of 1/2
+
     private Vector3 original_pos;
 
-    private float max_height = 4f;
+    private float max_height;
     private float gravity = -10f;
     private Vector3 target_pos;
     private Vector3 relative_target;
@@ -21,6 +25,7 @@ public class FireAoEProjectile : MonoBehaviour
     Vector3 CalculateLaunchVelocity()
     {
         Vector3 displacement = new Vector3(target_pos.x - transform.position.x, 0, target_pos.z - transform.position.z);
+        max_height = Mathf.Pow(relative_target.magnitude, 2) * Mathf.Abs(gravity) / 8 / Mathf.Pow(projectile_speed, 2) * visual_height;
         Vector3 velocity_y = Vector3.up * Mathf.Sqrt(-2 * gravity * max_height * Mathf.Pow(p_controller.last_direction_r2_no_normal.magnitude, 2));
         Vector3 velocity_x_z = displacement / (Mathf.Sqrt(-2 * max_height / gravity) + Mathf.Sqrt(2 * (-max_height) / gravity));
 
@@ -34,6 +39,7 @@ public class FireAoEProjectile : MonoBehaviour
         relative_target = new Vector3(p_controller.last_direction_r2_no_normal.x * projectile_range, 0, p_controller.last_direction_r2_no_normal.y * projectile_range);
         original_pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         target_pos = original_pos + relative_target;
+        velocity_rate = projectile_speed / projectile_average;
 
         Physics.gravity = Vector3.up * gravity;
         my_rigidbody = transform.GetComponent<Rigidbody>();
