@@ -1509,6 +1509,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player_movement_speed: 5.5
   player_item_carrying_speed: 4.5
+  straight_attack_consumption: 6
+  straight_projectile_speed: 40
+  straight_projectile_range: 5
+  straight_projectile_effect: {fileID: 1007943005267294941, guid: dd46130f0abbfd840abb1c9518bbab10,
+    type: 3}
+  aoe_attack_consumption: 10
+  aoe_projectile_speed: 0
+  aoe_projectile_range: 0
+  aoe_projectile_effect: {fileID: 0}
 --- !u!114 &821201574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1546,6 +1555,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player_movement_speed: 6.5
   player_item_carrying_speed: 5
+  straight_attack_consumption: 2
+  straight_projectile_speed: 60
+  straight_projectile_range: 5
+  straight_projectile_effect: {fileID: 7948496293634320947, guid: cfffefd043443ea4f9a25afe8a986dba,
+    type: 3}
+  aoe_attack_consumption: 10
+  aoe_projectile_speed: 0
+  aoe_projectile_range: 0
+  aoe_projectile_effect: {fileID: 0}
 --- !u!114 &821201576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1584,6 +1602,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player_movement_speed: 5
   player_item_carrying_speed: 4
+  straight_attack_consumption: 10
+  straight_projectile_speed: 35
+  straight_projectile_range: 10
+  straight_projectile_effect: {fileID: 3054006027529577289, guid: e175812524fe84646a705859f6415e51,
+    type: 3}
+  aoe_attack_consumption: 10
+  aoe_projectile_speed: 0
+  aoe_projectile_range: 0
+  aoe_projectile_effect: {fileID: 0}
 --- !u!114 &821201578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1598,6 +1625,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player_movement_speed: 5
   player_item_carrying_speed: 4
+  straight_attack_consumption: 7
+  straight_projectile_speed: 8
+  straight_projectile_range: 5
+  straight_projectile_effect: {fileID: 463218058454593155, guid: c705626136ba38a48804ab46045b952b,
+    type: 3}
+  aoe_attack_consumption: 10
+  aoe_projectile_speed: 0
+  aoe_projectile_range: 0
+  aoe_projectile_effect: {fileID: 0}
 --- !u!114 &821201579
 MonoBehaviour:
   m_ObjectHideFlags: 0

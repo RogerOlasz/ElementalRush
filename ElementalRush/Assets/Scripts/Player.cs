@@ -120,6 +120,9 @@ public class Player : MonoBehaviour
                     bottled_ice.SetIceBaseSpeed();
                     bottled_ice.SetIceItemCarryingSpeed();
 
+                    bottled_ice.SetIceStraightConsumption();
+                    bottled_ice.SetIceAoEConsumption();
+
                     element_text.GetComponent<TextMesh>().text = "Ice";
                     break;
                 }
@@ -127,6 +130,9 @@ public class Player : MonoBehaviour
                 {
                     bottled_plant.SetPlantBaseSpeed();
                     bottled_plant.SetPlantItemCarryingSpeed();
+
+                    bottled_plant.SetPlantStraightConsumption();
+                    bottled_plant.SetPlantAoEConsumption();
 
                     element_text.GetComponent<TextMesh>().text = "Plant";
                     break;
@@ -136,6 +142,9 @@ public class Player : MonoBehaviour
                     bottled_air.SetAirBaseSpeed();
                     bottled_air.SetAirItemCarryingSpeed();
 
+                    bottled_air.SetAirStraightConsumption();
+                    bottled_air.SetAirAoEConsumption();
+
                     element_text.GetComponent<TextMesh>().text = "Air";
                     break;
                 }
@@ -143,6 +152,9 @@ public class Player : MonoBehaviour
                 {
                     bottled_electric.SetElectricBaseSpeed();
                     bottled_electric.SetElectricItemCarryingSpeed();
+
+                    bottled_electric.SetElectricStraightConsumption();
+                    bottled_electric.SetElectricAoEConsumption();
 
                     element_text.GetComponent<TextMesh>().text = "Electric";
                     break;
