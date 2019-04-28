@@ -14,7 +14,7 @@ public class PlayersMatchBase : MonoBehaviour
         {
             if (ui_manager != null)
             {
-                ui_manager.OpenElementChangingMenu(); //DEPRACATED TODO Multiple tile collision are not able to give a good experience over element changer menu
+                ui_manager.OpenElementChangingMenu(); 
             }
         }
     }

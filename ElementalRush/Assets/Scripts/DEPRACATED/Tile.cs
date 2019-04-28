@@ -152,7 +152,6 @@ public class Tile : MonoBehaviour
     //    }
     //}
 
-    //TODO Player can only be on one tile
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Player")
@@ -161,7 +160,7 @@ public class Tile : MonoBehaviour
             //Debug.Log("Player is on: " + transform);
             if(this.type == TileType.Base && ui_manager != null)
             {
-                ui_manager.OpenElementChangingMenu(); //TODO Multiple tile collision are not able to give a good experience over element changer menu
+                ui_manager.OpenElementChangingMenu();
             }
             else if (ui_manager != null)
             {

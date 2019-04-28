@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(PlayerController))]
 public class Player : MonoBehaviour
 {
     UIManager ui_manager = null;
@@ -397,7 +396,7 @@ public class Player : MonoBehaviour
                     }
             }
 
-            current_element_energy = 0;
+            ConsumeElementEnergy(current_element_energy);
             extra_attack -= 1;
         }
         else if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 < p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0)
