@@ -312,11 +312,11 @@ MonoBehaviour:
   element_energy_bar: {fileID: 5140044406210186015}
   max_element_energy: 100
   current_element_energy: 0
-  movement_speed: 0
-  item_carrying_speed: 0
-  straight_attack_player_consumption: 0
+  movement_speed: 5
+  item_carrying_speed: 4
+  straight_attack_player_consumption: 7
   shooting_rate_duration_straight: 0.5
-  aoe_attack_player_consumption: 0
+  aoe_attack_player_consumption: 10
   shooting_rate_duration_aoe: 0.5
 --- !u!114 &5140044408255148819
 MonoBehaviour:
@@ -525,6 +525,7 @@ MonoBehaviour:
   - {fileID: 394528645150009808}
   - {fileID: 5140044408255148845}
   - {fileID: 5140044408255148819}
+  - {fileID: 5140044408255148837}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

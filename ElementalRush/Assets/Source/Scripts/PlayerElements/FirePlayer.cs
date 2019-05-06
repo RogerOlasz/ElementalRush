@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class FirePlayer : MonoBehaviour
+public class FirePlayer : MonoBehaviourPun, IPunObservable
 {
     private Player player_stats;
 
@@ -46,32 +47,56 @@ public class FirePlayer : MonoBehaviour
 
     public void StraightAttack()
     {
-        GameObject straight_attack_vfx;
+        if (photonView.IsMine)
+        {
+            GameObject straight_attack_vfx;
 
-        straight_attack_vfx = Instantiate(straight_projectile_effect, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        straight_attack_vfx.transform.localRotation = transform.rotation;
+            straight_attack_vfx = Instantiate(straight_projectile_effect, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+            straight_attack_vfx.transform.localRotation = transform.rotation;
+        }
     }
 
     public void AoEAttack()
     {
-        GameObject aoe_attack_vfx;
+        if (photonView.IsMine)
+        {
+            GameObject aoe_attack_vfx;
 
-        aoe_attack_vfx = Instantiate(aoe_projectile_effect, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        aoe_attack_vfx.transform.localRotation = transform.rotation;
+            aoe_attack_vfx = Instantiate(aoe_projectile_effect, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+            aoe_attack_vfx.transform.localRotation = transform.rotation;
+        }
     }
 
     // Start is called before the first frame update
     void Awake()
-    {        
-        player_stats = GetComponent<Player>();
+    {
+        if (photonView.IsMine)
+        {
+            player_stats = GetComponent<Player>();
 
-        straight_projectile = straight_projectile_effect.GetComponent<FireStraightProjectile>();
-        straight_projectile.SetProjectileProperties(straight_projectile_speed, straight_projectile_range);
+            straight_projectile = straight_projectile_effect.GetComponent<FireStraightProjectile>();
+            straight_projectile.SetProjectileProperties(straight_projectile_speed, straight_projectile_range); 
+        }
     }   
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            //stream.SendNext(health);
+            //stream.SendNext(username);
+        }
+        else if (stream.IsReading)
+        {
+            //health = (float)stream.ReceiveNext();
+            //username = (string)stream.ReceiveNext();
+            //user_text.text = username;
+        }
     }
 }

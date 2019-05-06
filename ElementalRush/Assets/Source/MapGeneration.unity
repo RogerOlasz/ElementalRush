@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 166297989}
   - component: {fileID: 166297991}
   m_Layer: 5
-  m_Name: ElectricImage
+  m_Name: ElectricButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -318,7 +318,7 @@ RectTransform:
   m_GameObject: {fileID: 166297987}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.207061, y: 1.5169265, z: 0.69301}
+  m_LocalScale: {x: 1.2, y: 1.55, z: 0.7}
   m_Children: []
   m_Father: {fileID: 1415267089}
   m_RootOrder: 6
@@ -404,19 +404,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 166297989}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5140044408255148845, guid: c834cf07506725e4abae999b5c1623ac,
-          type: 3}
-        m_MethodName: SetPlayerElectric
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &170076733
@@ -778,7 +766,7 @@ GameObject:
   - component: {fileID: 490150322}
   - component: {fileID: 490150324}
   m_Layer: 5
-  m_Name: EarthImage
+  m_Name: EarthButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -793,7 +781,7 @@ RectTransform:
   m_GameObject: {fileID: 490150320}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.207061, y: 1.5169265, z: 0.69301}
+  m_LocalScale: {x: 1.2, y: 1.55, z: 0.7}
   m_Children: []
   m_Father: {fileID: 1415267089}
   m_RootOrder: 1
@@ -879,19 +867,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 490150322}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5140044408255148845, guid: c834cf07506725e4abae999b5c1623ac,
-          type: 3}
-        m_MethodName: SetPlayerEarth
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &534669902
@@ -994,7 +970,7 @@ GameObject:
   - component: {fileID: 570782565}
   - component: {fileID: 570782567}
   m_Layer: 5
-  m_Name: IceImage
+  m_Name: IceButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1009,7 +985,7 @@ RectTransform:
   m_GameObject: {fileID: 570782563}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.207061, y: 1.5169265, z: 0.69301}
+  m_LocalScale: {x: 1.2, y: 1.55, z: 0.7}
   m_Children: []
   m_Father: {fileID: 1415267089}
   m_RootOrder: 3
@@ -1095,19 +1071,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 570782565}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5140044408255148845, guid: c834cf07506725e4abae999b5c1623ac,
-          type: 3}
-        m_MethodName: SetPlayerIce
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &656059337
@@ -1408,7 +1372,7 @@ GameObject:
   - component: {fileID: 1262874192}
   - component: {fileID: 1262874194}
   m_Layer: 5
-  m_Name: AirImage
+  m_Name: AirButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1423,7 +1387,7 @@ RectTransform:
   m_GameObject: {fileID: 1262874190}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.207061, y: 1.5169265, z: 0.69301}
+  m_LocalScale: {x: 1.2, y: 1.55, z: 0.7}
   m_Children: []
   m_Father: {fileID: 1415267089}
   m_RootOrder: 5
@@ -1509,19 +1473,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1262874192}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5140044408255148845, guid: c834cf07506725e4abae999b5c1623ac,
-          type: 3}
-        m_MethodName: SetPlayerAir
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1361363656
@@ -1585,7 +1537,7 @@ GameObject:
   - component: {fileID: 1401733636}
   - component: {fileID: 1401733638}
   m_Layer: 5
-  m_Name: PlantImage
+  m_Name: PlantButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1600,7 +1552,7 @@ RectTransform:
   m_GameObject: {fileID: 1401733634}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.207061, y: 1.5169265, z: 0.69301}
+  m_LocalScale: {x: 1.2, y: 1.55, z: 0.7}
   m_Children: []
   m_Father: {fileID: 1415267089}
   m_RootOrder: 4
@@ -1686,19 +1638,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1401733636}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5140044408255148845, guid: c834cf07506725e4abae999b5c1623ac,
-          type: 3}
-        m_MethodName: SetPlayerPlant
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1415267088
@@ -1712,6 +1652,7 @@ GameObject:
   - component: {fileID: 1415267089}
   - component: {fileID: 1415267091}
   - component: {fileID: 1415267090}
+  - component: {fileID: 1415267092}
   m_Layer: 5
   m_Name: ElementChangePanel
   m_TagString: Untagged
@@ -1728,7 +1669,7 @@ RectTransform:
   m_GameObject: {fileID: 1415267088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.6910092, y: 1.3455836, z: 2.9453418}
+  m_LocalScale: {x: 1.7, y: 1.35, z: 2.95}
   m_Children:
   - {fileID: 1657175396}
   - {fileID: 490150321}
@@ -1782,55 +1723,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415267088}
   m_CullTransparentMesh: 0
+--- !u!114 &1415267092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415267088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821b371b4e8b1364b9ce94b245a35135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fire_button: {fileID: 0}
+  earth_button: {fileID: 0}
+  water_button: {fileID: 0}
+  ice_button: {fileID: 0}
+  plant_button: {fileID: 0}
+  air_button: {fileID: 0}
+  electric_button: {fileID: 0}
 --- !u!224 &1514673412 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3377140018233187915, guid: bce4bd7731608e24f878e19d1f7fae12,
     type: 3}
   m_PrefabInstance: {fileID: 134254243}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1537455574
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1537455576}
-  - component: {fileID: 1537455575}
-  m_Layer: 0
-  m_Name: UIElementChanger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1537455575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1537455574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821b371b4e8b1364b9ce94b245a35135, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1537455576
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1537455574}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1644233364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1935,7 +1852,7 @@ GameObject:
   - component: {fileID: 1657175397}
   - component: {fileID: 1657175399}
   m_Layer: 5
-  m_Name: FireImage
+  m_Name: FireButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1950,7 +1867,7 @@ RectTransform:
   m_GameObject: {fileID: 1657175395}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.207061, y: 1.5169265, z: 0.69301}
+  m_LocalScale: {x: 1.2, y: 1.55, z: 0.7}
   m_Children: []
   m_Father: {fileID: 1415267089}
   m_RootOrder: 0
@@ -2036,19 +1953,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1657175397}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5140044408255148845, guid: c834cf07506725e4abae999b5c1623ac,
-          type: 3}
-        m_MethodName: SetPlayerFire
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1663668682
@@ -2155,7 +2060,7 @@ GameObject:
   - component: {fileID: 1687498079}
   - component: {fileID: 1687498081}
   m_Layer: 5
-  m_Name: WaterImage
+  m_Name: WaterButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2170,7 +2075,7 @@ RectTransform:
   m_GameObject: {fileID: 1687498077}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.207061, y: 1.5169265, z: 0.69301}
+  m_LocalScale: {x: 1.2, y: 1.55, z: 0.7}
   m_Children: []
   m_Father: {fileID: 1415267089}
   m_RootOrder: 2
@@ -2256,19 +2161,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1687498079}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5140044408255148845, guid: c834cf07506725e4abae999b5c1623ac,
-          type: 3}
-        m_MethodName: SetPlayerWater
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1732683604

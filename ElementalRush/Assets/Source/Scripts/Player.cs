@@ -576,7 +576,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {            
-            ui_manager = GameObject.Find("UIElementChanger").GetComponent<UIElementChanger>();
+            ui_manager = GameObject.Find("Canvas").transform.Find("ElementChangePanel").GetComponent<UIElementChanger>();
             player_canvas = transform.Find("PlayerCanvas").gameObject;
             element_text = player_canvas.transform.Find("PlayerElementText").gameObject;
 
@@ -592,7 +592,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
             SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
 
-            current_element_energy = max_element_energy;
+            RefillElementEnergy(max_element_energy);
 
             player_canvas.transform.Rotate(45, 0, 0);
             canvas_rotation = player_canvas.transform.rotation;
@@ -609,7 +609,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         }
         else
         {
-
+            player_canvas.transform.rotation = canvas_rotation;
         }
     }
 
@@ -628,6 +628,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
+            stream.SendNext(canvas_rotation);
             //stream.SendNext(health);
             //stream.SendNext(username);
         }
@@ -636,6 +637,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             //health = (float)stream.ReceiveNext();
             //username = (string)stream.ReceiveNext();
             //user_text.text = username;
+            canvas_rotation = (Quaternion)stream.ReceiveNext();       
         }
     }
 }

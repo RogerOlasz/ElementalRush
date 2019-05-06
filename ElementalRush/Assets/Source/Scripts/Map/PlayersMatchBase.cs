@@ -43,7 +43,7 @@ public class PlayersMatchBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ui_manager = GameObject.Find("UIElementChanger").GetComponent<UIElementChanger>();
+        ui_manager = GameObject.Find("Canvas").transform.Find("ElementChangePanel").GetComponent<UIElementChanger>();
         base_trigger = GetComponent<BoxCollider>();
         map_manager = GetComponentInParent<MapManager>();
 
