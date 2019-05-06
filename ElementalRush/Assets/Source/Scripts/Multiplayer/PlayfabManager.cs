@@ -10,6 +10,7 @@ public class PlayfabManager : MonoBehaviour
 
     public string username;
     public string password;
+    public string email;
     public bool have_account = false;
 
     LoginWithPlayFabRequest login_request;
@@ -20,7 +21,6 @@ public class PlayfabManager : MonoBehaviour
         if(have_account == false)
         {
             Register();
-            Login();
         }
         else if(have_account == true)
         {
@@ -56,6 +56,7 @@ public class PlayfabManager : MonoBehaviour
     public void Register()
     {
         RegisterPlayFabUserRequest request = new RegisterPlayFabUserRequest();
+        request.Email = email;
         request.Username = username;
         request.Password = password;
 

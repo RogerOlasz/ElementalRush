@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIElementChanger : MonoBehaviour
 {
     GameObject element_change_panel; 
 
@@ -17,12 +17,18 @@ public class UIManager : MonoBehaviour
         
     public void OpenElementChangingMenu()
     {
-        element_change_panel.SetActive(true);
+        if (element_change_panel != null)
+        {
+            element_change_panel.SetActive(true);
+        }
     }
 
     public void CloseElementChangingMenu()
     {
-        element_change_panel.SetActive(false);
+        if (element_change_panel != null)
+        {
+            element_change_panel.SetActive(false);
+        }
     }
 
     // Start is called before the first frame update

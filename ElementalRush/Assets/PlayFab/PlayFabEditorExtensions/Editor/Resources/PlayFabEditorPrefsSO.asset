@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: PlayFabEditorPrefsSO
   m_EditorClassIdentifier: 
   DevAccountEmail: rogerolasz96@gmail.com
-  DevAccountToken: urbxndhuostzk79wsugxi5jfr9o9a59puzoqtdhmhnqp3uxgofinyi1xdih7zwtqsx7ua8hwo9786noq1a54hqi6ons7hhhmg59zdz1wgekm4boo5yxf3q76f3n6ux3tfpa8j3txq8gc4zp4a7j8fwz5iefe3fx3ciephq5fw7qj3yqkbma1bunyyczjmofqt3ihry65
-  SelectedStudio: iOlasz
-  SdkPath: Assets/PlayFabSdk
+  DevAccountToken: 6nqfotcm4b34w9poz9zta19w5jif4qhgj3iit5m365pwhmtzmrykbwuukfcmdwthmiopuy8jujp6y994hysdozyr68e4g387dx3qkgmnciqfyjctzh4dmmo77a1xjaxw648offprtnig5pazr9p9hk6af4ht1e1jqsi3g69f39prdiexp38oifasb8mz49etcfqq47nf
+  SelectedStudio: RedDot
+  SdkPath: Assets/PlayFab/PlayFabSdk
   EdExPath: 
   LocalCloudScriptPath: 
   PanelIsShown: 0

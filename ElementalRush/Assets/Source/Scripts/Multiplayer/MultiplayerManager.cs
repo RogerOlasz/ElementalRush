@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class MultiplayerManager : MonoBehaviourPun
+public class MultiplayerManager : MonoBehaviourPunCallbacks
 {
     public PlayfabManager playfab_manager;
 
@@ -20,6 +20,11 @@ public class MultiplayerManager : MonoBehaviourPun
         
     }
 
+    private void FixedUpdate()
+    {
+        //Debug.Log(PhotonNetwork.NetworkClientState);
+    }
+
     public void ConnectToMaster()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -27,15 +32,15 @@ public class MultiplayerManager : MonoBehaviourPun
 
     public override void OnConnectedToMaster()
     {
-
+        PhotonNetwork.JoinRandomRoom();                
     }
 
-    public void CreateOrJoin()
-    {
-        PhotonNetwork.JoinRandomRoom();
-    }
+    //public void CreateOrJoin()
+    //{
+    //    PhotonNetwork.JoinRandomRoom();
+    //}
 
-    public virtual void OnPhotonRandomJoinFailed()
+    public override void OnJoinRandomFailed(short returnCode, string message)
     {
         RoomOptions new_room = new RoomOptions();
         new_room.MaxPlayers = 6;
@@ -46,8 +51,20 @@ public class MultiplayerManager : MonoBehaviourPun
         PhotonNetwork.CreateRoom("Dev: " + random_id, new_room, TypedLobby.Default);
     }
 
-    public virtual void OnJoinedRoom()
-    {  
-        GameObject player = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
+    //public virtual void OnPhotonRandomJoinFailed()
+    //{
+    //    RoomOptions new_room = new RoomOptions();
+    //    new_room.MaxPlayers = 6;
+    //    new_room.IsVisible = true;
+
+    //    int random_id = Random.Range(0, 3000);
+
+    //    PhotonNetwork.CreateRoom("Dev: " + random_id, new_room, TypedLobby.Default);
+    //}
+
+    public override void OnJoinedRoom()
+    {
+        GameObject player = PhotonNetwork.Instantiate("Player", Vector3.one, Quaternion.identity, 0);
+        player.layer = LayerMask.NameToLayer("TeamBlue");        
     }
 }

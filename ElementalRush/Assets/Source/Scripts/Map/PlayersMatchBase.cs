@@ -1,27 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayersMatchBase : MonoBehaviour
 {
-    UIManager ui_manager = null;
+    UIElementChanger ui_manager = null;
     BoxCollider base_trigger = null;
     MapManager map_manager = null;
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player" && collider.gameObject.GetPhotonView().IsMine)
         {
             if (ui_manager != null)
             {
-                ui_manager.OpenElementChangingMenu(); 
+                ui_manager.OpenElementChangingMenu();
             }
         }
     }
 
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player" && collider.gameObject.GetPhotonView().IsMine)
         {
             if (ui_manager != null)
             {
@@ -42,7 +43,7 @@ public class PlayersMatchBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ui_manager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        ui_manager = GameObject.Find("UIElementChanger").GetComponent<UIElementChanger>();
         base_trigger = GetComponent<BoxCollider>();
         map_manager = GetComponentInParent<MapManager>();
 
