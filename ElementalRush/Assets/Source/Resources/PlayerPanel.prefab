@@ -234,6 +234,9 @@ MonoBehaviour:
     type: 3}
   y_offset: 70
   x_offset: 1.25
+  y_remote_player_offset: 0.075
+  player_status: {fileID: 239072799637766377}
+  player_element_energy: {fileID: 239072800306581349}
 --- !u!114 &1314144940912359972
 MonoBehaviour:
   m_ObjectHideFlags: 0

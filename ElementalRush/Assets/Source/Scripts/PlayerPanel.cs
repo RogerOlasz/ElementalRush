@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 using Photon.Pun;
 
@@ -9,9 +10,14 @@ public class PlayerPanel : MonoBehaviourPun, IPunObservable
     public float y_offset;
     public float x_offset;
 
+    public float y_remote_player_offset;
+
     RectTransform my_rect;
     Canvas canvas;
     Camera player_camera;
+
+    public Text player_status;
+    public Image player_element_energy;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +29,10 @@ public class PlayerPanel : MonoBehaviourPun, IPunObservable
         {
             my_rect = GetComponent<RectTransform>();
             player_camera = Camera.main;
-            canvas = transform.parent.GetComponent<Canvas>();           
+            canvas = transform.parent.GetComponent<Canvas>();
+
+            player_status = GameObject.Find("PlayerElementText").GetComponent<Text>();
+            player_element_energy = transform.Find("ElementEnergyBarBackground").gameObject.transform.Find("ElementEnergyBar").GetComponent<Image>();
         }        
     }
 
@@ -61,7 +70,7 @@ public class PlayerPanel : MonoBehaviourPun, IPunObservable
             Vector2 position_on_screen = Camera.main.WorldToViewportPoint(PhotonView.Find((photonView.ViewID - 1)).gameObject.transform.position);
 
             Debug.Log(position_on_screen);
-            position_on_screen.y += 0.075f;
+            position_on_screen.y += y_remote_player_offset;
 
             this.GetComponent<RectTransform>().anchorMin = position_on_screen;
             this.GetComponent<RectTransform>().anchorMax = position_on_screen;
@@ -72,11 +81,13 @@ public class PlayerPanel : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-
+            stream.SendNext(player_status.text);
+            stream.SendNext(player_element_energy.fillAmount);
         }
         else if (stream.IsReading)
         {
-
+            player_status.text = (string)stream.ReceiveNext();
+            player_element_energy.fillAmount = (float)stream.ReceiveNext();
         }
     }
 }

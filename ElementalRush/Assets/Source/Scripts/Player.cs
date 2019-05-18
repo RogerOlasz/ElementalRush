@@ -19,6 +19,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     [Header("UI")]
     public GameObject player_panel = null;
+    PlayerPanel player_panel_ref;
     //public Image element_energy_bar;
     //GameObject element_text = null;
 
@@ -105,6 +106,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_fire.SetFireAoEConsumption();
 
                         //element_text.GetComponent<Text>().text = "Fire";
+                        player_panel_ref.player_status.text = "Fire";
                         break;
                     }
                 case PlayerElementOnUse.Earth:
@@ -116,6 +118,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_earth.SetEarthAoEConsumption();
 
                         //element_text.GetComponent<Text>().text = "Earth";
+                        player_panel_ref.player_status.text = "Earth";
                         break;
                     }
                 case PlayerElementOnUse.Water:
@@ -127,6 +130,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_water.SetWaterAoEConsumption();
 
                         //element_text.GetComponent<Text>().text = "Water";
+                        player_panel_ref.player_status.text = "Water";
                         break;
                     }
                 case PlayerElementOnUse.Ice:
@@ -138,6 +142,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_ice.SetIceAoEConsumption();
 
                         //element_text.GetComponent<Text>().text = "Ice";
+                        player_panel_ref.player_status.text = "Ice";
                         break;
                     }
                 case PlayerElementOnUse.Plant:
@@ -149,6 +154,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_plant.SetPlantAoEConsumption();
 
                         //element_text.GetComponent<Text>().text = "Plant";
+                        player_panel_ref.player_status.text = "Plant";
                         break;
                     }
                 case PlayerElementOnUse.Air:
@@ -160,6 +166,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_air.SetAirAoEConsumption();
 
                         //element_text.GetComponent<Text>().text = "Air";
+                        player_panel_ref.player_status.text = "Air";
                         break;
                     }
                 case PlayerElementOnUse.Electric:
@@ -171,6 +178,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_electric.SetElectricAoEConsumption();
 
                         //element_text.GetComponent<Text>().text = "Electric";
+                        player_panel_ref.player_status.text = "Electric";
                         break;
                     }
                 case PlayerElementOnUse.Non_Element:
@@ -180,6 +188,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         item_carrying_speed = 0;
 
                         //element_text.GetComponent<Text>().text = "Non-Element";
+                        player_panel_ref.player_status.text = "Non-Element";
                         break;
                     }
                 default:
@@ -291,6 +300,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             current_element_energy -= energy_consumed;
             //element_energy_bar.fillAmount = ((float)current_element_energy / max_element_energy);
+            player_panel_ref.player_element_energy.fillAmount = ((float)current_element_energy / max_element_energy);
         }
     }
 
@@ -300,6 +310,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             current_element_energy = energy_quantity;
             //element_energy_bar.fillAmount = ((float)current_element_energy / max_element_energy);
+            player_panel_ref.player_element_energy.fillAmount = ((float)current_element_energy / max_element_energy);
         }
     }
 
@@ -579,6 +590,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             player_camera = Camera.main;
             player_panel = PhotonNetwork.Instantiate("PlayerPanel", Vector3.zero, Quaternion.identity, 0);
             player_panel.GetComponent<PhotonView>().Owner.TagObject = this.gameObject;
+            player_panel_ref = player_panel.GetComponent<PlayerPanel>();
 
             p_controller = GetComponent<PlayerController>();
 
