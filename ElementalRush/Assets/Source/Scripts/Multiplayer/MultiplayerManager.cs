@@ -45,22 +45,12 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
         RoomOptions new_room = new RoomOptions();
         new_room.MaxPlayers = 6;
         new_room.IsVisible = true;
+        //new_room.PublishUserId = true;
 
         int random_id = Random.Range(0, 3000);
 
         PhotonNetwork.CreateRoom("Dev: " + random_id, new_room, TypedLobby.Default);
     }
-
-    //public virtual void OnPhotonRandomJoinFailed()
-    //{
-    //    RoomOptions new_room = new RoomOptions();
-    //    new_room.MaxPlayers = 6;
-    //    new_room.IsVisible = true;
-
-    //    int random_id = Random.Range(0, 3000);
-
-    //    PhotonNetwork.CreateRoom("Dev: " + random_id, new_room, TypedLobby.Default);
-    //}
 
     public override void OnJoinedRoom()
     {

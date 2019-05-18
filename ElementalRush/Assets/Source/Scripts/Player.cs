@@ -11,17 +11,16 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     UIElementChanger ui_manager = null;
     PlayerController p_controller = null;
+    Camera player_camera;
 
     //Camera Attributes
     public Vector3 camera_offset;
     public float camera_speed;
-    private Quaternion canvas_rotation;
-    private Vector3 canvas_position;
 
     [Header("UI")]
-    GameObject player_canvas = null;
-    public Image element_energy_bar;
-    GameObject element_text = null;
+    public GameObject player_panel = null;
+    //public Image element_energy_bar;
+    //GameObject element_text = null;
 
     //Bottled elements are those that are able to refill on the base
     FirePlayer bottled_fire = null;
@@ -105,7 +104,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_fire.SetFireStraightConsumption();
                         bottled_fire.SetFireAoEConsumption();
 
-                        element_text.GetComponent<Text>().text = "Fire";
+                        //element_text.GetComponent<Text>().text = "Fire";
                         break;
                     }
                 case PlayerElementOnUse.Earth:
@@ -116,7 +115,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_earth.SetEarthStraightConsumption();
                         bottled_earth.SetEarthAoEConsumption();
 
-                        element_text.GetComponent<Text>().text = "Earth";
+                        //element_text.GetComponent<Text>().text = "Earth";
                         break;
                     }
                 case PlayerElementOnUse.Water:
@@ -127,7 +126,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_water.SetWaterStraightConsumption();
                         bottled_water.SetWaterAoEConsumption();
 
-                        element_text.GetComponent<Text>().text = "Water";
+                        //element_text.GetComponent<Text>().text = "Water";
                         break;
                     }
                 case PlayerElementOnUse.Ice:
@@ -138,7 +137,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_ice.SetIceStraightConsumption();
                         bottled_ice.SetIceAoEConsumption();
 
-                        element_text.GetComponent<Text>().text = "Ice";
+                        //element_text.GetComponent<Text>().text = "Ice";
                         break;
                     }
                 case PlayerElementOnUse.Plant:
@@ -149,7 +148,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_plant.SetPlantStraightConsumption();
                         bottled_plant.SetPlantAoEConsumption();
 
-                        element_text.GetComponent<Text>().text = "Plant";
+                        //element_text.GetComponent<Text>().text = "Plant";
                         break;
                     }
                 case PlayerElementOnUse.Air:
@@ -160,7 +159,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_air.SetAirStraightConsumption();
                         bottled_air.SetAirAoEConsumption();
 
-                        element_text.GetComponent<Text>().text = "Air";
+                        //element_text.GetComponent<Text>().text = "Air";
                         break;
                     }
                 case PlayerElementOnUse.Electric:
@@ -171,7 +170,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_electric.SetElectricStraightConsumption();
                         bottled_electric.SetElectricAoEConsumption();
 
-                        element_text.GetComponent<Text>().text = "Electric";
+                        //element_text.GetComponent<Text>().text = "Electric";
                         break;
                     }
                 case PlayerElementOnUse.Non_Element:
@@ -180,7 +179,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         movement_speed = 7.5f;
                         item_carrying_speed = 0;
 
-                        element_text.GetComponent<Text>().text = "Non-Element";
+                        //element_text.GetComponent<Text>().text = "Non-Element";
                         break;
                     }
                 default:
@@ -291,7 +290,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             current_element_energy -= energy_consumed;
-            element_energy_bar.fillAmount = ((float)current_element_energy / max_element_energy);
+            //element_energy_bar.fillAmount = ((float)current_element_energy / max_element_energy);
         }
     }
 
@@ -300,7 +299,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             current_element_energy = energy_quantity;
-            element_energy_bar.fillAmount = ((float)current_element_energy / max_element_energy);
+            //element_energy_bar.fillAmount = ((float)current_element_energy / max_element_energy);
         }
     }
 
@@ -577,8 +576,9 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {            
             ui_manager = GameObject.Find("Canvas").transform.Find("ElementChangePanel").GetComponent<UIElementChanger>();
-            player_canvas = transform.Find("PlayerCanvas").gameObject;
-            element_text = player_canvas.transform.Find("PlayerElementText").gameObject;
+            player_camera = Camera.main;
+            player_panel = PhotonNetwork.Instantiate("PlayerPanel", Vector3.zero, Quaternion.identity, 0);
+            player_panel.GetComponent<PhotonView>().Owner.TagObject = this.gameObject;
 
             p_controller = GetComponent<PlayerController>();
 
@@ -593,10 +593,6 @@ public class Player : MonoBehaviourPun, IPunObservable
             SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
 
             RefillElementEnergy(max_element_energy);
-
-            player_canvas.transform.Rotate(45, 0, 0);
-            canvas_rotation = player_canvas.transform.rotation;
-            canvas_position = transform.position - player_canvas.transform.position;
         }
     }
 
@@ -604,23 +600,21 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            player_canvas.transform.rotation = canvas_rotation;
-            player_canvas.transform.position = transform.position - canvas_position;
+
         }
         else
         {
-            player_canvas.transform.rotation = canvas_rotation;
+            
         }
     }
 
     void LateUpdate()
     {
         if (photonView.IsMine)
-        {
-            //TODO Camera must be fixed
-            Vector3 camera_pos = Camera.main.gameObject.transform.position;
+        {            
+            Vector3 camera_pos = player_camera.gameObject.transform.position;
             Vector3 player_pos = transform.position;
-            Camera.main.transform.position = Vector3.Lerp(camera_pos, new Vector3(player_pos.x, player_pos.y, player_pos.z) + camera_offset, camera_speed); // * Time.deltaTime On camera speed If smoothier cam is needed
+            player_camera.transform.position = Vector3.Lerp(camera_pos, new Vector3(player_pos.x, player_pos.y, player_pos.z) + camera_offset, camera_speed); // * Time.deltaTime On camera speed If smoothier cam is needed
         }
     }
     
@@ -628,16 +622,11 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(canvas_rotation);
-            //stream.SendNext(health);
-            //stream.SendNext(username);
+            //stream.SendNext(canvas_rotation);
         }
         else if (stream.IsReading)
         {
-            //health = (float)stream.ReceiveNext();
-            //username = (string)stream.ReceiveNext();
-            //user_text.text = username;
-            canvas_rotation = (Quaternion)stream.ReceiveNext();       
+            //canvas_rotation = (Quaternion)stream.ReceiveNext();       
         }
     }
 }
