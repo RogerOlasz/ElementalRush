@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class AirPathBehaviour : MonoBehaviour
+public class AirPathBehaviour : MonoBehaviourPun, IPunObservable
 {
     public float effect_duration = 6f;
 
@@ -22,5 +23,17 @@ public class AirPathBehaviour : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+
+        }
+        else if (stream.IsReading)
+        {
+
+        }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class AirPlayer : MonoBehaviour
+public class AirPlayer : MonoBehaviourPun
 {
     private Player player_stats;
 
@@ -48,7 +49,7 @@ public class AirPlayer : MonoBehaviour
     {
         GameObject straight_attack_vfx;
 
-        straight_attack_vfx = Instantiate(straight_projectile_effect, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+        straight_attack_vfx = PhotonNetwork.Instantiate("AirStraightProjectile", new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
         straight_attack_vfx.transform.localRotation = transform.rotation;
     }
 

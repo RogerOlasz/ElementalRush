@@ -8,8 +8,8 @@ public class FirePlayer : MonoBehaviourPun
     private Player player_stats;
 
     [Header("Element attributes")]
-    public float player_movement_speed = 5;
-    public float player_item_carrying_speed = 4;
+    public float player_movement_speed = 5f;
+    public float player_item_carrying_speed = 4f;
 
     [Header("Straight attack properties")]
     public int straight_attack_consumption = 7;

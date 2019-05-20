@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class EarthPlayer : MonoBehaviour
+public class EarthPlayer : MonoBehaviourPun
 {
     private Player player_stats;
 
@@ -48,7 +49,7 @@ public class EarthPlayer : MonoBehaviour
     {
         GameObject straight_attack_vfx;
 
-        straight_attack_vfx = Instantiate(straight_projectile_effect, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+        straight_attack_vfx = PhotonNetwork.Instantiate("EarthStraightProjectile", new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity, 0);
         straight_attack_vfx.transform.localRotation = transform.rotation;
     }
 

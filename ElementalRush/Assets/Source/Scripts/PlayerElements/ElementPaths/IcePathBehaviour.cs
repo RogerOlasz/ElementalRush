@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class IcePathBehaviour : MonoBehaviour
+public class IcePathBehaviour : MonoBehaviourPun, IPunObservable
 {
     public float effect_duration = 12f;
 
@@ -22,5 +23,17 @@ public class IcePathBehaviour : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+
+        }
+        else if (stream.IsReading)
+        {
+
+        }
     }
 }

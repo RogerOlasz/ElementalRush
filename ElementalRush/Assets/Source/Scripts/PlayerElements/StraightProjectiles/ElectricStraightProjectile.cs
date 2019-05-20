@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class ElectricStraightProjectile : MonoBehaviour
+public class ElectricStraightProjectile : MonoBehaviourPun, IPunObservable
 {
     [Header("Projectile Attributes")]
     public float projectile_speed;
     public float projectile_range;
 
     private Vector3 original_pos;
+
+    private float distance;
 
     public void SetProjectileProperties(float _projectile_speed, float _projectile_range)
     {
@@ -25,7 +28,9 @@ public class ElectricStraightProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(original_pos, transform.position) <= projectile_range)
+        distance = Vector3.Distance(original_pos, transform.position);
+
+        if (distance <= projectile_range)
         {
             transform.position += transform.right * (projectile_speed * Time.deltaTime);
         }
@@ -40,6 +45,18 @@ public class ElectricStraightProjectile : MonoBehaviour
         if (collider.gameObject.tag == "MapBoundary")
         {
             Destroy(gameObject);
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.rotation);
+        }
+        else if (stream.IsReading)
+        {
+            transform.rotation = (Quaternion)stream.ReceiveNext();
         }
     }
 }

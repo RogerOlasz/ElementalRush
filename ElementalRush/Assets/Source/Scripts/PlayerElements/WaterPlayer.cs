@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class WaterPlayer : MonoBehaviour
+public class WaterPlayer : MonoBehaviourPun
 {
     private Player player_stats;
 
@@ -48,7 +49,7 @@ public class WaterPlayer : MonoBehaviour
     {
         GameObject straight_attack_vfx;
 
-        straight_attack_vfx = Instantiate(straight_projectile_effect, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+        straight_attack_vfx = PhotonNetwork.Instantiate("WaterStraightProjectile", new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity, 0);
         straight_attack_vfx.transform.localRotation = transform.rotation;
     }
 

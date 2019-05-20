@@ -10,7 +10,7 @@ public class FireStraightProjectile : MonoBehaviourPun, IPunObservable
     public float projectile_range;
 
     [Header("Element Path GameObject")]
-    public GameObject element_path;
+    public string element_path; //TODO it could be a good idea to modify things without code
     private int tile_counter = 1;
 
     private Vector3 original_pos;
