@@ -4846,7 +4846,7 @@ GameObject:
   - component: {fileID: 2234238456145119904}
   - component: {fileID: 6930454161797914736}
   - component: {fileID: 8311278172500474167}
-  - component: {fileID: 7985846883279187906}
+  - component: {fileID: 8659336305714558873}
   m_Layer: 0
   m_Name: FireStraightProjectile
   m_TagString: Untagged
@@ -4934,12 +4934,12 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 7985846883279187906}
+  - {fileID: 8659336305714558873}
   - {fileID: 6930454161797914736}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7985846883279187906
+--- !u!114 &8659336305714558873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4948,13 +4948,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5346742465431509159}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
 --- !u!1 &7726492417648880228
 GameObject:
   m_ObjectHideFlags: 0

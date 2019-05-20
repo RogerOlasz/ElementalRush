@@ -29,28 +29,25 @@ public class FireStraightProjectile : MonoBehaviourPun, IPunObservable
     // Start is called before the first frame update
     void Start()
     {
-        if (photonView.IsMine)
-        {
-            original_pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        }
+        original_pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
+        distance = Vector3.Distance(original_pos, transform.position);
+
+        if (distance <= projectile_range)
+        {
+            transform.position += transform.right * (projectile_speed * Time.deltaTime);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         if (photonView.IsMine)
         {
-            distance = Vector3.Distance(original_pos, transform.position);
-
-            if (distance <= projectile_range)
-            {
-                transform.position += transform.right * (projectile_speed * Time.deltaTime);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-
             if (distance >= tile_counter)
             {
                 projectile_direction = transform.position - original_pos;
@@ -74,13 +71,6 @@ public class FireStraightProjectile : MonoBehaviourPun, IPunObservable
                 tile_counter++;
             }
         }
-        else
-        {
-            if (Vector3.Distance(original_pos, transform.position) >= projectile_range)
-            {
-                Destroy(gameObject);
-            }
-        }
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -95,11 +85,11 @@ public class FireStraightProjectile : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(distance);
+            stream.SendNext(transform.rotation);
         }
         else if (stream.IsReading)
         {
-            distance = (float)stream.ReceiveNext();
+            transform.rotation = (Quaternion)stream.ReceiveNext();
         }
     }
 }
