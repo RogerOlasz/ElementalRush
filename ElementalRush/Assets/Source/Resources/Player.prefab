@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 5140044408255148842}
   - component: {fileID: 5140044408255148843}
   - component: {fileID: 5140044408255148840}
+  - component: {fileID: 291958373961680072}
   - component: {fileID: 8502894925873752292}
   - component: {fileID: 6074468917832034550}
   m_Layer: 0
@@ -334,6 +335,18 @@ MonoBehaviour:
   aoe_projectile_speed: 0
   aoe_projectile_range: 0
   aoe_projectile_effect: {fileID: 0}
+--- !u!114 &291958373961680072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140044408255148816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb84ee18c622654faba537f6cdc96eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8502894925873752292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +368,7 @@ MonoBehaviour:
   - {fileID: 6074468917832034550}
   - {fileID: 5140044408255148845}
   - {fileID: 5140044408255148819}
+  - {fileID: 291958373961680072}
   viewIdField: 0
   InstantiationId: 1
   isRuntimeInstantiated: 0

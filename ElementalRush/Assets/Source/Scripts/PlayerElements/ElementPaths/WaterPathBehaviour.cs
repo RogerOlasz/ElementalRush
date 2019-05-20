@@ -5,7 +5,37 @@ using Photon.Pun;
 
 public class WaterPathBehaviour : MonoBehaviourPun, IPunObservable
 {
+    CrowdControlManager cc_manager;
+
     public float effect_duration = 10f;
+    public float slow_percentage = 0.2f;
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            cc_manager = collider.GetComponent<CrowdControlManager>();
+
+        }
+    }
+
+    private void OnTriggerStay(Collider collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            cc_manager = collider.GetComponent<CrowdControlManager>();
+            
+        }
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            cc_manager = collider.GetComponent<CrowdControlManager>();
+
+        }
+    }
 
     IEnumerator AttackDuration()
     {

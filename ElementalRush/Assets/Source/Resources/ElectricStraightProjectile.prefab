@@ -9544,7 +9544,7 @@ GameObject:
   - component: {fileID: 6831864229770042259}
   - component: {fileID: 6831864229770041912}
   - component: {fileID: 9027696746891516404}
-  - component: {fileID: 7581184743077969121}
+  - component: {fileID: 3938541286557073678}
   m_Layer: 0
   m_Name: ElectricStraightProjectile
   m_TagString: Untagged
@@ -9630,12 +9630,12 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 7581184743077969121}
+  - {fileID: 3938541286557073678}
   - {fileID: 6831864229770041912}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7581184743077969121
+--- !u!114 &3938541286557073678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

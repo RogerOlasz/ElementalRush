@@ -39,7 +39,8 @@ public class FireStraightProjectile : MonoBehaviourPun, IPunObservable
 
         if (distance <= projectile_range)
         {
-            transform.position += transform.right * (projectile_speed * Time.deltaTime);
+            Vector3 movement = transform.right * (projectile_speed * Time.deltaTime);
+            transform.position += movement;
         }
         else
         {
