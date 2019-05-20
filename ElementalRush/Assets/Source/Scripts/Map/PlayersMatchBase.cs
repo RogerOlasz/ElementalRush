@@ -5,17 +5,18 @@ using Photon.Pun;
 
 public class PlayersMatchBase : MonoBehaviour
 {
-    UIElementChanger ui_manager = null;
     BoxCollider base_trigger = null;
     MapManager map_manager = null;
+    Player player = null;
 
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Player" && collider.gameObject.GetPhotonView().IsMine)
         {
-            if (ui_manager != null)
+            player = collider.gameObject.GetComponent<Player>();
+            if (player.element_changer_script != null)
             {
-                ui_manager.OpenElementChangingMenu();
+                player.element_changer_script.OpenElementChangingMenu();
             }
         }
     }
@@ -24,9 +25,10 @@ public class PlayersMatchBase : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player" && collider.gameObject.GetPhotonView().IsMine)
         {
-            if (ui_manager != null)
+            player = collider.gameObject.GetComponent<Player>();
+            if (player.element_changer_script != null)
             {
-                ui_manager.CloseElementChangingMenu();
+                player.element_changer_script.CloseElementChangingMenu();
             }
         }
     }
@@ -43,12 +45,11 @@ public class PlayersMatchBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ui_manager = GameObject.Find("Canvas").transform.Find("ElementChangePanel").GetComponent<UIElementChanger>();
         base_trigger = GetComponent<BoxCollider>();
         map_manager = GetComponentInParent<MapManager>();
 
         transform.position = new Vector3(map_manager.map_size.x / 2f, 0.75f, 0.5f);
-        base_trigger.size = new Vector3(map_manager.map_size.x, 1.5f, 1);
+        base_trigger.size = new Vector3(map_manager.map_size.x, 1.5f, 1f);
     }
 
     // Update is called once per frame

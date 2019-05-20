@@ -9,7 +9,6 @@ public class Player : MonoBehaviourPun, IPunObservable
 {
     #region PlayerClassAttributes
 
-    UIElementChanger ui_manager = null;
     PlayerController p_controller = null;
     Camera player_camera;
 
@@ -18,10 +17,10 @@ public class Player : MonoBehaviourPun, IPunObservable
     public float camera_speed;
 
     [Header("UI")]
-    public GameObject player_panel = null;
-    PlayerPanel player_panel_ref;
-    //public Image element_energy_bar;
-    //GameObject element_text = null;
+    [HideInInspector] public GameObject player_panel = null;
+    [HideInInspector] public PlayerPanel player_panel_script = null;
+    [HideInInspector] public GameObject element_changer = null;
+    [HideInInspector] public UIElementChanger element_changer_script = null;
 
     //Bottled elements are those that are able to refill on the base
     FirePlayer bottled_fire = null;
@@ -105,8 +104,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_fire.SetFireStraightConsumption();
                         bottled_fire.SetFireAoEConsumption();
 
-                        //element_text.GetComponent<Text>().text = "Fire";
-                        player_panel_ref.player_status.text = "Fire";
+                        player_panel_script.player_status.text = "Fire";
                         break;
                     }
                 case PlayerElementOnUse.Earth:
@@ -117,8 +115,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_earth.SetEarthStraightConsumption();
                         bottled_earth.SetEarthAoEConsumption();
 
-                        //element_text.GetComponent<Text>().text = "Earth";
-                        player_panel_ref.player_status.text = "Earth";
+                        player_panel_script.player_status.text = "Earth";
                         break;
                     }
                 case PlayerElementOnUse.Water:
@@ -129,8 +126,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_water.SetWaterStraightConsumption();
                         bottled_water.SetWaterAoEConsumption();
 
-                        //element_text.GetComponent<Text>().text = "Water";
-                        player_panel_ref.player_status.text = "Water";
+                        player_panel_script.player_status.text = "Water";
                         break;
                     }
                 case PlayerElementOnUse.Ice:
@@ -141,8 +137,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_ice.SetIceStraightConsumption();
                         bottled_ice.SetIceAoEConsumption();
 
-                        //element_text.GetComponent<Text>().text = "Ice";
-                        player_panel_ref.player_status.text = "Ice";
+                        player_panel_script.player_status.text = "Ice";
                         break;
                     }
                 case PlayerElementOnUse.Plant:
@@ -153,8 +148,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_plant.SetPlantStraightConsumption();
                         bottled_plant.SetPlantAoEConsumption();
 
-                        //element_text.GetComponent<Text>().text = "Plant";
-                        player_panel_ref.player_status.text = "Plant";
+                        player_panel_script.player_status.text = "Plant";
                         break;
                     }
                 case PlayerElementOnUse.Air:
@@ -165,8 +159,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_air.SetAirStraightConsumption();
                         bottled_air.SetAirAoEConsumption();
 
-                        //element_text.GetComponent<Text>().text = "Air";
-                        player_panel_ref.player_status.text = "Air";
+                        player_panel_script.player_status.text = "Air";
                         break;
                     }
                 case PlayerElementOnUse.Electric:
@@ -177,8 +170,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         bottled_electric.SetElectricStraightConsumption();
                         bottled_electric.SetElectricAoEConsumption();
 
-                        //element_text.GetComponent<Text>().text = "Electric";
-                        player_panel_ref.player_status.text = "Electric";
+                        player_panel_script.player_status.text = "Electric";
                         break;
                     }
                 case PlayerElementOnUse.Non_Element:
@@ -187,8 +179,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         movement_speed = 7.5f;
                         item_carrying_speed = 0;
 
-                        //element_text.GetComponent<Text>().text = "Non-Element";
-                        player_panel_ref.player_status.text = "Non-Element";
+                        player_panel_script.player_status.text = "Non-Element";
                         break;
                     }
                 default:
@@ -213,8 +204,8 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             SetPlayerStatsByElement(PlayerElementOnUse.Fire);
             RefillElementEnergy(max_element_energy);
-
-            ui_manager.CloseElementChangingMenu();
+                        
+            element_changer_script.CloseElementChangingMenu();
             Debug.Log(movement_speed);
         }
     }
@@ -226,7 +217,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             SetPlayerStatsByElement(PlayerElementOnUse.Earth);
             RefillElementEnergy(max_element_energy);
 
-            ui_manager.CloseElementChangingMenu();
+            element_changer_script.CloseElementChangingMenu();
             Debug.Log(movement_speed);
         }
     }
@@ -238,7 +229,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             SetPlayerStatsByElement(PlayerElementOnUse.Water);
             RefillElementEnergy(max_element_energy);
 
-            ui_manager.CloseElementChangingMenu();
+            element_changer_script.CloseElementChangingMenu();
             Debug.Log(movement_speed);
         }
     }
@@ -250,7 +241,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             SetPlayerStatsByElement(PlayerElementOnUse.Ice);
             RefillElementEnergy(max_element_energy);
 
-            ui_manager.CloseElementChangingMenu();
+            element_changer_script.CloseElementChangingMenu();
             Debug.Log(movement_speed);
         }
     }
@@ -262,7 +253,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             SetPlayerStatsByElement(PlayerElementOnUse.Plant);
             RefillElementEnergy(max_element_energy);
 
-            ui_manager.CloseElementChangingMenu();
+            element_changer_script.CloseElementChangingMenu();
             Debug.Log(movement_speed);
         }
     }
@@ -274,7 +265,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             SetPlayerStatsByElement(PlayerElementOnUse.Air);
             RefillElementEnergy(max_element_energy);
 
-            ui_manager.CloseElementChangingMenu();
+            element_changer_script.CloseElementChangingMenu();
             Debug.Log(movement_speed);
         }
     }
@@ -286,7 +277,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             SetPlayerStatsByElement(PlayerElementOnUse.Electric);
             RefillElementEnergy(max_element_energy);
 
-            ui_manager.CloseElementChangingMenu();
+            element_changer_script.CloseElementChangingMenu();
             Debug.Log(movement_speed);
         }
     }
@@ -300,7 +291,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             current_element_energy -= energy_consumed;
             //element_energy_bar.fillAmount = ((float)current_element_energy / max_element_energy);
-            player_panel_ref.player_element_energy.fillAmount = ((float)current_element_energy / max_element_energy);
+            player_panel_script.player_element_energy.fillAmount = ((float)current_element_energy / max_element_energy);
         }
     }
 
@@ -310,7 +301,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         {
             current_element_energy = energy_quantity;
             //element_energy_bar.fillAmount = ((float)current_element_energy / max_element_energy);
-            player_panel_ref.player_element_energy.fillAmount = ((float)current_element_energy / max_element_energy);
+            player_panel_script.player_element_energy.fillAmount = ((float)current_element_energy / max_element_energy);
         }
     }
 
@@ -361,7 +352,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 aim_straight = true;
             }
 
-            if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0 && current_element_energy > straight_attack_player_consumption)
+            if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0 && current_element_energy > straight_attack_player_consumption && on_use_element != PlayerElementOnUse.Non_Element)
             {
                 switch (on_use_element)
                 {
@@ -422,7 +413,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 shoot_rate_straight = false;
                 aim_straight = false;
             }
-            else if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0 && extra_attack > 0)
+            else if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0 && extra_attack > 0 )
             {
                 switch (on_use_element)
                 {
@@ -507,7 +498,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                 aim_aoe = true;
             }
 
-            if (shoot_rate_aoe == true && aim_aoe == true && p_controller.last_r2 > p_controller.cancel_attack_r2 && p_controller.direction_r2_no_normal.magnitude == 0)
+            if (shoot_rate_aoe == true && aim_aoe == true && p_controller.last_r2 > p_controller.cancel_attack_r2 && p_controller.direction_r2_no_normal.magnitude == 0 && on_use_element != PlayerElementOnUse.Non_Element)
             {
                 switch (on_use_element)
                 {
@@ -586,11 +577,15 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {            
-            ui_manager = GameObject.Find("Canvas").transform.Find("ElementChangePanel").GetComponent<UIElementChanger>();
             player_camera = Camera.main;
+
             player_panel = PhotonNetwork.Instantiate("PlayerPanel", Vector3.zero, Quaternion.identity, 0);
-            player_panel.GetComponent<PhotonView>().Owner.TagObject = this.gameObject;
-            player_panel_ref = player_panel.GetComponent<PlayerPanel>();
+            player_panel.GetPhotonView().Owner.TagObject = this.gameObject;
+            player_panel_script = player_panel.GetComponent<PlayerPanel>();
+
+            element_changer = PhotonNetwork.Instantiate("ElementChangePanel", Vector3.zero, Quaternion.identity, 0);
+            element_changer.GetPhotonView().Owner.TagObject = this.gameObject;
+            element_changer_script = element_changer.GetComponent<UIElementChanger>();
 
             p_controller = GetComponent<PlayerController>();
 
@@ -634,11 +629,11 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            //stream.SendNext(canvas_rotation);
+            stream.SendNext(current_element_energy);
         }
         else if (stream.IsReading)
-        {
-            //canvas_rotation = (Quaternion)stream.ReceiveNext();       
+        {    
+            current_element_energy = (int)stream.ReceiveNext();
         }
     }
 }
