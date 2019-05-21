@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect_duration: 10
+  slow_percentage: 0.2
 --- !u!114 &7099093064049777475
 MonoBehaviour:
   m_ObjectHideFlags: 0

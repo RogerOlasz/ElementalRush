@@ -11,6 +11,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     PlayerController p_controller = null;
     Camera player_camera;
+    CrowdControlManager cc_manager;
 
     //Camera Attributes
     public Vector3 camera_offset;
@@ -85,6 +86,11 @@ public class Player : MonoBehaviourPun, IPunObservable
     PlayerElementOnUse on_use_element;
 
     #endregion
+
+    public void RefreshSpeedFactor()
+    {
+        p_controller.SetSpeedFactor(movement_speed);
+    }
 
     #region SetPlayerStatsByElement
 
@@ -190,6 +196,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                     }
             }
 
+            cc_manager.SetNoCCSpeed();
             p_controller.SetSpeedFactor(movement_speed);
         }
     }
@@ -578,6 +585,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {            
             player_camera = Camera.main;
+            cc_manager = GetComponent<CrowdControlManager>();
 
             player_panel = PhotonNetwork.Instantiate("PlayerPanel", Vector3.zero, Quaternion.identity, 0);
             player_panel.GetPhotonView().Owner.TagObject = this.gameObject;

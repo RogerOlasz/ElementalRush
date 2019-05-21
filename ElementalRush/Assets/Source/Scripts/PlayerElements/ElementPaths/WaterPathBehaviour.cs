@@ -15,7 +15,7 @@ public class WaterPathBehaviour : MonoBehaviourPun, IPunObservable
         if (collider.gameObject.tag == "Player")
         {
             cc_manager = collider.GetComponent<CrowdControlManager>();
-
+            cc_manager.ApplySlowCC(slow_percentage);
         }
     }
 
@@ -33,13 +33,14 @@ public class WaterPathBehaviour : MonoBehaviourPun, IPunObservable
         if (collider.gameObject.tag == "Player")
         {
             cc_manager = collider.GetComponent<CrowdControlManager>();
-
+            cc_manager.RemoveSlowCC(slow_percentage);
         }
     }
 
     IEnumerator AttackDuration()
     {
         yield return new WaitForSeconds(effect_duration);
+        cc_manager.RemoveSlowCC(slow_percentage);
         Destroy(gameObject);
     }
 
