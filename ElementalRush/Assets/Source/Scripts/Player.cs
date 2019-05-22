@@ -585,7 +585,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {            
             player_camera = Camera.main;
-            cc_manager = GetComponent<CrowdControlManager>();
+            cc_manager = GetComponent<CrowdControlManager>();            
 
             player_panel = PhotonNetwork.Instantiate("PlayerPanel", Vector3.zero, Quaternion.identity, 0);
             player_panel.GetPhotonView().Owner.TagObject = this.gameObject;

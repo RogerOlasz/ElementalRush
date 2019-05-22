@@ -10,11 +10,14 @@ public class WaterStraightProjectile : MonoBehaviourPun, IPunObservable
     public float projectile_range;
 
     [Header("Element Path GameObject")]
-    public string element_path; //TODO it could be a good idea to modify things without code
-    private int tile_counter = 1;
+    public string element_path; //TODO it could be a good idea to modify things without code    
+    private GameObject my_path = null;
 
+    private bool path_instantiated;
+    private Vector3 path_scale;
+    private Vector3 path_position;
+    private Vector3 first_path_pos;
     private Vector3 original_pos;
-    private Vector3 first_path_go_pos;
     private Vector3 projectile_direction;
     private Vector3 projectile_direction_normalized;
 
@@ -30,6 +33,7 @@ public class WaterStraightProjectile : MonoBehaviourPun, IPunObservable
     void Start()
     {
         original_pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        path_instantiated = false;
     }
 
     // Update is called once per frame
@@ -48,27 +52,26 @@ public class WaterStraightProjectile : MonoBehaviourPun, IPunObservable
 
         if (photonView.IsMine)
         {
-            if (Vector3.Distance(original_pos, transform.position) >= tile_counter)
+            if (distance >= 0.55f && path_instantiated == false)
             {
                 projectile_direction = transform.position - original_pos;
                 projectile_direction_normalized = projectile_direction.normalized;
 
-                if (tile_counter == 1)
-                {
-                    GameObject tmp_path;
-                    tmp_path = PhotonNetwork.Instantiate("WaterStraightPath", new Vector3(transform.position.x, 0f, transform.position.z), transform.rotation);
-                    first_path_go_pos = transform.position;
+                my_path = PhotonNetwork.Instantiate("WaterStraightPath", new Vector3(transform.position.x, 0.005f, transform.position.z), transform.rotation);
+                path_scale = my_path.transform.localScale;
+                path_position = my_path.transform.position;
+                first_path_pos = path_position;
+                path_instantiated = true;
+            }
+            else if(my_path != null)
+            {
+                path_scale.x = distance;
+                my_path.transform.localScale = path_scale;
 
-                }
-                else if (tile_counter > 1)
-                {
-                    GameObject tmp_path;
-                    Vector3 tmp_path_position;
-                    tmp_path_position = new Vector3((first_path_go_pos.x + ((tile_counter - 1) * projectile_direction_normalized.x)), 0f, (first_path_go_pos.z + ((tile_counter - 1) * projectile_direction_normalized.z)));
-                    tmp_path = PhotonNetwork.Instantiate("WaterStraightPath", tmp_path_position, transform.rotation);
-                }
+                path_position.x = (distance / 2 * projectile_direction_normalized.x) + first_path_pos.x;
+                path_position.z = (distance / 2 * projectile_direction_normalized.z) + first_path_pos.z;
 
-                tile_counter++;
+                my_path.transform.position = path_position;
             }
         }
     }
