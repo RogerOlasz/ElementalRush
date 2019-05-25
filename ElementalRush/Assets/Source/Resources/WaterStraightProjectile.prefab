@@ -4780,8 +4780,6 @@ MonoBehaviour:
   projectile_range: 8
   element_path: 
   my_path: {fileID: 0}
-  projectile_direction_normalized: {x: 0, y: 0, z: 0}
-  distance: 0
 --- !u!114 &9131785508173625834
 MonoBehaviour:
   m_ObjectHideFlags: 0
