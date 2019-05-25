@@ -11,17 +11,17 @@ public class WaterStraightProjectile : MonoBehaviourPun, IPunObservable
 
     [Header("Element Path GameObject")]
     public string element_path; //TODO it could be a good idea to modify things without code    
-    private GameObject my_path = null;
+    [HideInInspector] public GameObject my_path = null;
 
     private bool path_instantiated;
-    private Vector3 path_scale;
-    private Vector3 path_position;
-    private Vector3 first_path_pos;
+    //public Vector3 path_scale;
+    //public Vector3 path_position;
+    //public Vector3 first_path_pos;
     private Vector3 original_pos;
     private Vector3 projectile_direction;
-    private Vector3 projectile_direction_normalized;
+    public Vector3 projectile_direction_normalized;
 
-    private float distance;
+    public float distance;
 
     public void SetProjectileProperties(float _projectile_speed, float _projectile_range)
     {
@@ -40,6 +40,8 @@ public class WaterStraightProjectile : MonoBehaviourPun, IPunObservable
     void Update()
     {
         distance = Vector3.Distance(original_pos, transform.position);
+        projectile_direction = transform.position - original_pos;
+        projectile_direction_normalized = projectile_direction.normalized;
 
         if (distance <= projectile_range)
         {
@@ -54,26 +56,37 @@ public class WaterStraightProjectile : MonoBehaviourPun, IPunObservable
         {
             if (distance >= 0.55f && path_instantiated == false)
             {
-                projectile_direction = transform.position - original_pos;
-                projectile_direction_normalized = projectile_direction.normalized;
-
                 my_path = PhotonNetwork.Instantiate("WaterStraightPath", new Vector3(transform.position.x, 0.005f, transform.position.z), transform.rotation);
-                path_scale = my_path.transform.localScale;
-                path_position = my_path.transform.position;
-                first_path_pos = path_position;
                 path_instantiated = true;
             }
-            else if(my_path != null)
-            {
-                path_scale.x = distance;
-                my_path.transform.localScale = path_scale;
-
-                path_position.x = (distance / 2 * projectile_direction_normalized.x) + first_path_pos.x;
-                path_position.z = (distance / 2 * projectile_direction_normalized.z) + first_path_pos.z;
-
-                my_path.transform.position = path_position;
-            }
         }
+
+        //if (photonView.IsMine)
+        //{
+        //    if (distance >= 0.55f && path_instantiated == false)
+        //    {
+        //        my_path = PhotonNetwork.Instantiate("WaterStraightPath", new Vector3(transform.position.x, 0.005f, transform.position.z), transform.rotation);
+        //        my_path.GetPhotonView().Owner.TagObject = this.gameObject;
+
+        //        path_scale = my_path.transform.localScale;
+        //        path_position = my_path.transform.position;
+        //        first_path_pos = path_position;
+        //        path_instantiated = true;
+        //    }
+        //    else if (my_path != null)
+        //    {
+        //        projectile_direction = transform.position - original_pos;
+        //        projectile_direction_normalized = projectile_direction.normalized;
+
+        //        path_scale.x = distance;
+        //        my_path.transform.localScale = path_scale;
+
+        //        path_position.x = (distance / 2 * projectile_direction_normalized.x) + first_path_pos.x;
+        //        path_position.z = (distance / 2 * projectile_direction_normalized.z) + first_path_pos.z;
+
+        //        my_path.transform.position = path_position;
+        //    }
+        //}
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -86,13 +99,13 @@ public class WaterStraightProjectile : MonoBehaviourPun, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting)
+        if (stream.IsWriting && photonView.IsMine)
         {
-            stream.SendNext(transform.rotation);
+
         }
         else if (stream.IsReading)
         {
-            transform.rotation = (Quaternion)stream.ReceiveNext();
+
         }
     }
 }

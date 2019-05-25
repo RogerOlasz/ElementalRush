@@ -41,6 +41,8 @@ public class Player : MonoBehaviourPun, IPunObservable
     //Player attributes
     [HideInInspector] public float movement_speed;
     [HideInInspector] public float item_carrying_speed;
+    private Vector3 real_position;
+    private Quaternion real_rotation;
 
     [Header("Straight Attack attributes")]
     //Player Straight attack
@@ -83,7 +85,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         Non_Element
     };
 
-    PlayerElementOnUse on_use_element;
+    public PlayerElementOnUse on_use_element;
 
     #endregion
 
@@ -615,11 +617,12 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-
+            //Debug.Log(PhotonNetwork.GetPing());            
         }
         else
         {
-            
+            transform.position = Vector3.Lerp(transform.position, real_position, Time.deltaTime * 15);
+            transform.rotation = Quaternion.Lerp(transform.rotation, real_rotation, Time.deltaTime * 15);
         }
     }
 
@@ -638,10 +641,16 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(current_element_energy);
+
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
         }
         else if (stream.IsReading)
         {    
             current_element_energy = (int)stream.ReceiveNext();
+
+            real_position = (Vector3)stream.ReceiveNext();
+            real_rotation = (Quaternion)stream.ReceiveNext();
         }
     }
 }

@@ -4711,7 +4711,6 @@ GameObject:
   - component: {fileID: 5482864204654563148}
   - component: {fileID: 5482864204654563054}
   - component: {fileID: 9131785508173625834}
-  - component: {fileID: 902533791523708376}
   m_Layer: 0
   m_Name: WaterStraightProjectile
   m_TagString: Untagged
@@ -4780,6 +4779,9 @@ MonoBehaviour:
   projectile_speed: 16
   projectile_range: 8
   element_path: 
+  my_path: {fileID: 0}
+  projectile_direction_normalized: {x: 0, y: 0, z: 0}
+  distance: 0
 --- !u!114 &9131785508173625834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4798,26 +4800,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 902533791523708376}
   - {fileID: 5482864204654563054}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &902533791523708376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5482864204654563225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
 --- !u!1 &5482864204654563310
 GameObject:
   m_ObjectHideFlags: 0

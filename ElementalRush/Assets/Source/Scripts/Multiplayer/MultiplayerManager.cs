@@ -54,7 +54,7 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        GameObject player = PhotonNetwork.Instantiate("Player", Vector3.one, Quaternion.identity, 0);
+        GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(2, 1, 2), Quaternion.identity, 0);
         player.layer = LayerMask.NameToLayer("TeamBlue");        
     }
 }

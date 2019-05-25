@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 5140044408255148840}
   - component: {fileID: 291958373961680072}
   - component: {fileID: 8502894925873752292}
-  - component: {fileID: 624744089461362374}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -149,6 +148,7 @@ MonoBehaviour:
   shooting_rate_duration_straight: 0.5
   aoe_attack_player_consumption: 10
   shooting_rate_duration_aoe: 0.5
+  on_use_element: 0
 --- !u!114 &5140044408255148819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,25 +365,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 624744089461362374}
   - {fileID: 5140044408255148845}
   - {fileID: 5140044408255148819}
   viewIdField: 0
   InstantiationId: 1
   isRuntimeInstantiated: 0
---- !u!114 &624744089461362374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5140044408255148816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3

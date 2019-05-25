@@ -33,5 +33,7 @@ MonoBehaviour:
   - PlayerPanelPositioning
   - Test
   - StraightAttackOnline
+  - TestAttack
+  - PathReference
   DisableAutoOpenWizard: 1
   ShowSettings: 1
