@@ -49,8 +49,7 @@ public class FirePlayer : MonoBehaviourPun
     {
         GameObject straight_attack_vfx;
 
-        straight_attack_vfx = PhotonNetwork.Instantiate("FireStraightProjectile", new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity, 0);
-        straight_attack_vfx.transform.localRotation = transform.rotation;
+        straight_attack_vfx = PhotonNetwork.Instantiate("FireStraightProjectile", transform.position, transform.rotation, 0);
     }
 
     public void AoEAttack()

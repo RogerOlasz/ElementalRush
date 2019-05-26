@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1600361858004924861}
   - component: {fileID: 3339726927645677865}
   - component: {fileID: 167562373755041074}
-  - component: {fileID: 1573970416811909061}
   m_Layer: 0
   m_Name: FireStraightPath
   m_TagString: Untagged
@@ -107,6 +106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect_duration: 5
+  tick_delay: 1
+  erased_energy_per_tick: 4
 --- !u!114 &167562373755041074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,23 +126,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 1573970416811909061}
   - {fileID: 3339726927645677865}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1573970416811909061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1600361858004924860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0

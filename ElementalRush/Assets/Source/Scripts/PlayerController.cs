@@ -230,14 +230,11 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            //stream.SendNext(health);
-            //stream.SendNext(username);
+
         }
         else if (stream.IsReading)
         {
-            //health = (float)stream.ReceiveNext();
-            //username = (string)stream.ReceiveNext();
-            //user_text.text = username;
+
         }
     }
 }

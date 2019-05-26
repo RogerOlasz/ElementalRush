@@ -5,7 +5,36 @@ using Photon.Pun;
 
 public class IcePathBehaviour : MonoBehaviourPun, IPunObservable
 {
+    CrowdControlManager cc_manager;
+
     public float effect_duration = 12f;
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            cc_manager = collider.GetComponent<CrowdControlManager>();
+            cc_manager.ApplySlipperyFloor();
+        }
+    }
+
+    private void OnTriggerStay(Collider collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            cc_manager = collider.GetComponent<CrowdControlManager>();
+
+        }
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            cc_manager = collider.GetComponent<CrowdControlManager>();
+            cc_manager.RemoveSlipperyFloor();
+        }
+    }
 
     IEnumerator AttackDuration()
     {

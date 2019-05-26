@@ -49,16 +49,12 @@ public class PlantPlayer : MonoBehaviourPun
     {
         GameObject straight_attack_vfx;
 
-        straight_attack_vfx = PhotonNetwork.Instantiate("PlantStraightProjectile", new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        straight_attack_vfx.transform.localRotation = transform.rotation;
+        straight_attack_vfx = PhotonNetwork.Instantiate("PlantStraightProjectile", transform.position, transform.rotation);
     }
 
     public void AoEAttack()
     {
-        //GameObject aoe_attack_vfx;
 
-        //aoe_attack_vfx = Instantiate(aoe_projectile_effect, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        //aoe_attack_vfx.transform.localRotation = transform.rotation;
     }
 
     // Start is called before the first frame update

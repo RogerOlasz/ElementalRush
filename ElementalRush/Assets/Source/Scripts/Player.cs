@@ -299,7 +299,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             current_element_energy -= energy_consumed;
-            //element_energy_bar.fillAmount = ((float)current_element_energy / max_element_energy);
             player_panel_script.player_element_energy.fillAmount = ((float)current_element_energy / max_element_energy);
         }
     }
@@ -309,7 +308,6 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {
             current_element_energy = energy_quantity;
-            //element_energy_bar.fillAmount = ((float)current_element_energy / max_element_energy);
             player_panel_script.player_element_energy.fillAmount = ((float)current_element_energy / max_element_energy);
         }
     }

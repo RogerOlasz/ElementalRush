@@ -6,6 +6,9 @@ using Photon.Pun;
 public class CrowdControlManager : MonoBehaviourPun
 {
     Player my_player_script;
+    Rigidbody my_rigidbody;
+
+    private bool slippery_floor;
 
     private float no_cc_movement_speed;
     private float total_slow_percentage;
@@ -14,13 +17,43 @@ public class CrowdControlManager : MonoBehaviourPun
     void Awake()
     {
         my_player_script = GetComponent<Player>();
+        my_rigidbody = GetComponent<Rigidbody>();
+
+        slippery_floor = false;
         total_slow_percentage = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (slippery_floor)
+        {
+            my_rigidbody.AddForce(new Vector3(10, 0, 0));
+        }
+    }
+
+    public void ApplySlipperyFloor()
+    {
+        slippery_floor = true;
+    }
+
+    public void RemoveSlipperyFloor()
+    {
+        slippery_floor = false;
+    }
+
+    public void EraseElementEnergy(int energy_to_erase)
+    {
+        if (my_player_script.on_use_element != Player.PlayerElementOnUse.Non_Element)
+        {
+            if (photonView.IsMine)
+            {
+                if(energy_to_erase < my_player_script.current_element_energy && my_player_script.current_element_energy >= energy_to_erase) //This last check should be on player script
+                {
+                    my_player_script.ConsumeElementEnergy(energy_to_erase);
+                }
+            }
+        }
     }
 
     public void SetNoCCSpeed()
@@ -99,7 +132,7 @@ public class CrowdControlManager : MonoBehaviourPun
                 {
                     if (was_stackable)
                     {
-                        if (total_slow_percentage >= slow_amount_to_remove)
+                        if (total_slow_percentage > slow_amount_to_remove || Mathf.Approximately(total_slow_percentage, slow_amount_to_remove))
                         {
                             total_slow_percentage -= slow_amount_to_remove;
 
@@ -107,7 +140,8 @@ public class CrowdControlManager : MonoBehaviourPun
                         }
                         else
                         {
-                            Debug.LogWarning("Too much slow to remove from the stack.");
+                            Debug.LogWarning("Slow stack: " + total_slow_percentage.ToString());
+                            Debug.LogWarning("Too much slow to remove from the stack. Slow to remove: " + slow_amount_to_remove.ToString());
                             return;
                         }
                     }

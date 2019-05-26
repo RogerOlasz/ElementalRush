@@ -40,8 +40,6 @@ public class WaterStraightProjectile : MonoBehaviourPun, IPunObservable
     void Update()
     {
         distance = Vector3.Distance(original_pos, transform.position);
-        //projectile_direction = transform.position - original_pos;
-        //projectile_direction_normalized = projectile_direction.normalized;
 
         if (distance <= projectile_range)
         {
@@ -52,37 +50,31 @@ public class WaterStraightProjectile : MonoBehaviourPun, IPunObservable
             Destroy(gameObject);
         }
 
-        //if (photonView.IsMine)
-        //{
-        //    if (distance >= 0.55f && path_instantiated == false)
-        //    {
-        //        my_path = PhotonNetwork.Instantiate("WaterStraightPath", new Vector3(transform.position.x, 0.005f, transform.position.z), transform.rotation);
-        //        path_instantiated = true;
-        //    }
-        //}
-
-        if (distance >= 0.55f && path_instantiated == false)
+        if (path_instantiated == false && distance >= 0.55f)
         {
             if (photonView.IsMine)
             {
                 my_path = PhotonNetwork.Instantiate("WaterStraightPath", new Vector3(transform.position.x, 0.005f, transform.position.z), transform.rotation);
             }
-            else
+            else if(PhotonView.Find(photonView.ViewID + 1) != null) //TODO: At some point, this method should be changed and reduce the number of conditions needed
             {
-                my_path = PhotonView.Find(photonView.ViewID + 1).transform.gameObject;
-                Debug.Log(my_path);
+                my_path = PhotonView.Find(photonView.ViewID + 1).gameObject; //Gives null when the objet is still not initialized
             }
 
-            path_scale = my_path.transform.localScale;
-            path_position = my_path.transform.position;
-            first_path_pos = path_position;
-            path_instantiated = true;
+            if (my_path != null)
+            {
+                path_scale = my_path.transform.localScale;
+                path_position = my_path.transform.position;
+                first_path_pos = path_position;
+
+                projectile_direction = transform.position - original_pos;
+                projectile_direction_normalized = projectile_direction.normalized;
+
+                path_instantiated = true;
+            }
         }
         else if (my_path != null)
         {
-            projectile_direction = transform.position - original_pos;
-            projectile_direction_normalized = projectile_direction.normalized;
-
             path_scale.x = distance;
             my_path.transform.localScale = path_scale;
 
@@ -90,34 +82,7 @@ public class WaterStraightProjectile : MonoBehaviourPun, IPunObservable
             path_position.z = (distance / 2 * projectile_direction_normalized.z) + first_path_pos.z;
 
             my_path.transform.position = path_position;
-        }      
-
-        //if (photonView.IsMine)
-        //{
-        //    if (distance >= 0.55f && path_instantiated == false)
-        //    {
-        //        my_path = PhotonNetwork.Instantiate("WaterStraightPath", new Vector3(transform.position.x, 0.005f, transform.position.z), transform.rotation);
-        //        my_path.GetPhotonView().Owner.TagObject = this.gameObject;
-
-        //        path_scale = my_path.transform.localScale;
-        //        path_position = my_path.transform.position;
-        //        first_path_pos = path_position;
-        //        path_instantiated = true;
-        //    }
-        //    else if (my_path != null)
-        //    {
-        //        projectile_direction = transform.position - original_pos;
-        //        projectile_direction_normalized = projectile_direction.normalized;
-
-        //        path_scale.x = distance;
-        //        my_path.transform.localScale = path_scale;
-
-        //        path_position.x = (distance / 2 * projectile_direction_normalized.x) + first_path_pos.x;
-        //        path_position.z = (distance / 2 * projectile_direction_normalized.z) + first_path_pos.z;
-
-        //        my_path.transform.position = path_position;
-        //    }
-        //}
+        }
     }
 
     private void OnTriggerEnter(Collider collider)

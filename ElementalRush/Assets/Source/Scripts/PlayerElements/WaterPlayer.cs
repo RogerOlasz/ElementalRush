@@ -47,13 +47,9 @@ public class WaterPlayer : MonoBehaviourPun
 
     public void StraightAttack()
     {
-        if (photonView.IsMine)
-        {
-            GameObject straight_attack_vfx;
+        GameObject straight_attack_vfx;
 
-            straight_attack_vfx = PhotonNetwork.Instantiate("WaterStraightProjectile", transform.position, transform.rotation, 0);
-            straight_attack_vfx.GetPhotonView().Owner.TagObject = this.gameObject;
-        }
+        straight_attack_vfx = PhotonNetwork.Instantiate("WaterStraightProjectile", transform.position, transform.rotation, 0);
     }
 
     public void AoEAttack()

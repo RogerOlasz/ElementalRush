@@ -49,8 +49,7 @@ public class IcePlayer : MonoBehaviourPun
     {
         GameObject straight_attack_vfx;
 
-        straight_attack_vfx = PhotonNetwork.Instantiate("IceStraightProjectile", new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-        straight_attack_vfx.transform.localRotation = transform.rotation;
+        straight_attack_vfx = PhotonNetwork.Instantiate("IceStraightProjectile", transform.position, transform.rotation);
     }
 
     public void AoEAttack()

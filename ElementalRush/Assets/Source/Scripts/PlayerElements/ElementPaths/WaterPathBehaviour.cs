@@ -5,10 +5,6 @@ using Photon.Pun;
 
 public class WaterPathBehaviour : MonoBehaviourPun, IPunObservable
 {
-    //private Vector3 real_position;
-    //private Quaternion real_rotation;
-    //private Vector3 real_scale;
-
     CrowdControlManager cc_manager;
     List<CrowdControlManager> list_of_cc;
 
@@ -48,7 +44,12 @@ public class WaterPathBehaviour : MonoBehaviourPun, IPunObservable
     IEnumerator AttackDuration()
     {
         yield return new WaitForSeconds(effect_duration);
-        
+
+        Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
         if (list_of_cc.Count > 0)
         {
             for (int i = 0; i < list_of_cc.Count; i++)
@@ -56,8 +57,6 @@ public class WaterPathBehaviour : MonoBehaviourPun, IPunObservable
                 list_of_cc[i].RemoveSlowCC(slow_percentage);
             }
         }
-
-        Destroy(gameObject);
     }
 
     void Awake()
@@ -74,31 +73,18 @@ public class WaterPathBehaviour : MonoBehaviourPun, IPunObservable
     // Update is called once per frame
     void Update()
     {        
-        //if (photonView.IsMine)
-        //{
 
-        //}
-        //else
-        //{            
-        //    //transform.position = Vector3.Lerp(transform.position, real_position, Time.deltaTime * 15);
-        //    //transform.rotation = Quaternion.Lerp(transform.rotation, real_rotation, Time.deltaTime * 30);
-        //    //transform.localScale = Vector3.Lerp(transform.localScale, real_scale, Time.deltaTime * 15);
-        //}
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting)
+        if (stream.IsWriting && photonView.IsMine)
         {
-            //stream.SendNext(transform.position);
-            //stream.SendNext(transform.rotation);
-            //stream.SendNext(transform.localScale);
+
         }
         else if (stream.IsReading)
         {
-            //real_position = (Vector3)stream.ReceiveNext();
-            //real_rotation = (Quaternion)stream.ReceiveNext();
-            //real_scale = (Vector3)stream.ReceiveNext();
+
         }
     }
 }
