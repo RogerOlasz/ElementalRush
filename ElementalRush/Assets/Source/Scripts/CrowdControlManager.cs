@@ -10,6 +10,11 @@ public class CrowdControlManager : MonoBehaviourPun
     Rigidbody my_rigidbody;
 
     private bool slippery_floor;
+    public float slippery_force;
+
+    private bool windy_tunnel;
+    public float wind_force;
+    public Vector3 wind_direction;
 
     private float no_cc_movement_speed;
     private float total_slow_percentage;
@@ -22,6 +27,7 @@ public class CrowdControlManager : MonoBehaviourPun
         my_p_controller = GetComponent<PlayerController>();
 
         slippery_floor = false;
+        windy_tunnel = false;
         total_slow_percentage = 0;
     }
 
@@ -31,20 +37,40 @@ public class CrowdControlManager : MonoBehaviourPun
         if (slippery_floor)
         {
             Vector3 direction = my_rigidbody.velocity.normalized;
-            my_rigidbody.AddForce(new Vector3(8 * direction.x, 0, 8 * direction.z));
+            my_rigidbody.AddForce(new Vector3(slippery_force * direction.x, 0, slippery_force * direction.z));
+        }
+
+        if(windy_tunnel)
+        {
+            my_rigidbody.AddForce(new Vector3((wind_force) * wind_direction.x, 0, (wind_force) * wind_direction.z));
         }
     }
 
-    public void ApplySlipperyFloor()
+    public void ApplyWindyTunnel(float _wind_force, Vector3 _wind_direction)
     {
+        wind_force = _wind_force;
+        wind_direction = _wind_direction;
+        windy_tunnel = true;
+        my_p_controller.velocity_control = true;
+    }
+
+    public void RemoveWindyTunnel()
+    {
+        windy_tunnel = false;
+        my_p_controller.velocity_control = false;
+    }
+
+    public void ApplySlipperyFloor(float _slippery_force)
+    {
+        slippery_force = _slippery_force;
         slippery_floor = true;
-        my_p_controller.slippery_movement = true;
+        my_p_controller.velocity_control = true;
     }
 
     public void RemoveSlipperyFloor()
     {
         slippery_floor = false;
-        my_p_controller.slippery_movement = false;
+        my_p_controller.velocity_control = false;
     }
 
     public void EraseElementEnergy(int energy_to_erase)

@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d14751dfb51d54881f946a886df368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slippery_movement: 0
+  velocity_control: 0
   stop_duration: 0.4
   sensibility: 0.3
   cancel_attack_r1: 0.5
@@ -348,6 +348,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb84ee18c622654faba537f6cdc96eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slippery_force: 0
+  wind_force: 0
+  wind_direction: {x: 0, y: 0, z: 0}
 --- !u!114 &8502894925873752292
 MonoBehaviour:
   m_ObjectHideFlags: 0

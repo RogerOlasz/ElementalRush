@@ -4846,7 +4846,6 @@ GameObject:
   - component: {fileID: 8542315997361676370}
   - component: {fileID: 8542315997361676740}
   - component: {fileID: 264194081618106572}
-  - component: {fileID: 6813185233231742019}
   m_Layer: 0
   m_Name: AirStraightProjectile
   m_TagString: Untagged
@@ -4915,6 +4914,7 @@ MonoBehaviour:
   projectile_speed: 40
   projectile_range: 5
   element_path: 
+  my_path: {fileID: 0}
 --- !u!114 &264194081618106572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4933,26 +4933,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 6813185233231742019}
   - {fileID: 8542315997361676740}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6813185233231742019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8542315997361676518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
 --- !u!1 &8542315997361676536
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     private Player player;
     Rigidbody rigid_body;
 
-    public bool slippery_movement;
+    public bool velocity_control;
 
     //Left joystick. Used to move the player
     public float stop_duration = 0.4f;
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            if (!slippery_movement)
+            if (!velocity_control)
             {
                 velo_x = joystick_l.Horizontal * speed_factor;
                 velo_z = joystick_l.Vertical * speed_factor;
@@ -193,7 +193,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             direction_r2 = new Vector2(0, 0);
             direction_r2_no_normal = new Vector2(0, 0);
 
-            slippery_movement = false;
+            velocity_control = false;
         }
     }
 
@@ -227,7 +227,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             }
             else
             {
-                if (!slippery_movement)
+                if (!velocity_control)
                 {
                     StaticRotation();
                     StoppingPlayer();

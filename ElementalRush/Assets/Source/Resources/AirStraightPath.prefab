@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 685877017999976635}
   - component: {fileID: 3541169059905864468}
   - component: {fileID: 2826682351330075044}
-  - component: {fileID: 4776693363347620986}
   m_Layer: 0
   m_Name: AirStraightPath
   m_TagString: Untagged
@@ -107,6 +106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect_duration: 6
+  wind_force: 15
+  wind_direction: {x: 0, y: 0, z: 0}
 --- !u!114 &2826682351330075044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,23 +126,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 4776693363347620986}
   - {fileID: 3541169059905864468}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &4776693363347620986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 685877017999976634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0

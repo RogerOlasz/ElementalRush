@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect_duration: 12
+  slippery_force: 6
 --- !u!114 &5204488234501307658
 MonoBehaviour:
   m_ObjectHideFlags: 0

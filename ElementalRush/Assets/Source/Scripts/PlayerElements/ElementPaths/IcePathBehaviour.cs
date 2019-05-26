@@ -9,13 +9,14 @@ public class IcePathBehaviour : MonoBehaviourPun, IPunObservable
     List<CrowdControlManager> list_of_cc;
 
     public float effect_duration = 12f;
+    public float slippery_force = 5f;
 
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Player")
         {
             cc_manager = collider.GetComponent<CrowdControlManager>();
-            cc_manager.ApplySlipperyFloor();
+            cc_manager.ApplySlipperyFloor(slippery_force);
 
             list_of_cc.Add(cc_manager);
         }
