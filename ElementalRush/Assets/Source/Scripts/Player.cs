@@ -585,6 +585,14 @@ public class Player : MonoBehaviourPun, IPunObservable
         if (photonView.IsMine)
         {            
             player_camera = Camera.main;
+            if (gameObject.layer == LayerMask.NameToLayer("TeamRed"))
+            {
+                player_camera.transform.Rotate(-65, 0, 0);
+                player_camera.transform.Rotate(0, 180, 0);
+                player_camera.transform.Rotate(65, 0, 0);
+
+                camera_offset.z = Mathf.Abs(camera_offset.z);
+            }
             cc_manager = GetComponent<CrowdControlManager>();            
 
             player_panel = PhotonNetwork.Instantiate("PlayerPanel", Vector3.zero, Quaternion.identity, 0);
@@ -620,7 +628,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         else
         {
             transform.position = Vector3.Lerp(transform.position, real_position, Time.deltaTime * 15);
-            transform.rotation = Quaternion.Lerp(transform.rotation, real_rotation, Time.deltaTime * 15);
+            transform.rotation = Quaternion.Lerp(transform.rotation, real_rotation, Time.deltaTime * 60);
         }
     }
 
@@ -628,7 +636,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {            
-            Vector3 camera_pos = player_camera.gameObject.transform.position;
+            Vector3 camera_pos = player_camera.transform.position;
             Vector3 player_pos = transform.position;
             player_camera.transform.position = Vector3.Lerp(camera_pos, new Vector3(player_pos.x, player_pos.y, player_pos.z) + camera_offset, camera_speed); // * Time.deltaTime On camera speed If smoothier cam is needed
         }

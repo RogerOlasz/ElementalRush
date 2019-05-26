@@ -8,10 +8,13 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
 {
     public PlayfabManager playfab_manager;
 
+    public GameObject map_manager;
+    private MapManager map_manager_script;    
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        map_manager_script = map_manager.GetComponent<MapManager>();
     }
 
     // Update is called once per frame
@@ -35,11 +38,6 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomRoom();                
     }
 
-    //public void CreateOrJoin()
-    //{
-    //    PhotonNetwork.JoinRandomRoom();
-    //}
-
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         RoomOptions new_room = new RoomOptions();
@@ -54,7 +52,18 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(2, 1, 2), Quaternion.identity, 0);
-        player.layer = LayerMask.NameToLayer("TeamBlue");        
+        GameObject player = PhotonNetwork.Instantiate("Player", map_manager_script.red_spawn_points[0].transform.position, Quaternion.identity, 0);
+        player.layer = LayerMask.NameToLayer("TeamRed");
+
+        //if(PhotonNetwork.PlayerList.Length % 2 != 0)
+        //{
+        //    GameObject player = PhotonNetwork.Instantiate("Player", map_manager_script.blue_spawn_points[PhotonNetwork.PlayerList.Length - 1].transform.position, Quaternion.identity, 0);
+        //    player.layer = LayerMask.NameToLayer("TeamBlue");     
+        //}
+        //else
+        //{
+        //    GameObject player = PhotonNetwork.Instantiate("Player", map_manager_script.red_spawn_points[PhotonNetwork.PlayerList.Length -2].transform.position, Quaternion.identity, 0);
+        //    player.layer = LayerMask.NameToLayer("TeamRed");
+        //}   
     }
 }

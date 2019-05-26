@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2155ddb5accd3a4cac84cc1c547b8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera_offset: {x: 0, y: 25, z: -11}
+  camera_offset: {x: 0, y: 18, z: -8}
   camera_speed: 1
   player_panel: {fileID: 239072799990215736, guid: cabac59a3cce4f441b8df02cae7afea1,
     type: 3}

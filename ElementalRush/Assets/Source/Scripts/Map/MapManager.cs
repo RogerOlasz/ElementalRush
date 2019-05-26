@@ -16,6 +16,9 @@ public class MapManager : MonoBehaviour
     //Player base from the map
     PlayersMatchBase match_base = null;
 
+    public List<GameObject> blue_spawn_points;
+    public List<GameObject> red_spawn_points;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -143,5 +146,14 @@ public class MapManager : MonoBehaviour
         //Setting the player base trigger
         match_base = GetComponentInChildren<PlayersMatchBase>();
         match_base.SetTriggerBase();
+
+        int spawn_positions = (map_size.x / 2);
+        blue_spawn_points[0].transform.position = new Vector3(spawn_positions - 10f, 1f, 0.5f);
+        blue_spawn_points[1].transform.position = new Vector3(spawn_positions, 1f, 0.5f);
+        blue_spawn_points[2].transform.position = new Vector3(spawn_positions + 10f, 1f, 0.5f);
+
+        red_spawn_points[0].transform.position = new Vector3(spawn_positions - 10f, 1f, map_size.y - 0.5f);
+        red_spawn_points[1].transform.position = new Vector3(spawn_positions, 1f, map_size.y - 0.5f);
+        red_spawn_points[2].transform.position = new Vector3(spawn_positions + 10f, 1f, map_size.y - 0.5f);
     }
 }

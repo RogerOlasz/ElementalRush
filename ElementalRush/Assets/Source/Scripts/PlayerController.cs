@@ -63,6 +63,15 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
                 velo_z = joystick_l.Vertical * speed_factor;
                 velo_eq.Set(velo_x, 0, velo_z);
 
+                if (gameObject.layer == LayerMask.NameToLayer("TeamRed"))
+                {
+                    velo_eq.Set(-velo_x, 0, -velo_z);
+                }
+                else
+                {
+                    velo_eq.Set(velo_x, 0, velo_z);
+                }
+
                 rigid_body.velocity = velo_eq;
             } 
         }
@@ -78,8 +87,17 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
                 //Current time during desaceleration
                 //Debug.Log(curr_time);
                 velo_x = fix_vel_x - fix_vel_x * curr_time / stop_duration;
-                velo_z = fix_vel_z - fix_vel_z * curr_time / stop_duration;
-                velo_eq.Set(velo_x, 0, velo_z);
+                velo_z = fix_vel_z - fix_vel_z * curr_time / stop_duration;                
+
+                if (gameObject.layer == LayerMask.NameToLayer("TeamRed"))
+                {
+                    velo_eq.Set(-velo_x, 0, -velo_z);
+                }
+                else
+                {
+                    velo_eq.Set(velo_x, 0, velo_z);
+                }
+
                 rigid_body.velocity = velo_eq;
             }
         }
