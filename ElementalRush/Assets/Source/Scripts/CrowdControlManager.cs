@@ -6,6 +6,7 @@ using Photon.Pun;
 public class CrowdControlManager : MonoBehaviourPun
 {
     Player my_player_script;
+    PlayerController my_p_controller;
     Rigidbody my_rigidbody;
 
     private bool slippery_floor;
@@ -18,6 +19,7 @@ public class CrowdControlManager : MonoBehaviourPun
     {
         my_player_script = GetComponent<Player>();
         my_rigidbody = GetComponent<Rigidbody>();
+        my_p_controller = GetComponent<PlayerController>();
 
         slippery_floor = false;
         total_slow_percentage = 0;
@@ -28,18 +30,21 @@ public class CrowdControlManager : MonoBehaviourPun
     {
         if (slippery_floor)
         {
-            my_rigidbody.AddForce(new Vector3(10, 0, 0));
+            Vector3 direction = my_rigidbody.velocity.normalized;
+            my_rigidbody.AddForce(new Vector3(8 * direction.x, 0, 8 * direction.z));
         }
     }
 
     public void ApplySlipperyFloor()
     {
         slippery_floor = true;
+        my_p_controller.slippery_movement = true;
     }
 
     public void RemoveSlipperyFloor()
     {
         slippery_floor = false;
+        my_p_controller.slippery_movement = false;
     }
 
     public void EraseElementEnergy(int energy_to_erase)
