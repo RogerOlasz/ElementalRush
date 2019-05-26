@@ -37,7 +37,15 @@ public class CrowdControlManager : MonoBehaviourPun
         if (slippery_floor)
         {
             Vector3 direction = my_rigidbody.velocity.normalized;
-            my_rigidbody.AddForce(new Vector3(slippery_force * direction.x, 0, slippery_force * direction.z));
+            if (direction != Vector3.zero)
+            {
+                my_p_controller.velocity_control = true;
+                my_rigidbody.AddForce(new Vector3(slippery_force * direction.x, 0, slippery_force * direction.z));
+            }
+            else
+            {
+                my_p_controller.velocity_control = false;
+            }
         }
 
         if(windy_tunnel)
