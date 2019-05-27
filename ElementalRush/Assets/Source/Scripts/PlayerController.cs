@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     private Player player;
     Rigidbody rigid_body;
 
-    public bool velocity_control;
+    [HideInInspector] public bool velocity_control;
 
     //Left joystick. Used to move the player
     public float stop_duration = 0.4f;
@@ -59,8 +59,8 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         {
             if (!velocity_control)
             {
-                velo_x = joystick_l.Horizontal * speed_factor;
-                velo_z = joystick_l.Vertical * speed_factor;
+                velo_x = joystick_l.Horizontal() * speed_factor;
+                velo_z = joystick_l.Vertical() * speed_factor;
                 velo_eq.Set(velo_x, 0, velo_z);
 
                 if (gameObject.layer == LayerMask.NameToLayer("TeamRed"))
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
             if (_joystick_l != null)
             {
-                if (_joystick_l.Horizontal >= 0)
+                if (_joystick_l.Horizontal() >= 0)
                 {
                     transform.rotation = Quaternion.Euler(0, rot_y, 0);
                     last_rot = rot_y;
@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             if (_joystick_r1 != null)
             {
                 last_direction_r1_no_normal = direction_r1_no_normal; //Still not in use
-                if (_joystick_r1.Horizontal >= 0)
+                if (_joystick_r1.Horizontal() >= 0)
                 {
                     transform.rotation = Quaternion.Euler(0, rot_y, 0);
                     last_rot = rot_y;
@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             if (_joystick_r2 != null)
             {
                 last_direction_r2_no_normal = direction_r2_no_normal;
-                if (_joystick_r2.Horizontal >= 0)
+                if (_joystick_r2.Horizontal() >= 0)
                 {
                     transform.rotation = Quaternion.Euler(0, rot_y, 0);
                     last_rot = rot_y;
@@ -220,17 +220,17 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            direction_l.Set(joystick_l.Horizontal, joystick_l.Vertical);
+            direction_l.Set(joystick_l.Horizontal(), joystick_l.Vertical());
             direction_l.Normalize();
-            direction_l_no_normal.Set(joystick_l.Horizontal, joystick_l.Vertical);
+            direction_l_no_normal.Set(joystick_l.Horizontal(), joystick_l.Vertical());
 
-            direction_r1.Set(joystick_r1.Horizontal, joystick_r1.Vertical);
+            direction_r1.Set(joystick_r1.Horizontal(), joystick_r1.Vertical());
             direction_r1.Normalize();
-            direction_r1_no_normal.Set(joystick_r1.Horizontal, joystick_r1.Vertical);
+            direction_r1_no_normal.Set(joystick_r1.Horizontal(), joystick_r1.Vertical());
 
-            direction_r2.Set(joystick_r2.Horizontal, joystick_r2.Vertical);
+            direction_r2.Set(joystick_r2.Horizontal(), joystick_r2.Vertical());
             direction_r2.Normalize();
-            direction_r2_no_normal.Set(joystick_r2.Horizontal, joystick_r2.Vertical);
+            direction_r2_no_normal.Set(joystick_r2.Horizontal(), joystick_r2.Vertical());
 
             player.StraightAiming();
             player.AoEAiming();
