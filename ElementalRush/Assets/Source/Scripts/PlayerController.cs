@@ -6,187 +6,116 @@ using Photon.Realtime;
 
 public class PlayerController : MonoBehaviourPun, IPunObservable
 {
-    private Joystick_L1 joystick_l;
-    private Joystick_R1 joystick_r1;
-    private Joystick_R2 joystick_r2;
+    private Joystick_L1 left_joystick;
+    private Joystick_R1 right_straight_joystick;
+    private Joystick_R2 right_aoe_joystick;
 
     private Player player;
-    Rigidbody rigid_body;
+    private Rigidbody rigid_body;
 
-    [HideInInspector] public bool velocity_control;
+    [HideInInspector] public bool velocity_control;    
 
     //Left joystick. Used to move the player
-    public float stop_duration = 0.4f;
-    private float speed_factor;
-    private float velo_x = 0f;
-    private float velo_z = 0f;
-    private float rot_y = 0f;
-    private float curr_time = 0;
-    private float fix_vel_x;
-    private float fix_vel_z;
-    private float last_rot;
-    private Vector2 direction_l;
-    private Vector2 direction_l_no_normal;
-    private Vector3 velo_eq;
+    [SerializeField] private float stop_duration = 0.4f;
+    [SerializeField] private float left_joystick_sensibility = 0.3f;
+    private float movement_speed_factor = 0;
+    private float stopping_current_time = 0;
+    private Vector3 velocity;
+    private Vector3 current_velocity;
 
-    //Used to detect joystick
-    public float sensibility = 0.3f;
+    private bool straight_aiming = false;
+    [SerializeField] private float right_1_joystick_sensibility = 0.1f;
 
-    //Attack variables
-    public float cancel_attack_r1 = 0.5f; 
-    public float last_r1 = 1f;
-    [HideInInspector] public Vector2 direction_r1;
-    [HideInInspector] public Vector2 direction_r1_no_normal;
-    [HideInInspector] public Vector2 last_direction_r1_no_normal;
+    private bool aoe_aiming = false;
+    [SerializeField] private float right_2_joystick_sensibility = 0.1f;
 
-    public float cancel_attack_r2 = 0.1f; //TODO: Actually this is apparently useless, used in Player.cs
-    public float last_r2 = 0f;
-    [HideInInspector] public Vector2 direction_r2;
-    [HideInInspector] public Vector2 direction_r2_no_normal;
-    [HideInInspector] public Vector2 last_direction_r2_no_normal;
+    Vector3 looking_at;
+    private Vector3 real_position;
+    private Quaternion real_rotation;
 
-    public void SetSpeedFactor(float new_speed)
+    public void SetSpeedFactor(float new_movement_speed)
     {
         if (photonView.IsMine)
         {
-            speed_factor = new_speed;
+            movement_speed_factor = new_movement_speed;
         }
     }
 
-    void MovingPlayer()
+    private void MovingPlayer()
     {
         if (photonView.IsMine)
         {
             if (!velocity_control)
             {
-                velo_x = joystick_l.Horizontal() * speed_factor;
-                velo_z = joystick_l.Vertical() * speed_factor;
-                velo_eq.Set(velo_x, 0, velo_z);
-
-                if (gameObject.layer == LayerMask.NameToLayer("TeamRed"))
+                if (gameObject.layer == LayerMask.NameToLayer("TeamBlue"))
                 {
-                    velo_eq.Set(-velo_x, 0, -velo_z);
+                    velocity.x = left_joystick.Horizontal() * movement_speed_factor;
+                    velocity.z = left_joystick.Vertical() * movement_speed_factor;
                 }
                 else
                 {
-                    velo_eq.Set(velo_x, 0, velo_z);
+                    velocity.x = left_joystick.Horizontal() * movement_speed_factor * -1;
+                    velocity.z = left_joystick.Vertical() * movement_speed_factor * -1;                    
                 }
 
-                rigid_body.velocity = velo_eq;
+                rigid_body.velocity = velocity;
+
+                if (velocity != Vector3.zero && straight_aiming == false && aoe_aiming == false)
+                {
+                    rigid_body.rotation = Quaternion.LookRotation(velocity);
+                }
             } 
         }
     }
 
-    void StoppingPlayer()
+    private void StoppingPlayer()
     {
         if (photonView.IsMine)
         {
-            curr_time += Time.fixedDeltaTime;
-            if (curr_time <= stop_duration)
+            if (!velocity_control)
             {
-                //Current time during desaceleration
-                //Debug.Log(curr_time);
-                velo_x = fix_vel_x - fix_vel_x * curr_time / stop_duration;
-                velo_z = fix_vel_z - fix_vel_z * curr_time / stop_duration;                
+                stopping_current_time += Time.fixedDeltaTime;
 
-                if (gameObject.layer == LayerMask.NameToLayer("TeamRed"))
+                if (stopping_current_time <= stop_duration)
                 {
-                    velo_eq.Set(-velo_x, 0, -velo_z);
-                }
-                else
-                {
-                    velo_eq.Set(velo_x, 0, velo_z);
-                }
+                    if (gameObject.layer == LayerMask.NameToLayer("TeamBlue"))
+                    {
+                        velocity.x = current_velocity.x - current_velocity.x * stopping_current_time / stop_duration;
+                        velocity.z = current_velocity.z - current_velocity.z * stopping_current_time / stop_duration;
+                    }
+                    else
+                    {
+                        velocity.x = (current_velocity.x - current_velocity.x * stopping_current_time / stop_duration) * -1;
+                        velocity.z = (current_velocity.z - current_velocity.z * stopping_current_time / stop_duration) ;
+                    }
 
-                rigid_body.velocity = velo_eq;
+                    rigid_body.velocity = velocity;
+
+                    if (velocity != Vector3.zero && straight_aiming == false && aoe_aiming == false)
+                    {
+                        rigid_body.rotation = Quaternion.LookRotation(velocity);
+                    }
+                }
             }
         }
+    }    
+
+    public void StraightAiming()
+    {
+        looking_at.x = right_straight_joystick.Horizontal();
+        looking_at.z = right_straight_joystick.Vertical();
+
+        rigid_body.rotation = Quaternion.LookRotation(looking_at);
+        straight_aiming = true;
     }
 
-    void Rotation(Vector2 direction, Joystick_L1 _joystick_l = null, Joystick_R1 _joystick_r1 = null, Joystick_R2 _joystick_r2 = null)
+    public void AoEAiming()
     {
-        if (photonView.IsMine)
-        {
-            rot_y = Mathf.Asin(-direction.y) * Mathf.Rad2Deg;
+        looking_at.x = right_aoe_joystick.Horizontal();
+        looking_at.z = right_aoe_joystick.Vertical();
 
-            if (_joystick_l != null)
-            {
-                if (_joystick_l.Horizontal() >= 0)
-                {
-                    transform.rotation = Quaternion.Euler(0, rot_y, 0);
-                    last_rot = rot_y;
-                }
-                else
-                {
-                    transform.rotation = Quaternion.Euler(0, 180 - rot_y, 0);
-                    last_rot = rot_y;
-                }
-            }
-
-            if (_joystick_r1 != null)
-            {
-                last_direction_r1_no_normal = direction_r1_no_normal; //Still not in use
-                if (_joystick_r1.Horizontal() >= 0)
-                {
-                    transform.rotation = Quaternion.Euler(0, rot_y, 0);
-                    last_rot = rot_y;
-                }
-                else
-                {
-                    transform.rotation = Quaternion.Euler(0, 180 - rot_y, 0);
-                    last_rot = rot_y;
-                }
-            }
-
-            if (_joystick_r2 != null)
-            {
-                last_direction_r2_no_normal = direction_r2_no_normal;
-                if (_joystick_r2.Horizontal() >= 0)
-                {
-                    transform.rotation = Quaternion.Euler(0, rot_y, 0);
-                    last_rot = rot_y;
-                }
-                else
-                {
-                    transform.rotation = Quaternion.Euler(0, 180 - rot_y, 0);
-                    last_rot = rot_y;
-                }
-            }
-        }
-    }
-
-    void RotatingPlayer()
-    {
-        if (photonView.IsMine)
-        {
-            if (direction_r1.magnitude == 0 && direction_l_no_normal.magnitude > 0 && direction_r2.magnitude == 0)
-            {
-                Rotation(direction_l, joystick_l);
-            }
-            else if (direction_r1.magnitude > 0 && direction_l_no_normal.magnitude == 0 && direction_r2.magnitude == 0)
-            {
-                Rotation(direction_r1, null, joystick_r1);
-            }
-            else if (direction_r1.magnitude == 0 && direction_l_no_normal.magnitude == 0 && direction_r2.magnitude > 0)
-            {
-                Rotation(direction_r2, null, null, joystick_r2);
-            }
-        }
-    }
-
-    void StaticRotation()
-    {
-        if (photonView.IsMine)
-        {
-            if (direction_r1_no_normal.magnitude > 0 && direction_r2_no_normal.magnitude == 0)
-            {
-                Rotation(direction_r1, null, joystick_r1);
-            }
-            else if (direction_r1_no_normal.magnitude == 0 && direction_r2_no_normal.magnitude > 0)
-            {
-                Rotation(direction_r2, null, null, joystick_r2);
-            }
-        }
+        rigid_body.rotation = Quaternion.LookRotation(looking_at);
+        aoe_aiming = true;
     }
 
     // Start is called before the first frame update
@@ -194,22 +123,16 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            joystick_l = FindObjectOfType<Joystick_L1>();
-            joystick_r1 = FindObjectOfType<Joystick_R1>();
-            joystick_r2 = FindObjectOfType<Joystick_R2>();
+            left_joystick = FindObjectOfType<Joystick_L1>();
+            right_straight_joystick = FindObjectOfType<Joystick_R1>();
+            right_aoe_joystick = FindObjectOfType<Joystick_R2>();
 
             rigid_body = GetComponent<Rigidbody>();
             player = GetComponent<Player>();
 
-            velo_eq = new Vector3(0, 0, 0);
-            direction_l = new Vector2(0, 0);
-            direction_l_no_normal = new Vector2(0, 0);
-
-            direction_r1 = new Vector2(0, 0);
-            direction_r1_no_normal = new Vector2(0, 0);
-
-            direction_r2 = new Vector2(0, 0);
-            direction_r2_no_normal = new Vector2(0, 0);
+            velocity = Vector3.zero;
+            current_velocity = Vector3.zero;
+            looking_at = Vector3.zero;
 
             velocity_control = false;
         }
@@ -220,37 +143,43 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            direction_l.Set(joystick_l.Horizontal(), joystick_l.Vertical());
-            direction_l.Normalize();
-            direction_l_no_normal.Set(joystick_l.Horizontal(), joystick_l.Vertical());
+            //player.StraightAiming();
+            //player.AoEAiming();
 
-            direction_r1.Set(joystick_r1.Horizontal(), joystick_r1.Vertical());
-            direction_r1.Normalize();
-            direction_r1_no_normal.Set(joystick_r1.Horizontal(), joystick_r1.Vertical());
-
-            direction_r2.Set(joystick_r2.Horizontal(), joystick_r2.Vertical());
-            direction_r2.Normalize();
-            direction_r2_no_normal.Set(joystick_r2.Horizontal(), joystick_r2.Vertical());
-
-            player.StraightAiming();
-            player.AoEAiming();
-
-            if (direction_l.magnitude >= sensibility)
+            if (left_joystick.Direction().magnitude >= left_joystick_sensibility)
             {
-                RotatingPlayer();
                 MovingPlayer();
-                curr_time = 0;
-                fix_vel_x = velo_x;
-                fix_vel_z = velo_z;
+                stopping_current_time = 0;
+                current_velocity.x = velocity.x;
+                current_velocity.z = velocity.z;
+            }
+            else if (rigid_body.velocity != Vector3.zero)
+            {
+                StoppingPlayer();
+            }
+
+            if (right_straight_joystick.Direction().magnitude > right_1_joystick_sensibility && aoe_aiming == false)
+            {
+                StraightAiming();
             }
             else
             {
-                if (!velocity_control)
-                {
-                    StaticRotation();
-                    StoppingPlayer();
-                }
+                straight_aiming = false;
             }
+
+            if (right_aoe_joystick.Direction().magnitude > right_2_joystick_sensibility && straight_aiming == false)
+            {
+                AoEAiming();
+            }
+            else
+            {
+                aoe_aiming = false;
+            }
+        }
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, real_position, Time.fixedDeltaTime * 15);
+            transform.rotation = Quaternion.Lerp(transform.rotation, real_rotation, Time.fixedDeltaTime * 60);
         }
     }
 
@@ -258,11 +187,13 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
         }
         else if (stream.IsReading)
         {
-
+            real_position = (Vector3)stream.ReceiveNext();
+            real_rotation = (Quaternion)stream.ReceiveNext();
         }
     }
 }

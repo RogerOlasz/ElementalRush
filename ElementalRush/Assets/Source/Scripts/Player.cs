@@ -41,8 +41,6 @@ public class Player : MonoBehaviourPun, IPunObservable
     //Player attributes
     [HideInInspector] public float movement_speed;
     [HideInInspector] public float item_carrying_speed;
-    private Vector3 real_position;
-    private Quaternion real_rotation;
 
     [Header("Straight Attack attributes")]
     //Player Straight attack
@@ -340,245 +338,245 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     #endregion
 
-    #region StraightAttackSystem
+    //#region StraightAttackSystem
 
-    public void StraightAiming()
-    {
-        if (photonView.IsMine)
-        {
-            if (shoot_rate_straight == true && current_element_energy >= straight_attack_player_consumption && p_controller.direction_r1_no_normal.magnitude > p_controller.sensibility)
-            {
-                //GenerateArea(); // l'àrea haurà de desepareixer quan la direcció baixa de 0.5
-                p_controller.last_r1 = p_controller.direction_r1_no_normal.magnitude;
-                aim_straight = true;
-            }
-            else if (shoot_rate_straight == true && extra_attack > 0 && p_controller.direction_r1_no_normal.magnitude > p_controller.sensibility)
-            {
-                //GenerateArea(); // l'àrea haurà de desepareixer quan la direcció baixa de 0.5
-                p_controller.last_r1 = p_controller.direction_r1_no_normal.magnitude;
-                aim_straight = true;
-            }
+    //public void StraightAiming()
+    //{
+    //    if (photonView.IsMine)
+    //    {
+    //        if (shoot_rate_straight == true && current_element_energy >= straight_attack_player_consumption && p_controller.direction_r1_no_normal.magnitude > p_controller.sensibility)
+    //        {
+    //            //GenerateArea(); // l'àrea haurà de desepareixer quan la direcció baixa de 0.5
+    //            p_controller.last_r1 = p_controller.direction_r1_no_normal.magnitude;
+    //            aim_straight = true;
+    //        }
+    //        else if (shoot_rate_straight == true && extra_attack > 0 && p_controller.direction_r1_no_normal.magnitude > p_controller.sensibility)
+    //        {
+    //            //GenerateArea(); // l'àrea haurà de desepareixer quan la direcció baixa de 0.5
+    //            p_controller.last_r1 = p_controller.direction_r1_no_normal.magnitude;
+    //            aim_straight = true;
+    //        }
 
-            if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0 && current_element_energy > straight_attack_player_consumption && on_use_element != PlayerElementOnUse.Non_Element)
-            {
-                switch (on_use_element)
-                {
-                    case PlayerElementOnUse.Fire:
-                        {
-                            bottled_fire.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Earth:
-                        {
-                            bottled_earth.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Water:
-                        {
-                            bottled_water.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Ice:
-                        {
-                            bottled_ice.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Plant:
-                        {
-                            bottled_plant.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Air:
-                        {
-                            bottled_air.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Electric:
-                        {
-                            bottled_electric.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Non_Element:
-                        {
-                            Debug.Log("Cannot attack, you have no element.");
-                            break;
-                        }
-                    default:
-                        {
-                            SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
-                            break;
-                        }
-                }
+    //        if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0 && current_element_energy > straight_attack_player_consumption && on_use_element != PlayerElementOnUse.Non_Element)
+    //        {
+    //            switch (on_use_element)
+    //            {
+    //                case PlayerElementOnUse.Fire:
+    //                    {
+    //                        bottled_fire.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Earth:
+    //                    {
+    //                        bottled_earth.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Water:
+    //                    {
+    //                        bottled_water.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Ice:
+    //                    {
+    //                        bottled_ice.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Plant:
+    //                    {
+    //                        bottled_plant.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Air:
+    //                    {
+    //                        bottled_air.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Electric:
+    //                    {
+    //                        bottled_electric.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Non_Element:
+    //                    {
+    //                        Debug.Log("Cannot attack, you have no element.");
+    //                        break;
+    //                    }
+    //                default:
+    //                    {
+    //                        SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
+    //                        break;
+    //                    }
+    //            }
 
-                ConsumeElementEnergy(straight_attack_player_consumption);
+    //            ConsumeElementEnergy(straight_attack_player_consumption);
 
-                if (current_element_energy < straight_attack_player_consumption)
-                {
-                    extra_attack += 1; //TODO Still need fixes, does not work properly
-                }
+    //            if (current_element_energy < straight_attack_player_consumption)
+    //            {
+    //                extra_attack += 1; //TODO Still need fixes, does not work properly
+    //            }
 
-                shoot_rate_straight = false;
-                aim_straight = false;
-            }
-            else if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0 && extra_attack > 0 )
-            {
-                switch (on_use_element)
-                {
-                    case PlayerElementOnUse.Fire:
-                        {
-                            bottled_fire.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Earth:
-                        {
-                            bottled_earth.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Water:
-                        {
-                            bottled_water.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Ice:
-                        {
-                            bottled_ice.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Plant:
-                        {
-                            bottled_plant.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Air:
-                        {
-                            bottled_air.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Electric:
-                        {
-                            bottled_electric.StraightAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Non_Element:
-                        {
-                            Debug.Log("Cannot attack, you have no element.");
-                            break;
-                        }
-                    default:
-                        {
-                            SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
-                            break;
-                        }
-                }
+    //            shoot_rate_straight = false;
+    //            aim_straight = false;
+    //        }
+    //        else if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 > p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0 && extra_attack > 0 )
+    //        {
+    //            switch (on_use_element)
+    //            {
+    //                case PlayerElementOnUse.Fire:
+    //                    {
+    //                        bottled_fire.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Earth:
+    //                    {
+    //                        bottled_earth.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Water:
+    //                    {
+    //                        bottled_water.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Ice:
+    //                    {
+    //                        bottled_ice.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Plant:
+    //                    {
+    //                        bottled_plant.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Air:
+    //                    {
+    //                        bottled_air.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Electric:
+    //                    {
+    //                        bottled_electric.StraightAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Non_Element:
+    //                    {
+    //                        Debug.Log("Cannot attack, you have no element.");
+    //                        break;
+    //                    }
+    //                default:
+    //                    {
+    //                        SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
+    //                        break;
+    //                    }
+    //            }
 
-                ConsumeElementEnergy(current_element_energy);
-                extra_attack -= 1;
-            }
-            else if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 < p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0)
-            {
-                aim_straight = false;
-            }
+    //            ConsumeElementEnergy(current_element_energy);
+    //            extra_attack -= 1;
+    //        }
+    //        else if (shoot_rate_straight == true && aim_straight == true && p_controller.last_r1 < p_controller.cancel_attack_r1 && p_controller.direction_r1_no_normal.magnitude == 0)
+    //        {
+    //            aim_straight = false;
+    //        }
 
-            if (shoot_rate_straight == false && current_element_energy > straight_attack_player_consumption && shooting_rate_straight == false) //the counter will stop 0.1 seconds after be charged
-            {
-                StartCoroutine(Recharge_straight());//co-rutina per truajar charged
-            }
-            else if (shoot_rate_straight == false && extra_attack > 0 && shooting_rate_straight == false)
-            {
-                StartCoroutine(Recharge_straight());
-            }
-        }
-    }
+    //        if (shoot_rate_straight == false && current_element_energy > straight_attack_player_consumption && shooting_rate_straight == false) //the counter will stop 0.1 seconds after be charged
+    //        {
+    //            StartCoroutine(Recharge_straight());//co-rutina per truajar charged
+    //        }
+    //        else if (shoot_rate_straight == false && extra_attack > 0 && shooting_rate_straight == false)
+    //        {
+    //            StartCoroutine(Recharge_straight());
+    //        }
+    //    }
+    //}
 
-    #endregion
+    //#endregion
 
-    #region AoEAttackSystem
+    //#region AoEAttackSystem
 
-    public void AoEAiming()
-    {
-        if (photonView.IsMine)
-        {
-            if (shoot_rate_aoe == true && current_element_energy >= aoe_attack_player_consumption && p_controller.direction_r2_no_normal.magnitude > p_controller.sensibility)
-            {
-                //GenerateArea(); // l'àrea haurà de desepareixer quan la direcció baixa de 0.5
-                p_controller.last_r2 = p_controller.direction_r2_no_normal.magnitude;
-                aim_aoe = true;
-            }
+    //public void AoEAiming()
+    //{
+    //    if (photonView.IsMine)
+    //    {
+    //        if (shoot_rate_aoe == true && current_element_energy >= aoe_attack_player_consumption && p_controller.direction_r2_no_normal.magnitude > p_controller.sensibility)
+    //        {
+    //            //GenerateArea(); // l'àrea haurà de desepareixer quan la direcció baixa de 0.5
+    //            p_controller.last_r2 = p_controller.direction_r2_no_normal.magnitude;
+    //            aim_aoe = true;
+    //        }
 
-            if (shoot_rate_aoe == true && aim_aoe == true && p_controller.last_r2 > p_controller.cancel_attack_r2 && p_controller.direction_r2_no_normal.magnitude == 0 && on_use_element != PlayerElementOnUse.Non_Element)
-            {
-                switch (on_use_element)
-                {
-                    case PlayerElementOnUse.Fire:
-                        {
-                            bottled_fire.AoEAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Earth:
-                        {
-                            bottled_earth.AoEAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Water:
-                        {
-                            bottled_water.AoEAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Ice:
-                        {
-                            bottled_ice.AoEAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Plant:
-                        {
-                            bottled_plant.AoEAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Air:
-                        {
-                            bottled_air.AoEAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Electric:
-                        {
-                            bottled_electric.AoEAttack();
-                            break;
-                        }
-                    case PlayerElementOnUse.Non_Element:
-                        {
-                            Debug.Log("Cannot attack, you have no element.");
-                            break;
-                        }
-                    default:
-                        {
-                            SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
-                            break;
-                        }
-                }
+    //        if (shoot_rate_aoe == true && aim_aoe == true && p_controller.last_r2 > p_controller.cancel_attack_r2 && p_controller.direction_r2_no_normal.magnitude == 0 && on_use_element != PlayerElementOnUse.Non_Element)
+    //        {
+    //            switch (on_use_element)
+    //            {
+    //                case PlayerElementOnUse.Fire:
+    //                    {
+    //                        bottled_fire.AoEAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Earth:
+    //                    {
+    //                        bottled_earth.AoEAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Water:
+    //                    {
+    //                        bottled_water.AoEAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Ice:
+    //                    {
+    //                        bottled_ice.AoEAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Plant:
+    //                    {
+    //                        bottled_plant.AoEAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Air:
+    //                    {
+    //                        bottled_air.AoEAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Electric:
+    //                    {
+    //                        bottled_electric.AoEAttack();
+    //                        break;
+    //                    }
+    //                case PlayerElementOnUse.Non_Element:
+    //                    {
+    //                        Debug.Log("Cannot attack, you have no element.");
+    //                        break;
+    //                    }
+    //                default:
+    //                    {
+    //                        SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
+    //                        break;
+    //                    }
+    //            }
 
-                ConsumeElementEnergy(aoe_attack_player_consumption);
+    //            ConsumeElementEnergy(aoe_attack_player_consumption);
 
-                if (current_element_energy < straight_attack_player_consumption)
-                {
-                    extra_attack += 1;
-                }
+    //            if (current_element_energy < straight_attack_player_consumption)
+    //            {
+    //                extra_attack += 1;
+    //            }
 
-                shoot_rate_aoe = false;
-                aim_aoe = false;
-            }
-            else if (shoot_rate_aoe == true && aim_aoe == true && p_controller.last_r2 < p_controller.cancel_attack_r2 && p_controller.direction_r2_no_normal.magnitude == 0)
-            {
-                aim_aoe = false;
-            }
+    //            shoot_rate_aoe = false;
+    //            aim_aoe = false;
+    //        }
+    //        else if (shoot_rate_aoe == true && aim_aoe == true && p_controller.last_r2 < p_controller.cancel_attack_r2 && p_controller.direction_r2_no_normal.magnitude == 0)
+    //        {
+    //            aim_aoe = false;
+    //        }
 
-            if (shoot_rate_aoe == false && current_element_energy >= aoe_attack_player_consumption && shooting_rate_aoe == false) //the counter will stop 0.1 seconds after be charged
-            {
-                StartCoroutine(Recharge_aoe());//co-rutina per truajar charged
-            }
-        }
-    }
+    //        if (shoot_rate_aoe == false && current_element_energy >= aoe_attack_player_consumption && shooting_rate_aoe == false) //the counter will stop 0.1 seconds after be charged
+    //        {
+    //            StartCoroutine(Recharge_aoe());//co-rutina per truajar charged
+    //        }
+    //    }
+    //}
 
-    #endregion
+    //#endregion
 
     void Start()
     {
@@ -621,18 +619,10 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     void Update()
     {
-        if (photonView.IsMine)
-        {
-            //Debug.Log(PhotonNetwork.GetPing());            
-        }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, real_position, Time.deltaTime * 15);
-            transform.rotation = Quaternion.Lerp(transform.rotation, real_rotation, Time.deltaTime * 60);
-        }
+
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (photonView.IsMine)
         {            
@@ -646,17 +636,11 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(current_element_energy);
-
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
+            stream.SendNext(current_element_energy);            
         }
         else if (stream.IsReading)
         {    
-            current_element_energy = (int)stream.ReceiveNext();
-
-            real_position = (Vector3)stream.ReceiveNext();
-            real_rotation = (Quaternion)stream.ReceiveNext();
+            current_element_energy = (int)stream.ReceiveNext();            
         }
     }
 }

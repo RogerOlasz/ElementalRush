@@ -163,17 +163,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity_control: 0
   stop_duration: 0.4
-  sensibility: 0.3
-  cancel_attack_r1: 0.5
-  last_r1: 1
-  direction_r1: {x: 0, y: 0}
-  direction_r1_no_normal: {x: 0, y: 0}
-  last_direction_r1_no_normal: {x: 0, y: 0}
-  cancel_attack_r2: 0.2
-  last_r2: 0
-  direction_r2: {x: 0, y: 0}
-  direction_r2_no_normal: {x: 0, y: 0}
-  last_direction_r2_no_normal: {x: 0, y: 0}
+  left_joystick_sensibility: 0.3
+  right_1_joystick_sensibility: 0.1
+  right_2_joystick_sensibility: 0.1
 --- !u!114 &5140044408255148838
 MonoBehaviour:
   m_ObjectHideFlags: 0
