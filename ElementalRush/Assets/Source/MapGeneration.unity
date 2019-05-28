@@ -1638,6 +1638,11 @@ PrefabInstance:
       propertyPath: handle_alpha
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 7332736383594594641, guid: 29a5e72ee364adc47a89b2cd8edb8907,
+        type: 3}
+      propertyPath: dead_zone
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5577100715537124100, guid: 29a5e72ee364adc47a89b2cd8edb8907,
         type: 3}
       propertyPath: m_Color.a

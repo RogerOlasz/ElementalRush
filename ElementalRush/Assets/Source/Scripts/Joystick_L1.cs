@@ -16,7 +16,7 @@ public class Joystick_L1 : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     //Dynamic joystick
 
     [SerializeField] private float move_threshold = 1;
-    [SerializeField] private float dead_zone = 0;
+    [SerializeField] private float dead_zone = 0; //Used to set a point from where the joystick won't move
     [SerializeField] [Range(0, 255)] private int circle_handler_alpha = 0;
     [SerializeField] [Range(0, 255)] private int handle_alpha = 0;
     private Color alpha_color;

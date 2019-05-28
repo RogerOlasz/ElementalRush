@@ -53,7 +53,7 @@ public class PlayerPanel : MonoBehaviourPun, IPunObservable
             Vector2 position_on_screen = player_camera.WorldToScreenPoint(PhotonView.Find((photonView.ViewID - 1)).gameObject.transform.position);
 
             Vector2 final_position = new Vector2((position_on_screen.x / canvas.scaleFactor) + x_offset, (position_on_screen.y / canvas.scaleFactor) + y_offset);
-            my_rect.anchoredPosition = Vector2.Lerp(final_position, real_position, Time.deltaTime);
+            my_rect.anchoredPosition = Vector2.Lerp(final_position, real_position, Time.fixedDeltaTime);
         }
     }
 

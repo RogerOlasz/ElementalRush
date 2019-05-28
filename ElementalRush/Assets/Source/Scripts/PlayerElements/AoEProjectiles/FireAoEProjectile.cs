@@ -17,7 +17,7 @@ public class FireAoEProjectile : MonoBehaviour
     private float max_height;
     private float gravity = -10f;
     private Vector3 target_pos;
-    private Vector3 relative_target;
+    //private Vector3 relative_target;
     private Rigidbody my_rigidbody;
     private PlayerController p_controller;    
 
@@ -37,7 +37,7 @@ public class FireAoEProjectile : MonoBehaviour
         p_controller = FindObjectOfType<PlayerController>();
         //relative_target = new Vector3(p_controller.last_direction_r2_no_normal.x * projectile_range, 0, p_controller.last_direction_r2_no_normal.y * projectile_range);
         original_pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        target_pos = original_pos + relative_target;
+        //target_pos = original_pos + relative_target;
         velocity_rate = projectile_speed / projectile_average;
 
         Physics.gravity = Vector3.up * gravity;

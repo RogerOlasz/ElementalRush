@@ -52,6 +52,9 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.SerializationRate = 30;
+
         GameObject player = PhotonNetwork.Instantiate("Player", map_manager_script.blue_spawn_points[0].transform.position, Quaternion.identity, 0);
         player.layer = LayerMask.NameToLayer("TeamBlue");
 

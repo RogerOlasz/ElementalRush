@@ -33,7 +33,6 @@ public class Player : MonoBehaviourPun, IPunObservable
     ElectricPlayer bottled_electric = null;
 
     [Header("Player attributes")]
-    //------ Player attack atributes ------
     public int max_element_energy = 100;
     public int current_element_energy;
 
@@ -42,11 +41,9 @@ public class Player : MonoBehaviourPun, IPunObservable
     [HideInInspector] public float item_carrying_speed;
 
     [Header("Straight Attack attributes")]
-    //Player Straight attack
     public int straight_attack_player_consumption; //This info will be readed from (Element)Player.cs
 
     [Header("AoE Attack attributes")]
-    //Player AoE attack
     public int aoe_attack_player_consumption;
 
     public enum PlayerElementPassives
@@ -74,7 +71,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         Non_Element
     };
 
-    public PlayerElementOnUse on_use_element;
+    [HideInInspector] public PlayerElementOnUse on_use_element;
 
     #endregion
 
@@ -283,15 +280,13 @@ public class Player : MonoBehaviourPun, IPunObservable
     #endregion
 
     #region EnergySettings
+
     public void ConsumeElementEnergy(int energy_consumed)
     {
         if (photonView.IsMine)
         {
-            if (energy_consumed <= current_element_energy)
-            {
-                current_element_energy -= energy_consumed;
-                player_panel_script.player_element_energy.fillAmount = ((float)current_element_energy / max_element_energy);
-            }
+            current_element_energy -= energy_consumed;            
+            player_panel_script.player_element_energy.fillAmount = ((float)current_element_energy / max_element_energy);
         }
     }
 
@@ -314,10 +309,27 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     public void StraightAimingScheme()
     {
-
+        //TODO: Code to render in some way a preview of the attack
     }
 
-    public void StraightAttack()
+    public void StraightAttackSystem()
+    {
+        if (current_element_energy >= straight_attack_player_consumption)
+        {
+            StraightAttack();
+        }
+        else if (current_element_energy > 0)
+        {
+            StraightAttack();
+            if (current_element_energy < 0)
+            {
+                current_element_energy = 0;
+                player_panel_script.player_element_energy.fillAmount = 0;
+            }
+        }
+    }
+
+    private void StraightAttack()
     {
         switch (on_use_element)
         {
@@ -376,89 +388,73 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     #region AoEAttackSystem
 
-    //public void AoEAiming()
-    //{
-    //    if (photonView.IsMine)
-    //    {
-    //        if (shoot_rate_aoe == true && current_element_energy >= aoe_attack_player_consumption && p_controller.direction_r2_no_normal.magnitude > p_controller.sensibility)
-    //        {
-    //            //GenerateArea(); // l'àrea haurà de desepareixer quan la direcció baixa de 0.5
-    //            p_controller.last_r2 = p_controller.direction_r2_no_normal.magnitude;
-    //            aim_aoe = true;
-    //        }
+    public void AoEAimingScheme()
+    {
+        //TODO: Code to render in some way a preview of the attack
+    }
 
-    //        if (shoot_rate_aoe == true && aim_aoe == true && p_controller.last_r2 > p_controller.cancel_attack_r2 && p_controller.direction_r2_no_normal.magnitude == 0 && on_use_element != PlayerElementOnUse.Non_Element)
-    //        {
-    //            switch (on_use_element)
-    //            {
-    //                case PlayerElementOnUse.Fire:
-    //                    {
-    //                        bottled_fire.AoEAttack();
-    //                        break;
-    //                    }
-    //                case PlayerElementOnUse.Earth:
-    //                    {
-    //                        bottled_earth.AoEAttack();
-    //                        break;
-    //                    }
-    //                case PlayerElementOnUse.Water:
-    //                    {
-    //                        bottled_water.AoEAttack();
-    //                        break;
-    //                    }
-    //                case PlayerElementOnUse.Ice:
-    //                    {
-    //                        bottled_ice.AoEAttack();
-    //                        break;
-    //                    }
-    //                case PlayerElementOnUse.Plant:
-    //                    {
-    //                        bottled_plant.AoEAttack();
-    //                        break;
-    //                    }
-    //                case PlayerElementOnUse.Air:
-    //                    {
-    //                        bottled_air.AoEAttack();
-    //                        break;
-    //                    }
-    //                case PlayerElementOnUse.Electric:
-    //                    {
-    //                        bottled_electric.AoEAttack();
-    //                        break;
-    //                    }
-    //                case PlayerElementOnUse.Non_Element:
-    //                    {
-    //                        Debug.Log("Cannot attack, you have no element.");
-    //                        break;
-    //                    }
-    //                default:
-    //                    {
-    //                        SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
-    //                        break;
-    //                    }
-    //            }
+    public void AoEAttackSystem()
+    {
+        if (current_element_energy >= aoe_attack_player_consumption)
+        {
+            AoEAttack();
+        }
+    }
 
-    //            ConsumeElementEnergy(aoe_attack_player_consumption);
+    private void AoEAttack()
+    {
+        switch (on_use_element)
+        {
+            case PlayerElementOnUse.Fire:
+                {
+                    bottled_fire.AoEAttack();
+                    break;
+                }
+            case PlayerElementOnUse.Earth:
+                {
+                    bottled_earth.AoEAttack();
+                    break;
+                }
+            case PlayerElementOnUse.Water:
+                {
+                    bottled_water.AoEAttack();
+                    break;
+                }
+            case PlayerElementOnUse.Ice:
+                {
+                    bottled_ice.AoEAttack();
+                    break;
+                }
+            case PlayerElementOnUse.Plant:
+                {
+                    bottled_plant.AoEAttack();
+                    break;
+                }
+            case PlayerElementOnUse.Air:
+                {
+                    bottled_air.AoEAttack();
+                    break;
+                }
+            case PlayerElementOnUse.Electric:
+                {
+                    bottled_electric.AoEAttack();
+                    break;
+                }
+            case PlayerElementOnUse.Non_Element:
+                {
+                    Debug.Log("Cannot attack, you have no element.");
+                    break;
+                }
+            default:
+                {
+                    //SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
+                    Debug.Log("Something went wrong! In default switch.");
+                    break;
+                }
+        }
 
-    //            if (current_element_energy < straight_attack_player_consumption)
-    //            {
-    //                extra_attack += 1;
-    //            }
-
-    //            shoot_rate_aoe = false;
-    //            aim_aoe = false;
-    //        }
-    //        else if (shoot_rate_aoe == true && aim_aoe == true && p_controller.last_r2 < p_controller.cancel_attack_r2 && p_controller.direction_r2_no_normal.magnitude == 0)
-    //        {
-    //            aim_aoe = false;
-    //        }
-
-    //        if (shoot_rate_aoe == false && current_element_energy >= aoe_attack_player_consumption && shooting_rate_aoe == false) //the counter will stop 0.1 seconds after be charged
-    //        {
-    //            StartCoroutine(Recharge_aoe());//co-rutina per truajar charged
-    //        }
-    //    }
-    //}
+        ConsumeElementEnergy(aoe_attack_player_consumption);
+    }
 
     #endregion
 
