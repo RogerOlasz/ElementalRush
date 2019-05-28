@@ -145,9 +145,7 @@ MonoBehaviour:
   movement_speed: 5
   item_carrying_speed: 4
   straight_attack_player_consumption: 7
-  shooting_rate_duration_straight: 0.5
   aoe_attack_player_consumption: 10
-  shooting_rate_duration_aoe: 0.5
   on_use_element: 0
 --- !u!114 &5140044408255148819
 MonoBehaviour:
@@ -164,8 +162,8 @@ MonoBehaviour:
   velocity_control: 0
   stop_duration: 0.4
   left_joystick_sensibility: 0.3
-  right_1_joystick_sensibility: 0.1
-  right_2_joystick_sensibility: 0.1
+  right_1_joystick_sensibility: 0.3
+  right_2_joystick_sensibility: 0.3
 --- !u!114 &5140044408255148838
 MonoBehaviour:
   m_ObjectHideFlags: 0

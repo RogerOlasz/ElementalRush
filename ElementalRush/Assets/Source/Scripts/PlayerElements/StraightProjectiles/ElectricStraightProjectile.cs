@@ -32,7 +32,7 @@ public class ElectricStraightProjectile : MonoBehaviourPun, IPunObservable
 
         if (distance <= projectile_range)
         {
-            transform.position += transform.right * (projectile_speed * Time.deltaTime);
+            transform.position += transform.forward * (projectile_speed * Time.deltaTime);
         }
         else
         {

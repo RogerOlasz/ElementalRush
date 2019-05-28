@@ -24,10 +24,10 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     private Vector3 current_velocity;
 
     private bool straight_aiming = false;
-    [SerializeField] private float right_1_joystick_sensibility = 0.1f;
+    [SerializeField] private float right_1_joystick_sensibility = 0.3f;
 
     private bool aoe_aiming = false;
-    [SerializeField] private float right_2_joystick_sensibility = 0.1f;
+    [SerializeField] private float right_2_joystick_sensibility = 0.3f;
 
     Vector3 looking_at;
     private Vector3 real_position;
@@ -161,9 +161,11 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             if (right_straight_joystick.Direction().magnitude > right_1_joystick_sensibility && aoe_aiming == false)
             {
                 StraightAiming();
+                //player.StraightAimingScheme();
             }
-            else
+            else if (straight_aiming == true)
             {
+                player.StraightAttack();
                 straight_aiming = false;
             }
 
@@ -171,7 +173,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             {
                 AoEAiming();
             }
-            else
+            else if (aoe_aiming == true)
             {
                 aoe_aiming = false;
             }
@@ -197,4 +199,3 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         }
     }
 }
-

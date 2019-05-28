@@ -43,7 +43,7 @@ public class IceStraightProjectile : MonoBehaviourPun, IPunObservable
 
         if (distance <= projectile_range)
         {
-            transform.position += transform.right * (projectile_speed * Time.deltaTime);
+            transform.position += transform.forward * (projectile_speed * Time.deltaTime);
         }
         else
         {
@@ -75,7 +75,7 @@ public class IceStraightProjectile : MonoBehaviourPun, IPunObservable
         }
         else if (my_path != null)
         {
-            path_scale.x = distance;
+            path_scale.z = distance;
             my_path.transform.localScale = path_scale;
 
             path_position.x = (distance / 2 * projectile_direction_normalized.x) + first_path_pos.x;

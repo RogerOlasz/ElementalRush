@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public enum AxisOptions
 {
@@ -16,6 +17,9 @@ public class Joystick_L1 : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
 
     [SerializeField] private float move_threshold = 1;
     [SerializeField] private float dead_zone = 0;
+    [SerializeField] [Range(0, 255)] private int circle_handler_alpha = 0;
+    [SerializeField] [Range(0, 255)] private int handle_alpha = 0;
+    private Color alpha_color;
     [SerializeField] private AxisOptions axis_options = AxisOptions.Both;
 
     [SerializeField] private RectTransform circle_handler = null;
@@ -41,6 +45,14 @@ public class Joystick_L1 : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         handle.anchorMax = center;
         handle.pivot = center;
         handle.anchoredPosition = Vector2.zero;
+
+        alpha_color = circle_handler.GetComponent<Image>().color;
+        alpha_color.a = (circle_handler_alpha / 255f * 100f) / 100f;
+        circle_handler.GetComponent<Image>().color = alpha_color;
+
+        alpha_color = handle.GetComponent<Image>().color;
+        alpha_color.a = (handle_alpha / 255f * 100f) / 100f;
+        handle.GetComponent<Image>().color = alpha_color;
     }
 
     public float Horizontal()
@@ -62,6 +74,14 @@ public class Joystick_L1 : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     {
         circle_handler.anchoredPosition = ScreenPointToAnchoredPosition(event_data.position);
 
+        alpha_color = circle_handler.GetComponent<Image>().color;
+        alpha_color.a = 1f;
+        circle_handler.GetComponent<Image>().color = alpha_color;
+
+        alpha_color = handle.GetComponent<Image>().color;
+        alpha_color.a = 1f;
+        handle.GetComponent<Image>().color = alpha_color;
+
         OnDrag(event_data);
     }
 
@@ -69,6 +89,14 @@ public class Joystick_L1 : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     {
         input_direction = Vector2.zero;
         handle.anchoredPosition = Vector2.zero;
+
+        alpha_color = circle_handler.GetComponent<Image>().color;
+        alpha_color.a = (circle_handler_alpha / 255f * 100f) / 100f;
+        circle_handler.GetComponent<Image>().color = alpha_color;
+
+        alpha_color = handle.GetComponent<Image>().color;
+        alpha_color.a = (handle_alpha / 255f * 100f) / 100f;
+        handle.GetComponent<Image>().color = alpha_color;
 
         circle_handler.anchoredPosition = original_pos;
     }
