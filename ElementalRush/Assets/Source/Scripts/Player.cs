@@ -303,8 +303,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     }
 
     #endregion
-
-
+    
     #region StraightAttackSystem
 
     public void StraightAimingScheme()
@@ -371,7 +370,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             case PlayerElementOnUse.Non_Element:
                 {
                     Debug.Log("Cannot attack, you have no element.");
-                    break;
+                    return;
                 }
             default:
                 {
@@ -443,7 +442,7 @@ public class Player : MonoBehaviourPun, IPunObservable
             case PlayerElementOnUse.Non_Element:
                 {
                     Debug.Log("Cannot attack, you have no element.");
-                    break;
+                    return;
                 }
             default:
                 {

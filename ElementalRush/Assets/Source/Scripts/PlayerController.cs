@@ -27,20 +27,17 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     [SerializeField] private float straight_fire_rate = 0.5f;
     [SerializeField] private float right_1_joystick_sensibility = 0.3f;
     private bool straight_aiming = false;
+    private bool straight_cancel_attack = false;
     private float straight_timer = 0;
 
     [Header("Right Joystick (AoE)")]
     [SerializeField] private float aoe_fire_rate = 0.5f;
     [SerializeField] private float right_2_joystick_sensibility = 0.3f;
     private bool aoe_aiming = false;
+    private bool aoe_cancel_attack = false;
     private float aoe_timer = 0;
 
     private Vector3 looking_at;
-    //private Vector3 real_position;
-    //private Quaternion real_rotation;
-    //private Vector3 last_position;
-    //[Range(0.0f, 1.0f)]
-    //public float prediction_coeff = 1.0f;    
 
     public void SetSpeedFactor(float new_movement_speed)
     {
@@ -114,7 +111,14 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         looking_at.x = right_straight_joystick.Horizontal();
         looking_at.z = right_straight_joystick.Vertical();
 
-        rigid_body.rotation = Quaternion.LookRotation(looking_at);
+        if (gameObject.layer == LayerMask.NameToLayer("TeamBlue"))
+        {
+            rigid_body.rotation = Quaternion.LookRotation(looking_at);
+        }
+        else
+        {
+            rigid_body.rotation = Quaternion.LookRotation(looking_at * -1);
+        }
         straight_aiming = true;
     }
 
@@ -123,7 +127,14 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         looking_at.x = right_aoe_joystick.Horizontal();
         looking_at.z = right_aoe_joystick.Vertical();
 
-        rigid_body.rotation = Quaternion.LookRotation(looking_at);
+        if (gameObject.layer == LayerMask.NameToLayer("TeamBlue"))
+        {
+            rigid_body.rotation = Quaternion.LookRotation(looking_at);
+        }
+        else
+        {
+            rigid_body.rotation = Quaternion.LookRotation(looking_at * -1);
+        }
         aoe_aiming = true;
     }
 
@@ -143,9 +154,6 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             current_velocity = Vector3.zero;
             looking_at = Vector3.zero;
 
-            //real_position = transform.position;
-            //real_rotation = transform.rotation;
-
             velocity_control = false;
         }
     }
@@ -154,14 +162,25 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
+            if(right_1_joystick_sensibility > right_straight_joystick.Direction().magnitude && right_straight_joystick.Direction().magnitude > 0)
+            {
+                straight_cancel_attack = true;
+            }
+
+            if (right_2_joystick_sensibility > right_aoe_joystick.Direction().magnitude && right_aoe_joystick.Direction().magnitude > 0)
+            {
+                aoe_cancel_attack = true;
+            }
+
             if (right_straight_joystick.Direction().magnitude > right_1_joystick_sensibility && aoe_aiming == false)
             {
                 StraightAiming();
                 //player.StraightAimingScheme();
+                straight_cancel_attack = false;
             }
             else if (straight_aiming == true)
             {
-                if (straight_timer >= straight_fire_rate)
+                if (straight_timer >= straight_fire_rate && straight_cancel_attack == false)
                 {
                     player.StraightAttackSystem();
                     straight_timer = 0f;
@@ -173,10 +192,11 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             {
                 AoEAiming();
                 //player.AoEAimingScheme();
+                aoe_cancel_attack = false;
             }
             else if (aoe_aiming == true)
             {
-                if (aoe_timer >= aoe_fire_rate)
+                if (aoe_timer >= aoe_fire_rate && aoe_cancel_attack == false)
                 {
                     player.AoEAttackSystem();
                     aoe_timer = 0f;
@@ -192,8 +212,6 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     // Update is called once per frame
     void FixedUpdate()
     {
-        //last_position = real_position;
-
         if (photonView.IsMine)
         {
             if (left_joystick.Direction().magnitude >= left_joystick_sensibility)
@@ -208,28 +226,17 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
                 StoppingPlayer();
             }            
         }
-        else
-        {            
-            //transform.position = Vector3.Lerp(transform.position, real_position + (prediction_coeff * velocity * Time.fixedDeltaTime), Time.fixedDeltaTime);
-            //transform.rotation = Quaternion.Lerp(transform.rotation, real_rotation, Time.fixedDeltaTime);
-        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            //stream.SendNext(transform.position);
-            //stream.SendNext(transform.rotation);
-            
-            //stream.SendNext((real_position - last_position) / Time.fixedDeltaTime);
+
         }
         else if (stream.IsReading)
         {
-            //real_position = (Vector3)stream.ReceiveNext();
-            //real_rotation = (Quaternion)stream.ReceiveNext();
 
-            //velocity = (Vector3)stream.ReceiveNext();
         }
     }
 }
