@@ -53,6 +53,6 @@ public class PlayerItemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(item_carrying + " Layer: " + gameObject.layer);
     }
 }

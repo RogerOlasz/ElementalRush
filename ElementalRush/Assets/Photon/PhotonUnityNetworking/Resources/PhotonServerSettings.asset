@@ -36,5 +36,6 @@ MonoBehaviour:
   - TestAttack
   - PathReference
   - ItemTaken
+  - SetPlayerTeam
   DisableAutoOpenWizard: 1
   ShowSettings: 1

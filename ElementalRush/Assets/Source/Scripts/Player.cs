@@ -457,10 +457,18 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     #endregion
 
+    [PunRPC]
+    public void SetPlayerTeam(int player_team)
+    {
+        this.gameObject.layer = player_team;
+    }     
+
     void Start()
     {
         if (photonView.IsMine)
-        {            
+        {
+            photonView.RPC("SetPlayerTeam", RpcTarget.OthersBuffered, this.gameObject.layer);
+
             player_camera = Camera.main;
             if (gameObject.layer == LayerMask.NameToLayer("TeamRed"))
             {
