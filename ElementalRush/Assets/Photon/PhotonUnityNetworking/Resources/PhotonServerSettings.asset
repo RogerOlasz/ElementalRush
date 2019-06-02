@@ -35,5 +35,6 @@ MonoBehaviour:
   - StraightAttackOnline
   - TestAttack
   - PathReference
+  - ItemTaken
   DisableAutoOpenWizard: 1
   ShowSettings: 1
