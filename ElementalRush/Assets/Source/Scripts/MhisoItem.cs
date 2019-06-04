@@ -13,9 +13,13 @@ public class MhisoItem : MonoBehaviourPun
         if (collider.gameObject.tag == "Player")
         {
             player_item_manager_script = collider.GetComponent<PlayerItemManager>();
-            player_item_manager_script.SetItemCarrying(my_type);
+            if (player_item_manager_script.is_carrying == false)
+            {
+                player_item_manager_script.SetItemCarrying(my_type);
+                player_item_manager_script.is_carrying = true;
 
-            photonView.RPC("ItemTaken", RpcTarget.All);
+                photonView.RPC("ItemTaken", RpcTarget.All);
+            }
         }
     }
 

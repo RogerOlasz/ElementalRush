@@ -14,6 +14,12 @@ public class PlayerItemManager : MonoBehaviour
     };
 
     Items item_carrying;
+    public bool is_carrying = false;
+
+    public Items GetItem()
+    {
+        return item_carrying;
+    }
 
     public void SetItemCarrying(Items item_to_carry)
     {
@@ -22,7 +28,16 @@ public class PlayerItemManager : MonoBehaviour
 
     public void DropItem()
     {
+        //TODO: Some particle and shound here
+
         item_carrying = Items.None;
+        is_carrying = false;
+    }
+
+    public void RemoveItem()
+    {
+        item_carrying = Items.None;
+        is_carrying = false;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,6 +68,6 @@ public class PlayerItemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(item_carrying + " Layer: " + gameObject.layer);
+        //Debug.Log(item_carrying + " Layer: " + gameObject.layer);
     }
 }
