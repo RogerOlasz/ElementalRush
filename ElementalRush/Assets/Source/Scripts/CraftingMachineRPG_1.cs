@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class CraftingMachineRPG_1 : MonoBehaviour
 {
+    [SerializeField] private int crafting_points = 0;
+    [SerializeField] private int crafting_level = 0;
+    [SerializeField] private float machine_quality = 0;
+    [SerializeField] private int items_crafted = 0;
+    [SerializeField] private int total_crafting_points = 0;
+
+    [Header("Machine Attributes")]
     public int points_to_level_up;
 
-    private int crafting_points = 0;
-    private int crafting_level = 0;
+    public int tier_1_quality_points;
+    public int tier_2_quality_points;
+
+    public int level_up_difficulty;
+
+    [Header("Cooldown between item craftings")]
+    public float crafting_machine_cooldown = 1f;
 
     public void CraftFinished(PlayerItemManager.Items material_1, PlayerItemManager.Items material_2)
     {
@@ -17,22 +29,22 @@ public class CraftingMachineRPG_1 : MonoBehaviour
         {
             case PlayerItemManager.Items.Tier1_Fuchsia:
                 {
-                    craft_quality += 5;
+                    craft_quality += tier_2_quality_points;
                     break;
                 }
             case PlayerItemManager.Items.Tier1_Lime:
                 {
-                    craft_quality += 2;
+                    craft_quality += tier_1_quality_points;
                     break;
                 }
             case PlayerItemManager.Items.Tier1_Orange:
                 {
-                    craft_quality += 2;
+                    craft_quality += tier_1_quality_points;
                     break;
                 }
             case PlayerItemManager.Items.Tier1_Turquoise:
                 {
-                    craft_quality += 5;
+                    craft_quality += tier_2_quality_points;
                     break;
                 }
         }
@@ -41,35 +53,51 @@ public class CraftingMachineRPG_1 : MonoBehaviour
         {
             case PlayerItemManager.Items.Tier1_Fuchsia:
                 {
-                    craft_quality += 5;
+                    craft_quality += tier_2_quality_points;
                     break;
                 }
             case PlayerItemManager.Items.Tier1_Lime:
                 {
-                    craft_quality += 2;
+                    craft_quality += tier_1_quality_points;
                     break;
                 }
             case PlayerItemManager.Items.Tier1_Orange:
                 {
-                    craft_quality += 2;
+                    craft_quality += tier_1_quality_points;
                     break;
                 }
             case PlayerItemManager.Items.Tier1_Turquoise:
                 {
-                    craft_quality += 5;
+                    craft_quality += tier_2_quality_points;
                     break;
                 }
         }
 
         crafting_points += craft_quality;
+        total_crafting_points += craft_quality;
 
-        if(crafting_points >= points_to_level_up)
+        items_crafted++;
+        machine_quality = (total_crafting_points / items_crafted)*10;
+
+        if (crafting_points >= points_to_level_up)
         {
-            crafting_level += 1;
+            crafting_level++;
 
-            points_to_level_up += 4;
-            crafting_points = 0;
-        }
+            crafting_points = (crafting_points - points_to_level_up);
+
+            points_to_level_up += level_up_difficulty;            
+        }        
+
+        StartCoroutine(MachineCooldown());
+    }
+
+    IEnumerator MachineCooldown()
+    {
+        yield return new WaitForSeconds(crafting_machine_cooldown);
+
+        GetComponent<CraftingMachineProcessor_1>().enabled = true;
+
+        StopCoroutine(MachineCooldown());
     }
 
     // Start is called before the first frame update

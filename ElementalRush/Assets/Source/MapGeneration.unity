@@ -1820,7 +1820,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crafting_slot_1_image: {fileID: 1476894580}
   crafting_slot_2_image: {fileID: 731605510}
-  progress_duration: 1
+  material_insert_duration: 1
+  item_crafting_duration: 2
 --- !u!114 &1247047175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1855,7 +1856,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d3fd7d51f504a341b561a74f85039a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points_to_level_up: 20
+  crafting_points: 0
+  crafting_level: 0
+  machine_quality: 0
+  items_crafted: 0
+  total_crafting_points: 0
+  points_to_level_up: 200
+  tier_1_quality_points: 20
+  tier_2_quality_points: 50
+  level_up_difficulty: 40
+  crafting_machine_cooldown: 1
 --- !u!23 &1300818277
 MeshRenderer:
   m_ObjectHideFlags: 0
