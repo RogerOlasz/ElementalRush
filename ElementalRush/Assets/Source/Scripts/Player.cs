@@ -59,7 +59,7 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     PlayerElementPassives on_use_passives;
 
-    public enum PlayerElementOnUse
+    public enum PlayerElementBottled
     {
         Fire = 0,
         Earth,
@@ -71,7 +71,7 @@ public class Player : MonoBehaviourPun, IPunObservable
         Non_Element
     };
 
-    [HideInInspector] public PlayerElementOnUse on_use_element;
+    [HideInInspector] public PlayerElementBottled bottled_element;
 
     #endregion
 
@@ -82,15 +82,15 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     #region SetPlayerStatsByElement
 
-    public void SetPlayerStatsByElement(PlayerElementOnUse new_on_use_element)
+    public void SetPlayerStatsByElement(PlayerElementBottled new_bottled_element)
     {
         if (photonView.IsMine)
         {
-            on_use_element = new_on_use_element;
+            bottled_element = new_bottled_element;
 
-            switch (on_use_element)
+            switch (bottled_element)
             {
-                case PlayerElementOnUse.Fire:
+                case PlayerElementBottled.Fire:
                     {
                         bottled_fire.SetFireBaseSpeed();
                         bottled_fire.SetFireItemCarryingSpeed();
@@ -101,7 +101,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         player_panel_script.player_status.text = "Fire";
                         break;
                     }
-                case PlayerElementOnUse.Earth:
+                case PlayerElementBottled.Earth:
                     {
                         bottled_earth.SetEarthBaseSpeed();
                         bottled_earth.SetEarthItemCarryingSpeed();
@@ -112,7 +112,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         player_panel_script.player_status.text = "Earth";
                         break;
                     }
-                case PlayerElementOnUse.Water:
+                case PlayerElementBottled.Water:
                     {
                         bottled_water.SetWaterBaseSpeed();
                         bottled_water.SetWaterItemCarryingSpeed();
@@ -123,7 +123,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         player_panel_script.player_status.text = "Water";
                         break;
                     }
-                case PlayerElementOnUse.Ice:
+                case PlayerElementBottled.Ice:
                     {
                         bottled_ice.SetIceBaseSpeed();
                         bottled_ice.SetIceItemCarryingSpeed();
@@ -134,7 +134,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         player_panel_script.player_status.text = "Ice";
                         break;
                     }
-                case PlayerElementOnUse.Plant:
+                case PlayerElementBottled.Plant:
                     {
                         bottled_plant.SetPlantBaseSpeed();
                         bottled_plant.SetPlantItemCarryingSpeed();
@@ -145,7 +145,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         player_panel_script.player_status.text = "Plant";
                         break;
                     }
-                case PlayerElementOnUse.Air:
+                case PlayerElementBottled.Air:
                     {
                         bottled_air.SetAirBaseSpeed();
                         bottled_air.SetAirItemCarryingSpeed();
@@ -156,7 +156,7 @@ public class Player : MonoBehaviourPun, IPunObservable
                         player_panel_script.player_status.text = "Air";
                         break;
                     }
-                case PlayerElementOnUse.Electric:
+                case PlayerElementBottled.Electric:
                     {
                         bottled_electric.SetElectricBaseSpeed();
                         bottled_electric.SetElectricItemCarryingSpeed();
@@ -167,18 +167,19 @@ public class Player : MonoBehaviourPun, IPunObservable
                         player_panel_script.player_status.text = "Electric";
                         break;
                     }
-                case PlayerElementOnUse.Non_Element:
+                case PlayerElementBottled.Non_Element:
                     {
                         //TODO: Set the Non-Element properties
                         movement_speed = 7.5f;
                         item_carrying_speed = 0;
+                        ConsumeElementEnergy(current_element_energy);
 
                         player_panel_script.player_status.text = "Non-Element";
                         break;
                     }
                 default:
                     {
-                        SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
+                        SetPlayerStatsByElement(PlayerElementBottled.Non_Element);
 
                         break;
                     }
@@ -197,7 +198,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            SetPlayerStatsByElement(PlayerElementOnUse.Fire);
+            SetPlayerStatsByElement(PlayerElementBottled.Fire);
             RefillElementEnergy(max_element_energy);
                         
             element_changer_script.CloseElementChangingMenu();
@@ -209,7 +210,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            SetPlayerStatsByElement(PlayerElementOnUse.Earth);
+            SetPlayerStatsByElement(PlayerElementBottled.Earth);
             RefillElementEnergy(max_element_energy);
 
             element_changer_script.CloseElementChangingMenu();
@@ -221,7 +222,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            SetPlayerStatsByElement(PlayerElementOnUse.Water);
+            SetPlayerStatsByElement(PlayerElementBottled.Water);
             RefillElementEnergy(max_element_energy);
 
             element_changer_script.CloseElementChangingMenu();
@@ -233,7 +234,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            SetPlayerStatsByElement(PlayerElementOnUse.Ice);
+            SetPlayerStatsByElement(PlayerElementBottled.Ice);
             RefillElementEnergy(max_element_energy);
 
             element_changer_script.CloseElementChangingMenu();
@@ -245,7 +246,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            SetPlayerStatsByElement(PlayerElementOnUse.Plant);
+            SetPlayerStatsByElement(PlayerElementBottled.Plant);
             RefillElementEnergy(max_element_energy);
 
             element_changer_script.CloseElementChangingMenu();
@@ -257,7 +258,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            SetPlayerStatsByElement(PlayerElementOnUse.Air);
+            SetPlayerStatsByElement(PlayerElementBottled.Air);
             RefillElementEnergy(max_element_energy);
 
             element_changer_script.CloseElementChangingMenu();
@@ -269,7 +270,7 @@ public class Player : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            SetPlayerStatsByElement(PlayerElementOnUse.Electric);
+            SetPlayerStatsByElement(PlayerElementBottled.Electric);
             RefillElementEnergy(max_element_energy);
 
             element_changer_script.CloseElementChangingMenu();
@@ -330,51 +331,51 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void StraightAttack()
     {
-        switch (on_use_element)
+        switch (bottled_element)
         {
-            case PlayerElementOnUse.Fire:
+            case PlayerElementBottled.Fire:
                 {
                     bottled_fire.StraightAttack();
                     break;
                 }
-            case PlayerElementOnUse.Earth:
+            case PlayerElementBottled.Earth:
                 {
                     bottled_earth.StraightAttack();
                     break;
                 }
-            case PlayerElementOnUse.Water:
+            case PlayerElementBottled.Water:
                 {
                     bottled_water.StraightAttack();
                     break;
                 }
-            case PlayerElementOnUse.Ice:
+            case PlayerElementBottled.Ice:
                 {
                     bottled_ice.StraightAttack();
                     break;
                 }
-            case PlayerElementOnUse.Plant:
+            case PlayerElementBottled.Plant:
                 {
                     bottled_plant.StraightAttack();
                     break;
                 }
-            case PlayerElementOnUse.Air:
+            case PlayerElementBottled.Air:
                 {
                     bottled_air.StraightAttack();
                     break;
                 }
-            case PlayerElementOnUse.Electric:
+            case PlayerElementBottled.Electric:
                 {
                     bottled_electric.StraightAttack();
                     break;
                 }
-            case PlayerElementOnUse.Non_Element:
+            case PlayerElementBottled.Non_Element:
                 {
                     Debug.Log("Cannot attack, you have no element.");
                     return;
                 }
             default:
                 {
-                    //SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
+                    //SetPlayerStatsByElement(PlayerElementBottled.Non_Element);
                     Debug.Log("Something went wrong! In default switch.");
                     break;
                 }
@@ -402,51 +403,51 @@ public class Player : MonoBehaviourPun, IPunObservable
 
     private void AoEAttack()
     {
-        switch (on_use_element)
+        switch (bottled_element)
         {
-            case PlayerElementOnUse.Fire:
+            case PlayerElementBottled.Fire:
                 {
                     bottled_fire.AoEAttack();
                     break;
                 }
-            case PlayerElementOnUse.Earth:
+            case PlayerElementBottled.Earth:
                 {
                     bottled_earth.AoEAttack();
                     break;
                 }
-            case PlayerElementOnUse.Water:
+            case PlayerElementBottled.Water:
                 {
                     bottled_water.AoEAttack();
                     break;
                 }
-            case PlayerElementOnUse.Ice:
+            case PlayerElementBottled.Ice:
                 {
                     bottled_ice.AoEAttack();
                     break;
                 }
-            case PlayerElementOnUse.Plant:
+            case PlayerElementBottled.Plant:
                 {
                     bottled_plant.AoEAttack();
                     break;
                 }
-            case PlayerElementOnUse.Air:
+            case PlayerElementBottled.Air:
                 {
                     bottled_air.AoEAttack();
                     break;
                 }
-            case PlayerElementOnUse.Electric:
+            case PlayerElementBottled.Electric:
                 {
                     bottled_electric.AoEAttack();
                     break;
                 }
-            case PlayerElementOnUse.Non_Element:
+            case PlayerElementBottled.Non_Element:
                 {
                     Debug.Log("Cannot attack, you have no element.");
                     return;
                 }
             default:
                 {
-                    //SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
+                    //SetPlayerStatsByElement(PlayerElementBottled.Non_Element);
                     Debug.Log("Something went wrong! In default switch.");
                     break;
                 }
@@ -498,15 +499,16 @@ public class Player : MonoBehaviourPun, IPunObservable
             bottled_air = transform.GetComponent<AirPlayer>();
             bottled_electric = transform.GetComponent<ElectricPlayer>();
 
-            SetPlayerStatsByElement(PlayerElementOnUse.Non_Element);
-
-            RefillElementEnergy(max_element_energy);
+            SetPlayerStatsByElement(PlayerElementBottled.Non_Element);            
         }
     }
 
     void Update()
     {
-
+        if (current_element_energy <= 0)
+        {
+            SetPlayerStatsByElement(PlayerElementBottled.Non_Element);
+        }
     }
 
     void FixedUpdate()

@@ -83,7 +83,7 @@ public class CrowdControlManager : MonoBehaviourPun
 
     public void EraseElementEnergy(int energy_to_erase)
     {
-        if (my_player_script.on_use_element != Player.PlayerElementOnUse.Non_Element)
+        if (my_player_script.bottled_element != Player.PlayerElementBottled.Non_Element)
         {
             if (photonView.IsMine)
             {
@@ -102,7 +102,7 @@ public class CrowdControlManager : MonoBehaviourPun
 
     public void ApplySlowCC(float slow_percentage, bool is_stackable = true)
     {        
-        if (my_player_script.on_use_element != Player.PlayerElementOnUse.Non_Element)
+        if (my_player_script.bottled_element != Player.PlayerElementBottled.Non_Element)
         {
             if (photonView.IsMine)
             {
@@ -161,7 +161,7 @@ public class CrowdControlManager : MonoBehaviourPun
 
     public void RemoveSlowCC(float slow_amount_to_remove, bool was_stackable = true)
     {
-        if (my_player_script.on_use_element != Player.PlayerElementOnUse.Non_Element)
+        if (my_player_script.bottled_element != Player.PlayerElementBottled.Non_Element)
         {
             if (photonView.IsMine)
             {

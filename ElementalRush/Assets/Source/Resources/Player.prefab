@@ -148,7 +148,7 @@ MonoBehaviour:
   item_carrying_speed: 4
   straight_attack_player_consumption: 7
   aoe_attack_player_consumption: 10
-  on_use_element: 0
+  bottled_element: 0
 --- !u!114 &5140044408255148819
 MonoBehaviour:
   m_ObjectHideFlags: 0

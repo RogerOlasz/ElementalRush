@@ -33,24 +33,30 @@ public class CraftingMachineProcessor_1 : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player") // TODO have to check the layers
         {
             if (player_item_manager_1 == null && slot_1 == PlayerItemManager.Items.None)
             {
-                player_item_manager_1 = collider.GetComponent<PlayerItemManager>();
-
-                if (player_item_manager_1.GetItem() != PlayerItemManager.Items.None)
+                if (gameObject.layer == 0 || gameObject.layer == collider.gameObject.layer)
                 {
-                    adding_slot_1 = true;
+                    player_item_manager_1 = collider.GetComponent<PlayerItemManager>();
+
+                    if (player_item_manager_1.GetItem() != PlayerItemManager.Items.None)
+                    {
+                        adding_slot_1 = true;
+                    }
                 }
             }
             else if (player_item_manager_2 == null && slot_2 == PlayerItemManager.Items.None)
             {
-                player_item_manager_2 = collider.GetComponent<PlayerItemManager>();
-
-                if (player_item_manager_2.GetItem() != PlayerItemManager.Items.None)
+                if (gameObject.layer == 0 || gameObject.layer == collider.gameObject.layer)
                 {
-                    adding_slot_2 = true;
+                    player_item_manager_2 = collider.GetComponent<PlayerItemManager>();
+
+                    if (player_item_manager_2.GetItem() != PlayerItemManager.Items.None)
+                    {
+                        adding_slot_2 = true;
+                    }
                 }
             }            
         }
@@ -76,7 +82,7 @@ public class CraftingMachineProcessor_1 : MonoBehaviourPun
     IEnumerator CraftingItem()
     {
         yield return new WaitForSeconds(item_crafting_duration);
-        GetComponent<CraftingMachineRPG_1>().CraftFinished(slot_1, slot_2);
+        GetComponent<CraftingMachineRPG_1>().TimeToCraft(slot_1, slot_2);
 
         ResetMachine();
 

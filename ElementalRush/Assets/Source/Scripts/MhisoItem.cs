@@ -12,13 +12,16 @@ public class MhisoItem : MonoBehaviourPun
     {
         if (collider.gameObject.tag == "Player")
         {
-            player_item_manager_script = collider.GetComponent<PlayerItemManager>();
-            if (player_item_manager_script.is_carrying == false)
+            if (collider.GetComponent<Player>().bottled_element != Player.PlayerElementBottled.Non_Element)
             {
-                player_item_manager_script.SetItemCarrying(my_type);
-                player_item_manager_script.is_carrying = true;
+                player_item_manager_script = collider.GetComponent<PlayerItemManager>();
+                if (player_item_manager_script.is_carrying == false)
+                {
+                    player_item_manager_script.SetItemCarrying(my_type);
+                    player_item_manager_script.is_carrying = true;
 
-                photonView.RPC("ItemTaken", RpcTarget.All);
+                    photonView.RPC("ItemTaken", RpcTarget.All);
+                }
             }
         }
     }
