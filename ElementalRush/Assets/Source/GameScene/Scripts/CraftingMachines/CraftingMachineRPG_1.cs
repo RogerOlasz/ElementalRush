@@ -110,7 +110,7 @@ public class CraftingMachineRPG_1 : MonoBehaviour
         crafting_machine_points += craft_quality;
         total_crafting_points += craft_quality;
 
-        game_manager.GetComponent<VictoryPointsManager>().AddVictoryPoints(craft_quality, gameObject.layer); //TODO It should be sent through the network ??
+        game_manager.GetComponent<VictoryPointsManager>().AddVictoryPoints(craft_quality, gameObject.layer); //TODO Should it be sent through the network ??
 
         items_crafted++;
         machine_quality = (total_crafting_points / items_crafted);

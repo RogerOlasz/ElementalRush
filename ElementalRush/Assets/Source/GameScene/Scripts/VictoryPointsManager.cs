@@ -17,11 +17,31 @@ public class VictoryPointsManager : MonoBehaviour
         {
             if (layer == LayerMask.NameToLayer("TeamBlue"))
             {
-                blue_team_victory_points += amount;                
+                blue_team_victory_points += amount; 
+                
+                if (layer == this.gameObject.layer)
+                {
+                    ally_team_marquee.text = blue_team_victory_points.ToString();
+                }
+
+                if (layer != this.gameObject.layer)
+                {
+                    enemy_team_marquee.text = blue_team_victory_points.ToString();
+                }
             }
             else if (layer == LayerMask.NameToLayer("TeamRed"))
             {
                 red_team_victory_points += amount;
+
+                if (layer == this.gameObject.layer)
+                {
+                    ally_team_marquee.text = red_team_victory_points.ToString();
+                }
+
+                if (layer != this.gameObject.layer)
+                {
+                    enemy_team_marquee.text = red_team_victory_points.ToString();
+                }
             }
         }
     }
@@ -31,6 +51,9 @@ public class VictoryPointsManager : MonoBehaviour
     {
         blue_team_victory_points = 0;
         red_team_victory_points = 0;
+
+        ally_team_marquee.text = blue_team_victory_points.ToString();
+        enemy_team_marquee.text = red_team_victory_points.ToString();
     }
 
     // Update is called once per frame

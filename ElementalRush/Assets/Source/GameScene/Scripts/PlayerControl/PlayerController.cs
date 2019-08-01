@@ -84,16 +84,8 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
                 if (stopping_current_time <= stop_duration)
                 {
-                    if (gameObject.layer == LayerMask.NameToLayer("TeamBlue"))
-                    {
-                        velocity.x = current_velocity.x - current_velocity.x * stopping_current_time / stop_duration;
-                        velocity.z = current_velocity.z - current_velocity.z * stopping_current_time / stop_duration;
-                    }
-                    else
-                    {
-                        velocity.x = (current_velocity.x - current_velocity.x * stopping_current_time / stop_duration) * -1;
-                        velocity.z = (current_velocity.z - current_velocity.z * stopping_current_time / stop_duration) ;
-                    }
+                    velocity.x = current_velocity.x - current_velocity.x * stopping_current_time / stop_duration;
+                    velocity.z = current_velocity.z - current_velocity.z * stopping_current_time / stop_duration;
 
                     rigid_body.velocity = velocity;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class CraftingMachineProcessor_1 : MonoBehaviourPun
+public class CraftingMachineProcessor_1 : MonoBehaviourPun, IPunObservable
 {    
     PlayerItemManager player_item_manager_1 = null;
     PlayerItemManager player_item_manager_2 = null;
@@ -233,6 +233,20 @@ public class CraftingMachineProcessor_1 : MonoBehaviourPun
                 crafting_slot_2_image.fillAmount = 0;
                 timer_2 = 0;
             }
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(crafting_slot_1_image.fillAmount);
+            stream.SendNext(crafting_slot_2_image.fillAmount);
+        }
+        else if (stream.IsReading)
+        {
+            crafting_slot_1_image.fillAmount = (float)stream.ReceiveNext();
+            crafting_slot_2_image.fillAmount = (float)stream.ReceiveNext();
         }
     }
 }
